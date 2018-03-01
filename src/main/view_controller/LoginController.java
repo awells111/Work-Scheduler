@@ -2,17 +2,9 @@ package main.view_controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import main.Main;
-
-import java.io.IOException;
 
 public class LoginController {
     public static final String FXML_LOGIN = "view_controller/login.fxml";
