@@ -39,4 +39,5 @@ public class ConnectedUser {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }
