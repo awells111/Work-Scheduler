@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import main.Main;
+import main.data.DbConnection;
+import main.model.ConnectedUser;
 
 public class LoginController {
     public static final String FXML_LOGIN = "view_controller/login.fxml";
@@ -13,9 +15,11 @@ public class LoginController {
     @FXML
     private TextField textFieldLoginPassword;
     private Main mainApp;
+    private DbConnection dbConnection;
+    private ConnectedUser connectedUser;
 
     public LoginController() {
-
+        dbConnection = new DbConnection();
     }
 
     public void setMainApp(Main mainApp) {
@@ -23,10 +27,18 @@ public class LoginController {
     }
 
     @FXML
-    void handleLogin(ActionEvent event) {
-        System.out.println("Login button clicked! " + "Username: " + textFieldLoginName.getText() + ", Password: " + textFieldLoginPassword.getText());
+    void handleLogin(ActionEvent event) throws ClassNotFoundException {
+        String user = textFieldLoginName.getText();
+        String pass = textFieldLoginPassword.getText();
+        int userId = dbConnection.userLogin(user, pass);
 
-        showAlertExample();
+        boolean loggedIn = userId != DbConnection.USER_NOT_FOUND; //Returns true if our login query returned a user
+
+        if (loggedIn) {
+            connectedUser = new ConnectedUser(userId, user, pass);
+        } else {
+            showAlertExample();
+        }
     }
 
     void showAlertExample() {
