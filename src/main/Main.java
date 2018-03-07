@@ -15,10 +15,18 @@ import static main.view_controller.LoginController.FXML_LOGIN;
 
 public class Main extends Application {
 
+    public static final String PATH_RB = "main.rb";
+
     private Stage primaryStage;
 
-    public Main() {
+    private ResourceBundle rb;
 
+    public Main() {
+        //todo Required for A. Log-in Form **Requires import java.util.Locale;
+        //Locale.setDefault(new Locale("fr"));
+        //Locale.setDefault(new Locale("es"));
+
+        rb = ResourceBundle.getBundle(PATH_RB);
     }
 
     @Override
@@ -32,12 +40,7 @@ public class Main extends Application {
 
     private void initRootLayout() {
         try {
-            //todo Required for A. Log-in Form **Requires import java.util.Locale;
-            //Locale.setDefault(new Locale("fr"));
-            //Locale.setDefault(new Locale("es"));
-
-            ResourceBundle bundle = ResourceBundle.getBundle("main.rb");
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource(FXML_LOGIN), bundle);
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource(FXML_LOGIN), rb);
             AnchorPane rootLayout = loader.load();
             Scene scene = new Scene(rootLayout);
             getPrimaryStage().setScene(scene);
@@ -58,4 +61,5 @@ public class Main extends Application {
     public Stage getPrimaryStage() {
         return primaryStage;
     }
+
 }

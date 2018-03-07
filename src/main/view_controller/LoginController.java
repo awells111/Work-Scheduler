@@ -13,18 +13,27 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import static main.Main.PATH_RB;
 
 public class LoginController {
     public static final String FXML_LOGIN = "view_controller/login.fxml";
+
     @FXML
     private TextField textFieldLoginName;
     @FXML
     private TextField textFieldLoginPassword;
+    @FXML
+    private ResourceBundle rb;
+
     private Main mainApp;
     private DbConnection dbConnection;
 
     public LoginController() {
         dbConnection = new DbConnection();
+        rb = ResourceBundle.getBundle(PATH_RB);
     }
 
     public void setMainApp(Main mainApp) {
@@ -53,9 +62,9 @@ public class LoginController {
 
     void showAlertExample() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Error Signing In");
+        alert.setTitle(rb.getString("error"));
         alert.setHeaderText(null);
-        alert.setContentText("Incorrect username or password");
+        alert.setContentText(rb.getString("username_password_not_match"));
 
         //If ok is pressed, load next scene?
 //        alert.showAndWait().ifPresent((response -> {
