@@ -7,7 +7,7 @@ import static main.model.ConnectedUser.COLUMN_USER_PASSWORD;
 import static main.model.ConnectedUser.COLUMN_USER_USERNAME;
 
 public class TestConnection {
-
+//todo delete in final version
     //userId userName password
     public static void main(String[] argv) throws ClassNotFoundException {
         Connection conn = null;

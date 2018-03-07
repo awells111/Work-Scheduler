@@ -6,14 +6,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import main.Main;
 import main.data.DbConnection;
+import main.log.UserLog;
 import main.model.ConnectedUser;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import static main.Main.PATH_RB;
@@ -40,31 +35,38 @@ public class LoginController {
         this.mainApp = mainApp;
     }
 
-    //todo translate log-in and error control messages into 2 languages.
-
     @FXML
     void handleLogin(ActionEvent event) throws ClassNotFoundException {
+        textFieldLoginName.setText(removeWhiteSpace(textFieldLoginName.getText()));
+        textFieldLoginPassword.setText(removeWhiteSpace(textFieldLoginPassword.getText()));
+
         String user = textFieldLoginName.getText();
         String pass = textFieldLoginPassword.getText();
         int userId = dbConnection.userLogin(user, pass);
 
         boolean loggedIn = userId != DbConnection.USER_NOT_FOUND; //Returns true if our login query returned a user
 
-        if (loggedIn) {
+        if (loggedIn) { //If login was successful
             ConnectedUser connectedUser = new ConnectedUser(userId, user, pass);
 
-            logUser(connectedUser);
+            /*Add the username and login time to our log file*/
+            UserLog userLog = new UserLog(connectedUser);
+            userLog.logUser();
 
-        } else {
-            showAlertExample();
+            mainApp.setConnectedUser(connectedUser);
+
+            mainApp.showOverview(); //Show the overview scene
+        } else { //If login failed
+            showErrorAlert();
         }
     }
 
-    void showAlertExample() {
+    void showErrorAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(rb.getString("error"));
         alert.setHeaderText(null);
         alert.setContentText(rb.getString("username_password_not_match"));
+        alert.showAndWait();
 
         //If ok is pressed, load next scene?
 //        alert.showAndWait().ifPresent((response -> {
@@ -84,30 +86,10 @@ public class LoginController {
 //                }
 //            }
 //        }));
-
-        alert.showAndWait();
     }
 
-    private void logUser(ConnectedUser connectedUser) {
-
-        try {
-
-            //File prints to log.txt at the project directory above the "src" folder
-            String path = "log.txt";
-
-            //By setting this to true, our line will append to the log instead of creating a new one
-            PrintStream fileStream = new PrintStream(new FileOutputStream(path, true));
-
-            //Current timestamp
-            String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-
-            //Print the timestamp and username to the log
-            fileStream.println(timeStamp + " User Logged In: " + connectedUser.getUsername());
-
-        } catch (SecurityException | IOException e) {
-            e.printStackTrace();
-        }
-
+    /*Removes all whitespaces and non-visible characters (e.g., tab, \n)*/
+    public String removeWhiteSpace(String s) {
+        return s.replaceAll("\\s+", "");
     }
-
 }

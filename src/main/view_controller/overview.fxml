@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view_controller.OverviewController">
+   <children>
+      <Button fx:id="calendarButton" layoutX="721.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleShowCalendar" text="View Calendar" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0" />
+   </children>
+</AnchorPane>
