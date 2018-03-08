@@ -3,7 +3,6 @@ package main.view_controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import main.Main;
@@ -13,12 +12,6 @@ import java.sql.SQLException;
 
 public class OverviewController {
     public static final String FXML_OVERVIEW = "view_controller/overview.fxml";
-
-    @FXML
-    private Button calendarButton; //Click this button to show a calendar
-
-    @FXML
-    private Button addCustomerButton; //Click this button to insert a customer
 
     @FXML
     private TableView<Customer> tableViewCustomer;
@@ -96,13 +89,7 @@ public class OverviewController {
     }
 
     void insertCustomer(Customer customer) {
-        int numUpdated = 0;
-
-        try {
-            numUpdated = mainApp.getDbConnection().insertCustomer(customer);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        int numUpdated = mainApp.getDbConnection().insertCustomer(customer);
 
         if (numUpdated > 0) {
             customers.add(customer);
