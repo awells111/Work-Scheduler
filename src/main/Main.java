@@ -1,23 +1,22 @@
 package main;
 
-import com.sun.javafx.scene.control.skin.DatePickerSkin;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.data.DbConnection;
 import main.model.ConnectedUser;
+import main.model.Customer;
 import main.view.CalendarDialog;
 import main.view_controller.LoginController;
 import main.view_controller.OverviewController;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import static main.view_controller.LoginController.FXML_LOGIN;
@@ -31,7 +30,7 @@ public class Main extends Application {
 
     private ResourceBundle rb;
 
-    private ConnectedUser connectedUser;
+    private DbConnection dbConnection;
 
     public Main() {
         //todo Required for A. Log-in Form **Requires import java.util.Locale;
@@ -46,6 +45,7 @@ public class Main extends Application {
         this.window = primaryStage;
         getWindow().setTitle("Work Scheduler");
 
+        dbConnection = new DbConnection();
         showLogin(); //Show login screen on application start
     }
 
@@ -57,12 +57,12 @@ public class Main extends Application {
         return window;
     }
 
-    public ConnectedUser getConnectedUser() {
-        return connectedUser;
+    public DbConnection getDbConnection() {
+        return dbConnection;
     }
 
-    public void setConnectedUser(ConnectedUser connectedUser) {
-        this.connectedUser = connectedUser;
+    public void setDbConnection(DbConnection dbConnection) {
+        this.dbConnection = dbConnection;
     }
 
     /*Sends our application to the login screen*/

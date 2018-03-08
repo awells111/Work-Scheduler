@@ -2,10 +2,6 @@ package main.model;
 
 public class ConnectedUser {
 
-    public static final int COLUMN_USER_ID = 1;
-    public static final int COLUMN_USER_USERNAME = 2;
-    public static final int COLUMN_USER_PASSWORD = 3;
-
     private int id;
     private String username;
     private String password;

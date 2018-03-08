@@ -2,9 +2,9 @@ package main.data;
 
 import java.sql.*;
 
-import static main.model.ConnectedUser.COLUMN_USER_ID;
-import static main.model.ConnectedUser.COLUMN_USER_PASSWORD;
-import static main.model.ConnectedUser.COLUMN_USER_USERNAME;
+import static main.data.SQLStatements.COLUMN_USER_ID;
+import static main.data.SQLStatements.COLUMN_USER_PASSWORD;
+import static main.data.SQLStatements.COLUMN_USER_USERNAME;
 
 public class TestConnection {
 //todo delete in final version
@@ -65,9 +65,5 @@ public class TestConnection {
 //            System.out.print(columnValue + " " + rsmd.getColumnName(i));
 //        }
 //    }
-
-//              Test Usernames  Test Passwords
-//              "test"          "test"
-//              "taskstream"    "100please"
 }
 

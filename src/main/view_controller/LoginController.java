@@ -9,6 +9,7 @@ import main.data.DbConnection;
 import main.log.UserLog;
 import main.model.ConnectedUser;
 
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import static main.Main.PATH_RB;
@@ -24,10 +25,8 @@ public class LoginController {
     private ResourceBundle rb;
 
     private Main mainApp;
-    private DbConnection dbConnection;
 
     public LoginController() {
-        dbConnection = new DbConnection();
         rb = ResourceBundle.getBundle(PATH_RB);
     }
 
@@ -36,15 +35,15 @@ public class LoginController {
     }
 
     @FXML
-    void handleLogin(ActionEvent event) throws ClassNotFoundException {
+    void handleLogin(ActionEvent event) throws SQLException, ClassNotFoundException {
         textFieldLoginName.setText(removeWhiteSpace(textFieldLoginName.getText()));
         textFieldLoginPassword.setText(removeWhiteSpace(textFieldLoginPassword.getText()));
 
         String user = textFieldLoginName.getText();
         String pass = textFieldLoginPassword.getText();
-        int userId = dbConnection.userLogin(user, pass);
+        int userId = mainApp.getDbConnection().userLogin(user, pass);
 
-        boolean loggedIn = userId != DbConnection.USER_NOT_FOUND; //Returns true if our login query returned a user
+        boolean loggedIn = userId != DbConnection.QUERY_ERROR; //Returns true if our login query returned a user
 
         if (loggedIn) { //If login was successful
             ConnectedUser connectedUser = new ConnectedUser(userId, user, pass);
@@ -53,7 +52,7 @@ public class LoginController {
             UserLog userLog = new UserLog(connectedUser);
             userLog.logUser();
 
-            mainApp.setConnectedUser(connectedUser);
+            mainApp.getDbConnection().setConnectedUser(connectedUser);
 
             mainApp.showOverview(); //Show the overview scene
         } else { //If login failed
