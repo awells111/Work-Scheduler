@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view_controller.OverviewController">
    <children>
-      <Button mnemonicParsing="false" onAction="#handleAddCustomer" text="Add Customer" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0" />
+      <Button mnemonicParsing="false" onAction="#handleAddCustomer" text="Add" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0" />
       <Button layoutX="721.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleShowCalendar" text="View Calendar" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0" />
       <TableView fx:id="tableViewCustomer" layoutX="14.0" layoutY="39.0" prefHeight="543.0" prefWidth="776.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="47.0">
         <columns>
@@ -22,5 +22,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
+      <Button layoutX="56.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleModifyCustomer" text="Modify" AnchorPane.leftAnchor="64.0" AnchorPane.topAnchor="8.0" />
+      <Button layoutX="131.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleDeleteCustomer" text="Delete" AnchorPane.leftAnchor="139.0" AnchorPane.topAnchor="8.0" />
    </children>
 </AnchorPane>

@@ -146,28 +146,72 @@ public class DbConnection {
         return QUERY_SUCCESS;
     }
 
-    //    public int insertCustomer(Customer customer) throws SQLException, ClassNotFoundException {
-    //
-    //        Connection conn = getConnection();
-    //
-    //        /*Insert the customer first*/
-    //        PreparedStatement custStmt = conn.prepareStatement(INSERT_CUSTOMER);
-    //        custStmt.setInt(1, customer.getId());
-    //        custStmt.setString(2, customer.getName());
-    //        custStmt.setInt(3, customer.getId());
-    //
-    //        custStmt.executeUpdate();
-    //
-    //
-    //        /*Insert the address*/
-    //        PreparedStatement addrStmt = conn.prepareStatement(INSERT_ADDRESS);
-    ////        addrStmt.setInt(1, customer.getId());
-    //        addrStmt.setInt(1, 1);
-    //        addrStmt.setString(2, customer.getAddress());
-    //        addrStmt.setString(3, customer.getPhone());
-    //
-    //        return addrStmt.executeUpdate();
-    //    }
+    public int updateCustomer(Customer customer) {
+        try (Connection conn = getConnection()) {
+            conn.setAutoCommit(false); //By setting AutoCommit to false, the we can cancel the first statement if the second one fails
+            try {
+                /*Insert the customer first*/
+                PreparedStatement custStmt = conn.prepareStatement(INSERT_CUSTOMER);
+                custStmt.setInt(1, customer.getId());
+                custStmt.setString(2, customer.getName());
+                custStmt.setInt(3, customer.getId());
+
+                custStmt.executeUpdate();
+
+
+                /*Insert the address*/
+                PreparedStatement addrStmt = conn.prepareStatement(INSERT_ADDRESS);
+                addrStmt.setInt(1, customer.getId());
+                addrStmt.setString(2, customer.getAddress());
+                addrStmt.setString(3, customer.getPhone());
+
+                addrStmt.executeUpdate();
+
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                System.out.println("Hiya buddy");
+                throw e;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return QUERY_ERROR;
+        }
+
+        return QUERY_SUCCESS;
+    }
+
+    public int deleteCustomer(Customer customer) {
+        try (Connection conn = getConnection()) {
+            conn.setAutoCommit(false); //By setting AutoCommit to false, the we can cancel the first statement if the second one fails
+            try {
+                /*Insert the customer first*/
+                PreparedStatement custStmt = conn.prepareStatement(DELETE_CUSTOMER);
+                custStmt.setInt(1, customer.getId());
+
+                custStmt.executeUpdate();
+
+
+                /*Insert the address*/
+                PreparedStatement addrStmt = conn.prepareStatement(DELETE_ADDRESS);
+                addrStmt.setInt(1, customer.getId());
+
+                addrStmt.executeUpdate();
+
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                throw e;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return QUERY_ERROR;
+        }
+
+        return QUERY_SUCCESS;
+    }
+
+
 //              Test Usernames  Test Passwords
 //              "test"          "test"
 //              "t"             "t"

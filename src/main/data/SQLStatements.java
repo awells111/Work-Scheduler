@@ -22,6 +22,8 @@ class SQLStatements {
     static final String SELECT_CUSTOMERS = "SELECT * FROM customer";
     static final String INSERT_CUSTOMER = "INSERT INTO `customer`(`customerId`, `customerName`, `addressId`) VALUES (?, ?, ?)";
 
+    static final String DELETE_CUSTOMER = "DELETE FROM customer WHERE customerId = ?";
+
     /*
     Address Table
     */
@@ -32,5 +34,7 @@ class SQLStatements {
     /*Address Table Statements*/
     static final String SELECT_ADDRESSES = "SELECT * FROM address";
     static final String INSERT_ADDRESS = "INSERT INTO `address`(`addressId`, `address`, `phone`) VALUES (?, ?, ?)";
+
+    static final String DELETE_ADDRESS = "DELETE FROM address WHERE addressId = ?";
 
 }

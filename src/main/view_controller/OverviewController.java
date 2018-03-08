@@ -76,7 +76,29 @@ public class OverviewController {
 
     @FXML
     void handleAddCustomer() {
-        insertCustomer(new Customer(nextCustomerId(), "PersonName", "Address", "Phone"));
+        Customer customer = new Customer(nextCustomerId(), "PersonName", "Address", "Phone");
+
+        int numUpdated = mainApp.getDbConnection().insertCustomer(customer);
+
+        if (numUpdated > 0) {
+            customers.add(customer);
+        }
+    }
+
+    @FXML
+    void handleModifyCustomer() {
+        //todo open new window
+    }
+
+    @FXML
+    void handleDeleteCustomer() {
+        Customer selectedCustomer = tableViewCustomer.getSelectionModel().getSelectedItem();
+
+        int numUpdated = mainApp.getDbConnection().deleteCustomer(selectedCustomer);
+
+        if (numUpdated > 0) {
+            customers.remove(selectedCustomer);
+        }
     }
 
     /*Since the database does not use autoincrement, we will take the last customer and increment the id*/
@@ -88,11 +110,4 @@ public class OverviewController {
         return customers.get(customers.size() - 1).getId() + 1;
     }
 
-    void insertCustomer(Customer customer) {
-        int numUpdated = mainApp.getDbConnection().insertCustomer(customer);
-
-        if (numUpdated > 0) {
-            customers.add(customer);
-        }
-    }
 }
