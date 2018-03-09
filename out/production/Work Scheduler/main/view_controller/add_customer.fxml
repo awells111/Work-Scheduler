@@ -9,7 +9,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view_controller.AddCustomerController">
    <children>
-      <GridPane prefHeight="600.0" prefWidth="800.0" styleClass="gridpane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -27,7 +27,7 @@
             <TextField fx:id="textFieldCustomerName" GridPane.columnIndex="1" />
             <TextField fx:id="textFieldCustomerAddress" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="textFieldCustomerPhone" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="hbox" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="SOMETIMES" />
                   <Button mnemonicParsing="false" onAction="#handleCustomerSave" text="Save">

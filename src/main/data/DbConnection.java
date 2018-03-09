@@ -13,10 +13,8 @@ import static main.data.SQLStatements.COLUMN_USER_PASSWORD;
 import static main.data.SQLStatements.COLUMN_USER_USERNAME;
 
 public class DbConnection {
-    //todo use connection pool
-    public static final int QUERY_ERROR = -1;
-    public static final int QUERY_SUCCESS = 1;
 
+    //todo use connection pool
     private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String DB_NAME = "U04TS4";
     private static final String DB_URL = "jdbc:mysql://52.206.157.109/U04TS4";
@@ -25,7 +23,7 @@ public class DbConnection {
 
     private ConnectedUser connectedUser; //Will only be set AFTER userLogin TODO do we even need this
 
-    private Connection getConnection() throws SQLException, ClassNotFoundException {
+    public Connection getConnection() throws SQLException, ClassNotFoundException {
         Connection conn;
 
         Class.forName(DB_DRIVER);
@@ -60,7 +58,7 @@ public class DbConnection {
             }
         }
 
-        return QUERY_ERROR;
+        return DAO.CODE_ERROR;
     }
 
     /*User is set after userLogin*/
@@ -74,7 +72,7 @@ public class DbConnection {
         Connection conn = getConnection();
 
         /*Select all customers*/
-        PreparedStatement custStmt = conn.prepareStatement(SELECT_CUSTOMERS);
+        PreparedStatement custStmt = conn.prepareStatement(CustomerDAO.QUERY_SELECT_CUSTOMERS);
 
         ResultSet custRS = custStmt.executeQuery();
 
@@ -82,8 +80,8 @@ public class DbConnection {
         int arrayListIndex = 0;
 
         while (custRS.next()) { //For each result
-            int rsCustId = custRS.getInt(COLUMN_CUSTOMER_ID);
-            String rsCustName = custRS.getString(COLUMN_CUSTOMER_NAME);
+            int rsCustId = custRS.getInt(CustomerDAO.COLUMN_CUSTOMER_ID);
+            String rsCustName = custRS.getString(CustomerDAO.COLUMN_CUSTOMER_NAME);
 
             hashMap.put(rsCustId, arrayListIndex++);
 
@@ -91,14 +89,14 @@ public class DbConnection {
         }
 
         /*Select all addresses (For the previous customers)*/
-        PreparedStatement addrStmt = conn.prepareStatement(SELECT_ADDRESSES);
+        PreparedStatement addrStmt = conn.prepareStatement(CustomerDAO.QUERY_SELECT_ADDRESSES);
 
         ResultSet addrRS = addrStmt.executeQuery();
 
         while (addrRS.next()) { //For each result
-            int rsAddrId = addrRS.getInt(COLUMN_ADDRESS_ID);
-            String rsAddrName = addrRS.getString(COLUMN_ADDRESS_NAME);
-            String rsAddrPhone = addrRS.getString(COLUMN_ADDRESS_PHONE);
+            int rsAddrId = addrRS.getInt(CustomerDAO.COLUMN_ADDRESS_ID);
+            String rsAddrName = addrRS.getString(CustomerDAO.COLUMN_ADDRESS_NAME);
+            String rsAddrPhone = addrRS.getString(CustomerDAO.COLUMN_ADDRESS_PHONE);
 
             Customer current = customers.get(hashMap.get(rsAddrId));
             current.setAddress(rsAddrName);
@@ -108,111 +106,7 @@ public class DbConnection {
         return customers;
     }
 
-
-
-    //todo on failure reset
-    public int insertCustomer(Customer customer) {
-        try (Connection conn = getConnection()) {
-            conn.setAutoCommit(false); //By setting AutoCommit to false, the we can cancel the first statement if the second one fails
-            try {
-                /*Insert the customer first*/
-                PreparedStatement custStmt = conn.prepareStatement(INSERT_CUSTOMER);
-                custStmt.setInt(1, customer.getId());
-                custStmt.setString(2, customer.getName());
-                custStmt.setInt(3, customer.getId());
-
-                custStmt.executeUpdate();
-
-
-                /*Insert the address*/
-                PreparedStatement addrStmt = conn.prepareStatement(INSERT_ADDRESS);
-                addrStmt.setInt(1, customer.getId());
-                addrStmt.setString(2, customer.getAddress());
-                addrStmt.setString(3, customer.getPhone());
-
-                addrStmt.executeUpdate();
-
-                conn.commit();
-            } catch (SQLException e) {
-                conn.rollback();
-                System.out.println("Hiya buddy");
-                throw e;
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return QUERY_ERROR;
-        }
-
-        return QUERY_SUCCESS;
-    }
-
-    public int updateCustomer(Customer customer) {
-        try (Connection conn = getConnection()) {
-            conn.setAutoCommit(false); //By setting AutoCommit to false, the we can cancel the first statement if the second one fails
-            try {
-                /*Insert the customer first*/
-                PreparedStatement custStmt = conn.prepareStatement(INSERT_CUSTOMER);
-                custStmt.setInt(1, customer.getId());
-                custStmt.setString(2, customer.getName());
-                custStmt.setInt(3, customer.getId());
-
-                custStmt.executeUpdate();
-
-
-                /*Insert the address*/
-                PreparedStatement addrStmt = conn.prepareStatement(INSERT_ADDRESS);
-                addrStmt.setInt(1, customer.getId());
-                addrStmt.setString(2, customer.getAddress());
-                addrStmt.setString(3, customer.getPhone());
-
-                addrStmt.executeUpdate();
-
-                conn.commit();
-            } catch (SQLException e) {
-                conn.rollback();
-                System.out.println("Hiya buddy");
-                throw e;
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return QUERY_ERROR;
-        }
-
-        return QUERY_SUCCESS;
-    }
-
-    public int deleteCustomer(Customer customer) {
-        try (Connection conn = getConnection()) {
-            conn.setAutoCommit(false); //By setting AutoCommit to false, the we can cancel the first statement if the second one fails
-            try {
-                /*Insert the customer first*/
-                PreparedStatement custStmt = conn.prepareStatement(DELETE_CUSTOMER);
-                custStmt.setInt(1, customer.getId());
-
-                custStmt.executeUpdate();
-
-
-                /*Insert the address*/
-                PreparedStatement addrStmt = conn.prepareStatement(DELETE_ADDRESS);
-                addrStmt.setInt(1, customer.getId());
-
-                addrStmt.executeUpdate();
-
-                conn.commit();
-            } catch (SQLException e) {
-                conn.rollback();
-                throw e;
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return QUERY_ERROR;
-        }
-
-        return QUERY_SUCCESS;
-    }
-
-
-//              Test Usernames  Test Passwords
-//              "test"          "test"
-//              "t"             "t"
+    //              Test Usernames  Test Passwords
+    //              "test"          "test"
+    //              "t"             "t"
 }

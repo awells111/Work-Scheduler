@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import main.Main;
-import main.data.DbConnection;
+import main.data.DAO;
 import main.log.UserLog;
 import main.model.ConnectedUser;
 
@@ -43,7 +43,7 @@ public class LoginController {
         String pass = textFieldLoginPassword.getText();
         int userId = mainApp.getDatabase().getDbConnection().userLogin(user, pass);
 
-        boolean loggedIn = userId != DbConnection.QUERY_ERROR; //Returns true if our login query returned a user
+        boolean loggedIn = userId != DAO.CODE_ERROR; //Returns true if our login query returned a user
 
         if (loggedIn) { //If login was successful
             ConnectedUser connectedUser = new ConnectedUser(userId, user, pass);

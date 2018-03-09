@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view_controller.OverviewController">
    <children>
-      <GridPane prefHeight="379.0" prefWidth="560.0" styleClass="gridpane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane prefHeight="379.0" prefWidth="560.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -18,9 +18,9 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <HBox styleClass="hbox" stylesheets="@../view/resources/style.css">
+            <HBox>
                <children>
-                  <Button mnemonicParsing="false" onAction="#handleAddCustomer" stylesheets="@../view/resources/style.css" text="Add" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0">
+                  <Button mnemonicParsing="false" onAction="#handleAddCustomer" text="Add" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin></Button>

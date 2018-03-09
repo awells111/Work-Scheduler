@@ -7,6 +7,8 @@ import main.model.Customer;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static main.data.DAO.CODE_SUCCESS;
+
 public class Database {
 
     public static final int CODE_NEW_CUSTOMER = -1;
@@ -15,8 +17,11 @@ public class Database {
 
     private ObservableList<Customer> customers;
 
+    private CustomerDAO customerDAO;
+
     public Database() {
         dbConnection = new DbConnection();
+        customerDAO = new CustomerDAO(dbConnection);
     }
 
     private void setCustomers(ObservableList<Customer> customers) {
@@ -29,6 +34,10 @@ public class Database {
 
     public DbConnection getDbConnection() {
         return dbConnection;
+    }
+
+    public CustomerDAO getCustomerDAO() {
+        return customerDAO;
     }
 
     /*Since the database does not use autoincrement, we will take the last customer and increment the id*/
@@ -53,9 +62,9 @@ public class Database {
     /*boolean represents an error -- (error = false) if a customer is added, else (error = true)*/
     public boolean addCustomer(Customer newCustomer) {
         boolean error = true;
-        int numUpdated = getDbConnection().insertCustomer(newCustomer);
+        int successCode = customerDAO.insertEntity(newCustomer);
 
-        if (numUpdated > 0) {
+        if (successCode == CODE_SUCCESS) {
             getCustomers().add(newCustomer);
 
             error = false;
@@ -67,9 +76,9 @@ public class Database {
     /*boolean represents an error -- (error = false) if a customer is updated, else (error = true)*/
     public boolean updateCustomer(Customer oldCustomer, Customer updatedCustomer) {
         boolean error = true;
-        int numUpdated = getDbConnection().updateCustomer(updatedCustomer);
+        int successCode = customerDAO.updateEntity(updatedCustomer);
 
-        if (numUpdated > 0) {
+        if (successCode == CODE_SUCCESS) {
             int oldCustomerIndex = getCustomers().indexOf(oldCustomer);
             getCustomers().set(oldCustomerIndex, updatedCustomer);
 
@@ -82,9 +91,9 @@ public class Database {
     /*boolean represents an error -- (error = false) if a customer is deleted, else (error = true)*/
     public boolean deleteCustomer(Customer selectedCustomer) {
         boolean error = true;
-        int numUpdated = getDbConnection().deleteCustomer(selectedCustomer);
+        int successCode = customerDAO.deleteEntity(selectedCustomer);
 
-        if (numUpdated > 0) {
+        if (successCode == CODE_SUCCESS) {
             getCustomers().remove(selectedCustomer);
 
             error = false;
@@ -92,5 +101,4 @@ public class Database {
 
         return error;
     }
-
 }
