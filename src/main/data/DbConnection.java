@@ -66,46 +66,6 @@ public class DbConnection {
         this.connectedUser = connectedUser;
     }
 
-    public ArrayList<Customer> getCustomers() throws SQLException, ClassNotFoundException {
-        ArrayList<Customer> customers = new ArrayList<>();
-
-        Connection conn = getConnection();
-
-        /*Select all customers*/
-        PreparedStatement custStmt = conn.prepareStatement(CustomerDAO.QUERY_SELECT_CUSTOMERS);
-
-        ResultSet custRS = custStmt.executeQuery();
-
-        HashMap<Integer, Integer> hashMap = new HashMap<>(); //Will hold the index of an object in the arraylist
-        int arrayListIndex = 0;
-
-        while (custRS.next()) { //For each result
-            int rsCustId = custRS.getInt(CustomerDAO.COLUMN_CUSTOMER_ID);
-            String rsCustName = custRS.getString(CustomerDAO.COLUMN_CUSTOMER_NAME);
-
-            hashMap.put(rsCustId, arrayListIndex++);
-
-            customers.add(new Customer(rsCustId, rsCustName, "", ""));
-        }
-
-        /*Select all addresses (For the previous customers)*/
-        PreparedStatement addrStmt = conn.prepareStatement(CustomerDAO.QUERY_SELECT_ADDRESSES);
-
-        ResultSet addrRS = addrStmt.executeQuery();
-
-        while (addrRS.next()) { //For each result
-            int rsAddrId = addrRS.getInt(CustomerDAO.COLUMN_ADDRESS_ID);
-            String rsAddrName = addrRS.getString(CustomerDAO.COLUMN_ADDRESS_NAME);
-            String rsAddrPhone = addrRS.getString(CustomerDAO.COLUMN_ADDRESS_PHONE);
-
-            Customer current = customers.get(hashMap.get(rsAddrId));
-            current.setAddress(rsAddrName);
-            current.setPhone(rsAddrPhone);
-        }
-
-        return customers;
-    }
-
     //              Test Usernames  Test Passwords
     //              "test"          "test"
     //              "t"             "t"

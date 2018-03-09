@@ -61,7 +61,6 @@ public class AddCustomerController {
 
     @FXML
     void handleCustomerCancel() {
-        System.out.println(isNewCustomer());
         dialogStage.close();
     }
 

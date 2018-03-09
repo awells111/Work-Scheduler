@@ -2,7 +2,10 @@ package main.data;
 
 import main.model.Customer;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CustomerDAO extends DAO {
 
@@ -59,13 +62,23 @@ public class CustomerDAO extends DAO {
         }
     }
 
+    private ResultSet[] getResultSets(String[][] statements) {
+        try {
+            return super.getResultSets(getDbConnection().getConnection(), statements);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return new ResultSet[0];
+    }
+
     /**
      * Insert a {@link Customer} into the database
      *
      * @param newCustomer The {@link Customer} that will be inserted into the database
      * @return {@value CODE_SUCCESS} if successful, else {@value CODE_ERROR}
      */
-    public int insertEntity(Customer newCustomer) {
+    int insertEntity(Customer newCustomer) {
         String id = Integer.toString(newCustomer.getId()); //The same ID is used for both Address and Customer
 
         /*Build the statements required to insert a customer*/
@@ -97,7 +110,7 @@ public class CustomerDAO extends DAO {
      * @param updatedCustomer The {@link Customer} that will be updated in the database
      * @return {@value CODE_SUCCESS} if successful, else {@value CODE_ERROR}
      */
-    public int updateEntity(Customer updatedCustomer) {
+    int updateEntity(Customer updatedCustomer) {
         String id = Integer.toString(updatedCustomer.getId()); //The same ID is used for both Address and Customer
 
         /*Build the statements required to delete a customer*/
@@ -128,7 +141,7 @@ public class CustomerDAO extends DAO {
      * @param selectedCustomer The {@link Customer} that will be deleted in the database
      * @return {@value CODE_SUCCESS} if successful, else {@value CODE_ERROR}
      */
-    public int deleteEntity(Customer selectedCustomer) {
+    int deleteEntity(Customer selectedCustomer) {
         String id = Integer.toString(selectedCustomer.getId()); //The same ID is used for both Address and Customer
 
         /*Build the statements required to delete a customer*/
@@ -148,5 +161,55 @@ public class CustomerDAO extends DAO {
 
         /*Execute the required statements*/
         return update(statements);
+    }
+
+    ArrayList<Customer> getCustomers() {
+        ArrayList<Customer> customers = new ArrayList<>();
+
+        String[][] queries = emptyEntity(CUSTOMER_TABLES.length);
+
+        queries[0] = new String[]{
+                QUERY_SELECT_CUSTOMERS
+        };
+
+        queries[1] = new String[]{
+                QUERY_SELECT_ADDRESSES
+        };
+
+        ResultSet[] resultSets = getResultSets(queries);
+
+        try {
+            HashMap<Integer, Integer> hashMap = new HashMap<>(); //Will hold the index of an object in the arraylist
+            int arrayListIndex = 0;
+
+            ResultSet custRS = resultSets[0];
+
+            while (custRS.next()) { //For each result
+                int rsCustId = custRS.getInt(CustomerDAO.COLUMN_CUSTOMER_ID);
+                String rsCustName = custRS.getString(CustomerDAO.COLUMN_CUSTOMER_NAME);
+
+                hashMap.put(rsCustId, arrayListIndex++);
+
+                customers.add(new Customer(rsCustId, rsCustName, "", ""));
+            }
+
+
+            ResultSet addrRS = resultSets[1];
+
+            while (addrRS.next()) { //For each result
+                int rsAddrId = addrRS.getInt(CustomerDAO.COLUMN_ADDRESS_ID);
+                String rsAddrName = addrRS.getString(CustomerDAO.COLUMN_ADDRESS_NAME);
+                String rsAddrPhone = addrRS.getString(CustomerDAO.COLUMN_ADDRESS_PHONE);
+
+                Customer current = customers.get(hashMap.get(rsAddrId));
+                current.setAddress(rsAddrName);
+                current.setPhone(rsAddrPhone);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return customers;
     }
 }

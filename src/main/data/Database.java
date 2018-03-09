@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import main.model.Customer;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import static main.data.DAO.CODE_SUCCESS;
@@ -51,18 +50,14 @@ public class Database {
 
     public void setCustomersFromDatabase() {
         /*Select all customers from the database*/
-        try {
-            ArrayList<Customer> customers = getDbConnection().getCustomers();
-            setCustomers(FXCollections.observableList(customers));
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        ArrayList<Customer> customers = getCustomerDAO().getCustomers();
+        setCustomers(FXCollections.observableList(customers));
     }
 
     /*boolean represents an error -- (error = false) if a customer is added, else (error = true)*/
     public boolean addCustomer(Customer newCustomer) {
         boolean error = true;
-        int successCode = customerDAO.insertEntity(newCustomer);
+        int successCode = getCustomerDAO().insertEntity(newCustomer);
 
         if (successCode == CODE_SUCCESS) {
             getCustomers().add(newCustomer);
@@ -76,7 +71,7 @@ public class Database {
     /*boolean represents an error -- (error = false) if a customer is updated, else (error = true)*/
     public boolean updateCustomer(Customer oldCustomer, Customer updatedCustomer) {
         boolean error = true;
-        int successCode = customerDAO.updateEntity(updatedCustomer);
+        int successCode = getCustomerDAO().updateEntity(updatedCustomer);
 
         if (successCode == CODE_SUCCESS) {
             int oldCustomerIndex = getCustomers().indexOf(oldCustomer);
@@ -91,7 +86,7 @@ public class Database {
     /*boolean represents an error -- (error = false) if a customer is deleted, else (error = true)*/
     public boolean deleteCustomer(Customer selectedCustomer) {
         boolean error = true;
-        int successCode = customerDAO.deleteEntity(selectedCustomer);
+        int successCode = getCustomerDAO().deleteEntity(selectedCustomer);
 
         if (successCode == CODE_SUCCESS) {
             getCustomers().remove(selectedCustomer);
