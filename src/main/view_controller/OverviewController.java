@@ -64,12 +64,12 @@ public class OverviewController {
     void handleAddCustomer() {
         Customer newCustomer = new Customer(Database.CODE_NEW_CUSTOMER, "", "", "");
 
-        mainApp.showAddCustomer(mainApp.getDatabase().getDbConnection(), newCustomer);
+        mainApp.showAddCustomer(newCustomer);
     }
 
     @FXML
     void handleModifyCustomer() {
-        mainApp.showAddCustomer(mainApp.getDatabase().getDbConnection(), tableViewCustomer.getSelectionModel().getSelectedItem());
+        mainApp.showAddCustomer(tableViewCustomer.getSelectionModel().getSelectedItem());
     }
 
     @FXML

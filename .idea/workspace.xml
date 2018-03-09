@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/main/Main.java" line="39" mnemonic="A" />
+    <bookmark url="file://$PROJECT_DIR$/src/main/Main.java" line="40" mnemonic="A" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="" />
@@ -65,7 +65,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/data/DbConnection.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="408">
-              <caret line="70" column="32" lean-forward="true" selection-start-line="70" selection-start-column="32" selection-end-line="70" selection-end-column="32" />
+              <caret line="70" column="32" lean-forward="false" selection-start-line="70" selection-start-column="32" selection-end-line="70" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#getConnection#0;class#DbConnection#0" expanded="false" />
@@ -87,18 +87,70 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AddCustomerController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AddCustomerController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/view_controller/AddCustomerController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
-              <caret line="24" column="30" lean-forward="true" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
+            <state relative-caret-position="504">
+              <caret line="24" column="30" lean-forward="false" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#setCustomers#0;class#AddCustomerController#0" expanded="false" />
-                <element signature="e#1950#1951#0" expanded="true" />
-                <element signature="e#2010#2011#0" expanded="true" />
-                <element signature="e#2119#2120#0" expanded="true" />
-                <element signature="e#2164#2165#0" expanded="true" />
+                <element signature="method#setCustomer#0;class#AddCustomerController#0" expanded="false" />
+                <element signature="e#1949#1950#0" expanded="true" />
+                <element signature="e#2009#2010#0" expanded="true" />
+                <element signature="e#2118#2119#0" expanded="true" />
+                <element signature="e#2163#2164#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/view/resources/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="147">
+              <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1251">
+              <caret line="42" column="34" lean-forward="false" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+              <folding>
+                <element signature="method#showCalendar#0;class#Main#0" expanded="false" />
+                <element signature="e#3964#3965#0" expanded="true" />
+                <element signature="e#3989#3990#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OverviewController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/view_controller/OverviewController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="66" column="16" lean-forward="false" selection-start-line="66" selection-start-column="16" selection-end-line="66" selection-end-column="16" />
+              <folding>
+                <element signature="method#initialize#0;class#OverviewController#0" expanded="false" />
+                <marker date="1520562804253" expanded="false" signature="1417:1496" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoginController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/view_controller/LoginController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#672#673#0" expanded="true" />
+                <element signature="e#726#727#0" expanded="true" />
+                <element signature="e#2192#2228#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -217,12 +269,14 @@
         <option value="$PROJECT_DIR$/src/main/data/DbConnection.java" />
         <option value="$PROJECT_DIR$/src/main/model/Customers.java" />
         <option value="$PROJECT_DIR$/src/main/data/Customers.java" />
-        <option value="$PROJECT_DIR$/src/main/view_controller/LoginController.java" />
-        <option value="$PROJECT_DIR$/src/main/Main.java" />
         <option value="$PROJECT_DIR$/src/main/view_controller/OverviewController.java" />
         <option value="$PROJECT_DIR$/src/main/data/Database.java" />
         <option value="$PROJECT_DIR$/src/main/model/Customer.java" />
         <option value="$PROJECT_DIR$/src/main/view_controller/AddCustomerController.java" />
+        <option value="$PROJECT_DIR$/src/main/view/StyledScene.java" />
+        <option value="$PROJECT_DIR$/src/main/view_controller/LoginController.java" />
+        <option value="$PROJECT_DIR$/src/main/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/view/resources/style.css" />
       </list>
     </option>
   </component>
@@ -317,6 +371,13 @@
               <item name="Work-Scheduler" type="58d84e3e:PackageViewProjectNode" />
               <item name="Work Scheduler" type="616d4139:PackageViewModuleNode" />
               <item name="main" type="1f31426a:PackageElementNode" />
+              <item name="view" type="1f31426a:PackageElementNode" />
+              <item name="resources" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="Work-Scheduler" type="58d84e3e:PackageViewProjectNode" />
+              <item name="Work Scheduler" type="616d4139:PackageViewModuleNode" />
+              <item name="main" type="1f31426a:PackageElementNode" />
               <item name="view_controller" type="1f31426a:PackageElementNode" />
             </path>
           </expand>
@@ -396,12 +457,17 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="main.Main" />
+      <recent name="main.view.StyledScene" />
+      <recent name="main.view.resources" />
       <recent name="main.data.Queries" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="main" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Gerald\Documents\GitHub\Work-Scheduler\src\main\view\resources" />
+      <recent name="C:\Users\Gerald\Documents\GitHub\Work-Scheduler\src\main\view" />
       <recent name="C:\Users\Gerald\Documents\GitHub\Work-Scheduler\src\main\resources" />
       <recent name="C:\Users\Gerald\Documents\GitHub\Work-Scheduler\src\main" />
       <recent name="C:\Users\Owner\IdeaProjects\Work Scheduler\src\main\view_controller" />
@@ -645,39 +711,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/view_controller/LoginController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="28" column="27" lean-forward="false" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#681#682#0" expanded="false" />
-            <element signature="e#735#736#0" expanded="false" />
-            <element signature="e#779#780#0" expanded="false" />
-            <element signature="e#817#818#0" expanded="false" />
-            <element signature="e#2201#2237#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/model/ConnectedUser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="6" column="52" lean-forward="false" selection-start-line="6" selection-start-column="52" selection-end-line="6" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/view_controller/login.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/data/TestConnection.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="567">
@@ -691,9 +724,9 @@
         <state relative-caret-position="798">
           <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
           <folding>
-            <element signature="e#1062#1063#0" expanded="true" />
-            <element signature="e#1093#1094#0" expanded="true" />
-            <element signature="method#showAddCustomer#0;class#Main#0" expanded="false" />
+            <element signature="method#showCalendar#0;class#Main#0" expanded="false" />
+            <element signature="e#3964#3965#0" expanded="true" />
+            <element signature="e#3989#3990#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -703,12 +736,12 @@
         <state relative-caret-position="462">
           <caret line="28" column="27" lean-forward="false" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#681#682#0" expanded="false" />
-            <element signature="e#735#736#0" expanded="false" />
-            <element signature="e#779#780#0" expanded="false" />
-            <element signature="e#817#818#0" expanded="false" />
-            <element signature="e#2201#2237#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#672#673#0" expanded="true" />
+            <element signature="e#726#727#0" expanded="true" />
+            <element signature="e#770#771#0" expanded="false" />
+            <element signature="e#808#809#0" expanded="false" />
+            <element signature="e#2192#2228#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -737,9 +770,9 @@
         <state relative-caret-position="798">
           <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
           <folding>
-            <element signature="e#1062#1063#0" expanded="true" />
-            <element signature="e#1093#1094#0" expanded="true" />
-            <element signature="method#showAddCustomer#0;class#Main#0" expanded="false" />
+            <element signature="method#showCalendar#0;class#Main#0" expanded="false" />
+            <element signature="e#3964#3965#0" expanded="true" />
+            <element signature="e#3989#3990#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -749,12 +782,12 @@
         <state relative-caret-position="588">
           <caret line="28" column="27" lean-forward="false" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#681#682#0" expanded="false" />
-            <element signature="e#735#736#0" expanded="false" />
-            <element signature="e#779#780#0" expanded="false" />
-            <element signature="e#817#818#0" expanded="false" />
-            <element signature="e#2201#2237#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#672#673#0" expanded="true" />
+            <element signature="e#726#727#0" expanded="true" />
+            <element signature="e#770#771#0" expanded="false" />
+            <element signature="e#808#809#0" expanded="false" />
+            <element signature="e#2192#2228#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -783,9 +816,9 @@
         <state relative-caret-position="798">
           <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
           <folding>
-            <element signature="e#1062#1063#0" expanded="true" />
-            <element signature="e#1093#1094#0" expanded="true" />
-            <element signature="method#showAddCustomer#0;class#Main#0" expanded="false" />
+            <element signature="method#showCalendar#0;class#Main#0" expanded="false" />
+            <element signature="e#3964#3965#0" expanded="true" />
+            <element signature="e#3989#3990#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -806,12 +839,12 @@
         <state relative-caret-position="462">
           <caret line="36" column="27" lean-forward="false" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#681#682#0" expanded="false" />
-            <element signature="e#735#736#0" expanded="false" />
-            <element signature="e#779#780#0" expanded="false" />
-            <element signature="e#817#818#0" expanded="false" />
-            <element signature="e#2201#2237#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#672#673#0" expanded="true" />
+            <element signature="e#726#727#0" expanded="true" />
+            <element signature="e#770#771#0" expanded="false" />
+            <element signature="e#808#809#0" expanded="false" />
+            <element signature="e#2192#2228#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -821,9 +854,9 @@
         <state relative-caret-position="798">
           <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
           <folding>
-            <element signature="e#1062#1063#0" expanded="true" />
-            <element signature="e#1093#1094#0" expanded="true" />
-            <element signature="method#showAddCustomer#0;class#Main#0" expanded="false" />
+            <element signature="method#showCalendar#0;class#Main#0" expanded="false" />
+            <element signature="e#3964#3965#0" expanded="true" />
+            <element signature="e#3989#3990#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -844,12 +877,12 @@
         <state relative-caret-position="462">
           <caret line="36" column="27" lean-forward="false" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#681#682#0" expanded="false" />
-            <element signature="e#735#736#0" expanded="false" />
-            <element signature="e#779#780#0" expanded="false" />
-            <element signature="e#817#818#0" expanded="false" />
-            <element signature="e#2201#2237#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#672#673#0" expanded="true" />
+            <element signature="e#726#727#0" expanded="true" />
+            <element signature="e#770#771#0" expanded="false" />
+            <element signature="e#808#809#0" expanded="false" />
+            <element signature="e#2192#2228#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -859,9 +892,9 @@
         <state relative-caret-position="798">
           <caret line="50" column="0" lean-forward="true" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
           <folding>
-            <element signature="e#1062#1063#0" expanded="true" />
-            <element signature="e#1093#1094#0" expanded="true" />
-            <element signature="method#showAddCustomer#0;class#Main#0" expanded="false" />
+            <element signature="method#showCalendar#0;class#Main#0" expanded="false" />
+            <element signature="e#3964#3965#0" expanded="true" />
+            <element signature="e#3989#3990#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -882,12 +915,12 @@
         <state relative-caret-position="378">
           <caret line="22" column="9" lean-forward="true" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="9" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#681#682#0" expanded="false" />
-            <element signature="e#735#736#0" expanded="false" />
-            <element signature="e#779#780#0" expanded="false" />
-            <element signature="e#817#818#0" expanded="false" />
-            <element signature="e#2201#2237#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#672#673#0" expanded="true" />
+            <element signature="e#726#727#0" expanded="true" />
+            <element signature="e#770#771#0" expanded="false" />
+            <element signature="e#808#809#0" expanded="false" />
+            <element signature="e#2192#2228#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -897,9 +930,9 @@
         <state relative-caret-position="68">
           <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding>
-            <element signature="e#1062#1063#0" expanded="true" />
-            <element signature="e#1093#1094#0" expanded="true" />
-            <element signature="method#showAddCustomer#0;class#Main#0" expanded="false" />
+            <element signature="method#showCalendar#0;class#Main#0" expanded="false" />
+            <element signature="e#3964#3965#0" expanded="true" />
+            <element signature="e#3989#3990#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -920,12 +953,12 @@
         <state relative-caret-position="68">
           <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#681#682#0" expanded="false" />
-            <element signature="e#735#736#0" expanded="false" />
-            <element signature="e#779#780#0" expanded="false" />
-            <element signature="e#817#818#0" expanded="false" />
-            <element signature="e#2201#2237#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#672#673#0" expanded="true" />
+            <element signature="e#726#727#0" expanded="true" />
+            <element signature="e#770#771#0" expanded="false" />
+            <element signature="e#808#809#0" expanded="false" />
+            <element signature="e#2192#2228#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -935,9 +968,9 @@
         <state relative-caret-position="68">
           <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding>
-            <element signature="e#1062#1063#0" expanded="true" />
-            <element signature="e#1093#1094#0" expanded="true" />
-            <element signature="method#showAddCustomer#0;class#Main#0" expanded="false" />
+            <element signature="method#showCalendar#0;class#Main#0" expanded="false" />
+            <element signature="e#3964#3965#0" expanded="true" />
+            <element signature="e#3989#3990#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -958,12 +991,12 @@
         <state relative-caret-position="68">
           <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#681#682#0" expanded="false" />
-            <element signature="e#735#736#0" expanded="false" />
-            <element signature="e#779#780#0" expanded="false" />
-            <element signature="e#817#818#0" expanded="false" />
-            <element signature="e#2201#2237#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#672#673#0" expanded="true" />
+            <element signature="e#726#727#0" expanded="true" />
+            <element signature="e#770#771#0" expanded="false" />
+            <element signature="e#808#809#0" expanded="false" />
+            <element signature="e#2192#2228#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1076,36 +1109,16 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/view/CalendarDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="30" selection-end-column="34" />
-          <folding>
-            <element signature="method#CalendarDialog#0;class#CalendarDialog#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/data/DbConnection.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
-          <caret line="70" column="32" lean-forward="true" selection-start-line="70" selection-start-column="32" selection-end-line="70" selection-end-column="32" />
+          <caret line="70" column="32" lean-forward="false" selection-start-line="70" selection-start-column="32" selection-end-line="70" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#getConnection#0;class#DbConnection#0" expanded="false" />
             <element signature="method#userLogin#0;class#DbConnection#0" expanded="false" />
             <element signature="method#getCustomers#0;class#DbConnection#0" expanded="false" />
             <element signature="method#deleteCustomer#0;class#DbConnection#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/view_controller/LoginController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-12">
-          <caret line="54" column="27" lean-forward="false" selection-start-line="54" selection-start-column="27" selection-end-line="54" selection-end-column="27" />
-          <folding>
-            <element signature="e#2201#2237#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1165,30 +1178,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/view_controller/OverviewController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="71" column="92" lean-forward="true" selection-start-line="71" selection-start-column="92" selection-end-line="71" selection-end-column="92" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#initialize#0;class#OverviewController#0" expanded="false" />
-            <marker date="1520558903528" expanded="false" signature="1417:1496" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1638">
-          <caret line="102" column="78" lean-forward="false" selection-start-line="102" selection-start-column="78" selection-end-line="102" selection-end-column="78" />
-          <folding>
-            <element signature="e#1062#1063#0" expanded="true" />
-            <element signature="e#1093#1094#0" expanded="true" />
-            <element signature="method#showAddCustomer#0;class#Main#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/data/SQLStatements.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="483">
@@ -1197,18 +1186,92 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/style_sheet">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/view_controller/AddCustomerController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="24" column="30" lean-forward="true" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
+        <state relative-caret-position="504">
+          <caret line="24" column="30" lean-forward="false" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#setCustomers#0;class#AddCustomerController#0" expanded="false" />
-            <element signature="e#1950#1951#0" expanded="true" />
-            <element signature="e#2010#2011#0" expanded="true" />
-            <element signature="e#2119#2120#0" expanded="true" />
-            <element signature="e#2164#2165#0" expanded="true" />
+            <element signature="method#setCustomer#0;class#AddCustomerController#0" expanded="false" />
+            <element signature="e#1949#1950#0" expanded="true" />
+            <element signature="e#2009#2010#0" expanded="true" />
+            <element signature="e#2118#2119#0" expanded="true" />
+            <element signature="e#2163#2164#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/view/StyledScene.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="11" column="66" lean-forward="false" selection-start-line="11" selection-start-column="66" selection-end-line="11" selection-end-column="66" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#802#803#0" expanded="true" />
+            <element signature="e#831#832#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/view_controller/OverviewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="66" column="16" lean-forward="false" selection-start-line="66" selection-start-column="16" selection-end-line="66" selection-end-column="16" />
+          <folding>
+            <element signature="method#initialize#0;class#OverviewController#0" expanded="false" />
+            <marker date="1520562804253" expanded="false" signature="1417:1496" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/view/CalendarDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="31" column="5" lean-forward="true" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+          <folding>
+            <element signature="method#CalendarDialog#0;class#CalendarDialog#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/view_controller/LoginController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#672#673#0" expanded="true" />
+            <element signature="e#726#727#0" expanded="true" />
+            <element signature="e#2192#2228#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1251">
+          <caret line="42" column="34" lean-forward="false" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+          <folding>
+            <element signature="method#showCalendar#0;class#Main#0" expanded="false" />
+            <element signature="e#3964#3965#0" expanded="true" />
+            <element signature="e#3989#3990#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/view/resources/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>

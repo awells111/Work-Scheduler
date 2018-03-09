@@ -21,7 +21,7 @@ public class LoginController {
     private TextField textFieldLoginName;
     @FXML
     private TextField textFieldLoginPassword;
-    @FXML
+
     private ResourceBundle rb;
 
     private Main mainApp;

@@ -1,0 +1,8 @@
+.hbox {
+    -fx-spacing: 8;
+}
+
+.gridpane {
+    -fx-vgap: 8;
+    -fx-hgap: 8;
+}

@@ -8,14 +8,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.data.Database;
-import main.data.DbConnection;
 import main.model.Customer;
 import main.view.CalendarDialog;
+import main.view.StyledScene;
 import main.view_controller.AddCustomerController;
 import main.view_controller.LoginController;
 import main.view_controller.OverviewController;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import static main.view_controller.AddCustomerController.FXML_ADD_CUSTOMER;
@@ -38,8 +39,8 @@ public class Main extends Application {
 
     public Main() {
         //todo Required for A. Log-in Form **Requires import java.util.Locale;
-        //Locale.setDefault(new Locale("fr"));
-        //Locale.setDefault(new Locale("es"));
+//        Locale.setDefault(new Locale("fr"));
+//        Locale.setDefault(new Locale("es"));
 
         rb = ResourceBundle.getBundle(PATH_RB);
     }
@@ -64,12 +65,11 @@ public class Main extends Application {
     /*Sends our application to the login screen*/
     public void showLogin() {
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource(FXML_LOGIN), rb);
-            AnchorPane rootLayout = loader.load();
-            Scene scene = new Scene(rootLayout);
+            StyledScene styledScene = new StyledScene(this, FXML_LOGIN);
+            Scene scene = styledScene.create();
             getWindow().setScene(scene);
             getWindow().show();
-            LoginController controller = loader.getController();
+            LoginController controller = styledScene.getLoader().getController();
             controller.setMainApp(this);
 
         } catch (IOException e) {
@@ -80,12 +80,11 @@ public class Main extends Application {
     /*Sends our application to the overview screen*/
     public void showOverview() {
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource(FXML_OVERVIEW));
-            AnchorPane rootLayout = loader.load();
-            Scene scene = new Scene(rootLayout);
+            StyledScene styledScene = new StyledScene(this, FXML_OVERVIEW);
+            Scene scene = styledScene.create();
             getWindow().setScene(scene);
             getWindow().show();
-            OverviewController controller = loader.getController();
+            OverviewController controller = styledScene.getLoader().getController();
             controller.setMainApp(this);
 
         } catch (IOException e) {
@@ -100,24 +99,22 @@ public class Main extends Application {
         calendarDialog.showDialog(getWindow());
     }
 
-    public void showAddCustomer(DbConnection dbConnection, Customer customer) {
+    public void showAddCustomer(Customer customer) {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource(FXML_ADD_CUSTOMER));
-            AnchorPane root = loader.load();
+            StyledScene styledScene = new StyledScene(this, FXML_ADD_CUSTOMER);
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Add Customer");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(getWindow());
-            Scene scene = new Scene(root);
+            Scene scene = styledScene.create();
             dialogStage.setScene(scene);
 
             // Set the customer into the controller.
-            AddCustomerController controller = loader.getController();
+            AddCustomerController controller = styledScene.getLoader().getController();
             controller.setDialogStage(dialogStage);
-            controller.setCustomers(database, customer);
+            controller.setCustomer(database, customer);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
@@ -125,5 +122,9 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public ResourceBundle getRb() {
+        return rb;
     }
 }

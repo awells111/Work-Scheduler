@@ -28,7 +28,7 @@ public class AddCustomerController {
         this.dialogStage = dialogStage;
     }
 
-    public void setCustomers(Database database, Customer customer) {
+    public void setCustomer(Database database, Customer customer) {
         this.database = database;
         this.customer = customer;
 
