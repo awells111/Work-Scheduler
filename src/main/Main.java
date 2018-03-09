@@ -1,24 +1,24 @@
 package main;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.data.Database;
 import main.data.DbConnection;
-import main.model.ConnectedUser;
 import main.model.Customer;
 import main.view.CalendarDialog;
+import main.view_controller.AddCustomerController;
 import main.view_controller.LoginController;
 import main.view_controller.OverviewController;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
+import static main.view_controller.AddCustomerController.FXML_ADD_CUSTOMER;
 import static main.view_controller.LoginController.FXML_LOGIN;
 import static main.view_controller.OverviewController.FXML_OVERVIEW;
 
@@ -30,7 +30,11 @@ public class Main extends Application {
 
     private ResourceBundle rb;
 
-    private DbConnection dbConnection;
+    public Database getDatabase() {
+        return database;
+    }
+
+    private Database database;
 
     public Main() {
         //todo Required for A. Log-in Form **Requires import java.util.Locale;
@@ -45,7 +49,7 @@ public class Main extends Application {
         this.window = primaryStage;
         getWindow().setTitle("Work Scheduler");
 
-        dbConnection = new DbConnection();
+        database = new Database();
         showLogin(); //Show login screen on application start
     }
 
@@ -55,14 +59,6 @@ public class Main extends Application {
 
     public Stage getWindow() {
         return window;
-    }
-
-    public DbConnection getDbConnection() {
-        return dbConnection;
-    }
-
-    public void setDbConnection(DbConnection dbConnection) {
-        this.dbConnection = dbConnection;
     }
 
     /*Sends our application to the login screen*/
@@ -104,4 +100,30 @@ public class Main extends Application {
         calendarDialog.showDialog(getWindow());
     }
 
+    public void showAddCustomer(DbConnection dbConnection, Customer customer) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource(FXML_ADD_CUSTOMER));
+            AnchorPane root = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Add Customer");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(getWindow());
+            Scene scene = new Scene(root);
+            dialogStage.setScene(scene);
+
+            // Set the customer into the controller.
+            AddCustomerController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setCustomers(database, customer);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

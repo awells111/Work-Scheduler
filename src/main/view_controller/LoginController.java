@@ -41,7 +41,7 @@ public class LoginController {
 
         String user = textFieldLoginName.getText();
         String pass = textFieldLoginPassword.getText();
-        int userId = mainApp.getDbConnection().userLogin(user, pass);
+        int userId = mainApp.getDatabase().getDbConnection().userLogin(user, pass);
 
         boolean loggedIn = userId != DbConnection.QUERY_ERROR; //Returns true if our login query returned a user
 
@@ -52,7 +52,7 @@ public class LoginController {
             UserLog userLog = new UserLog(connectedUser);
             userLog.logUser();
 
-            mainApp.getDbConnection().setConnectedUser(connectedUser);
+            mainApp.getDatabase().getDbConnection().setConnectedUser(connectedUser);
 
             mainApp.showOverview(); //Show the overview scene
         } else { //If login failed

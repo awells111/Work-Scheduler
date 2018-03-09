@@ -12,10 +12,6 @@ public class Customer {
     private StringProperty address;
     private StringProperty phone;
 
-    public Customer(String name, String address, String phone) {
-        this(Integer.MIN_VALUE, name, address, phone);
-    }
-
     public Customer(int id, String name, String address, String phone) {
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);

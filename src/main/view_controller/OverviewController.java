@@ -1,14 +1,11 @@
 package main.view_controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import main.Main;
 import main.model.Customer;
-
-import java.sql.SQLException;
+import main.data.Database;
 
 public class OverviewController {
     public static final String FXML_OVERVIEW = "view_controller/overview.fxml";
@@ -27,8 +24,6 @@ public class OverviewController {
 
     @FXML
     private TableColumn<Customer, String> columnPhone;
-
-    private ObservableList<Customer> customers;
 
     private Main mainApp;
 
@@ -50,23 +45,14 @@ public class OverviewController {
         columnPhone.setCellValueFactory(
                 cellData -> cellData.getValue().phoneProperty()
         );
-
-        customers = FXCollections.observableArrayList();
-
-
     }
 
     public void setMainApp(Main mainApp) {
         this.mainApp = mainApp;
 
-        /*Select all customers from the database*/
-        try {
-            customers = FXCollections.observableList(mainApp.getDbConnection().getCustomers());
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        mainApp.getDatabase().setCustomersFromDatabase();
 
-        tableViewCustomer.setItems(customers);
+        tableViewCustomer.setItems(mainApp.getDatabase().getCustomers());
     }
 
     @FXML
@@ -76,38 +62,19 @@ public class OverviewController {
 
     @FXML
     void handleAddCustomer() {
-        Customer customer = new Customer(nextCustomerId(), "PersonName", "Address", "Phone");
+        Customer newCustomer = new Customer(Database.CODE_NEW_CUSTOMER, "", "", "");
 
-        int numUpdated = mainApp.getDbConnection().insertCustomer(customer);
-
-        if (numUpdated > 0) {
-            customers.add(customer);
-        }
+        mainApp.showAddCustomer(mainApp.getDatabase().getDbConnection(), newCustomer);
     }
 
     @FXML
     void handleModifyCustomer() {
-        //todo open new window
+        mainApp.showAddCustomer(mainApp.getDatabase().getDbConnection(), tableViewCustomer.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     void handleDeleteCustomer() {
         Customer selectedCustomer = tableViewCustomer.getSelectionModel().getSelectedItem();
-
-        int numUpdated = mainApp.getDbConnection().deleteCustomer(selectedCustomer);
-
-        if (numUpdated > 0) {
-            customers.remove(selectedCustomer);
-        }
+        mainApp.getDatabase().deleteCustomer(selectedCustomer);
     }
-
-    /*Since the database does not use autoincrement, we will take the last customer and increment the id*/
-    private int nextCustomerId() {
-        if (customers.size() == 0) { //If no customers exist
-            return 1;
-        }
-
-        return customers.get(customers.size() - 1).getId() + 1;
-    }
-
 }
