@@ -59,8 +59,8 @@ public class AppointmentDAO extends DAO{
             COLUMN_APPOINTMENT_ID + ", " +
             COLUMN_CUSTOMER_ID + ", " +
             COLUMN_APPOINTMENT_TYPE + ", " +
-            "DATE_FORMAT(" + COLUMN_APPOINTMENT_START + ", " + MYSQL_DATETIME_FORMAT + "), " +
-            "DATE_FORMAT(" + COLUMN_APPOINTMENT_END + ", " + MYSQL_DATETIME_FORMAT + ") VALUES (?, ?, ?, ?, ?)";
+            COLUMN_APPOINTMENT_START + ", " +
+            COLUMN_APPOINTMENT_END + ") VALUES (?, ?, ?, ?, ?)";
 
     /**
      * Insert an {@link Appointment} into the database

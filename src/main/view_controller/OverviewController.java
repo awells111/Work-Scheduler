@@ -1,8 +1,11 @@
 package main.view_controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -11,10 +14,27 @@ import main.data.Database;
 import main.model.Appointment;
 import main.model.Customer;
 
+import java.util.function.Predicate;
+
 public class OverviewController {
     public static final String FXML_OVERVIEW = "view_controller/overview.fxml";
 
     //todo myTableView.setPlaceholder(new Label("My table is empty message"));
+
+    @FXML
+    private Button modifyCustomerButton;
+
+    @FXML
+    private Button deleteCustomerButton;
+
+    @FXML
+    private Button addAppointmentButton;
+
+    @FXML
+    private Button modifyAppointmentButton;
+
+    @FXML
+    private Button deleteAppointmentButton;
 
     @FXML
     private TableView<Customer> tableViewCustomer;
@@ -104,6 +124,15 @@ public class OverviewController {
         tableViewAppointment.setPlaceholder(selectACustomer);
 
         tableViewCustomer.setItems(mainApp.getDatabase().getCustomers());
+
+        /*Called when the table's selection changes*/
+        tableViewAppointment.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) { //If an Appointment is selected, enable the buttons that can be used
+                modifyAppointmentButton.setDisable(false);
+                deleteAppointmentButton.setDisable(false);
+            }
+        });
+
         initAppointmentFilter();
     }
 
@@ -149,25 +178,46 @@ public class OverviewController {
         mainApp.getDatabase().deleteAppointment(selectedAppointment);
     }
 
-    /*This will filter out appointments based on the selected Customer*/
+    /*This will filter out Appointments based on the selected Customer*/
     private void initAppointmentFilter() {
         filteredAppointmentData = new FilteredList<>(mainApp.getDatabase().getAppointments(), p -> true);
 
-        tableViewCustomer.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                filteredAppointmentData.setPredicate(appointment -> {
+        //todo check to see if db behavior needs to be changed. if the appointment list removes items, the invisible table items might not be counted for an insert id
+        tableViewCustomer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Customer>() {
+            @Override
+            public void changed(ObservableValue<? extends Customer> observable, Customer oldValue, Customer newValue) {
+                if (newValue == null) { //If no customer is selected, disable the buttons because they cannot be used.
+                    deleteCustomerButton.setDisable(true);
+                    modifyCustomerButton.setDisable(true);
+                    addAppointmentButton.setDisable(true);
+                    modifyAppointmentButton.setDisable(true);
+                    deleteAppointmentButton.setDisable(true);
+                } else {
+                    deleteCustomerButton.setDisable(false);
+                    modifyCustomerButton.setDisable(false);
+                    addAppointmentButton.setDisable(false);
+                    /*todo modifyAppointmentButton and deleteAppointmentButton will be enabled when an appointment is selected*/
+                }
 
-                    if (newValue == null) { //If selected Customer is null
-                        return false;
+                filteredAppointmentData.setPredicate(new Predicate<Appointment>() {
+                    @Override
+                    public boolean test(Appointment appointment) {
+
+                        if (newValue == null) { //If selected Customer is null
+                            return false;
+                        }
+
+                        int customerId = newValue.getId();
+
+                        if (customerId == appointment.getCustomerId()) {
+                            return true;
+                        }
+
+                        return false; // Does not match.
                     }
-
-                    int customerId = newValue.getId();
-
-                    if (customerId == appointment.getId()) {
-                        return true;
-                    }
-
-                    return false; // Does not match.
-                }));
+                });
+            }
+        });
 
         /*todo By selecting and unselecting a row, the filter will appropriately filter the appointments. I would like to find a better solution for this.*/
         tableViewCustomer.getSelectionModel().select(0);

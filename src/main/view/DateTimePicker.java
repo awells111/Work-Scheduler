@@ -70,12 +70,12 @@ public class DateTimePicker extends DatePicker {
         return dateTimeValue;
     }
 
-    public String getFormat() {
-        return format.get();
+    public String getFormattedString() {
+        return this.getConverter().toString(this.getDateTimeValue().toLocalDate());
     }
 
-    public ObjectProperty<String> formatProperty() {
-        return format;
+    public String getFormat() {
+        return format.get();
     }
 
     private void setFormat(String format) {

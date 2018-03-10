@@ -59,15 +59,15 @@ public class AddAppointmentController {
 
     @FXML
     void handleAppointmentSave() {
-        if (errorBeforeSave()) { //Check for errors like empty fields
-            return;
-        }
-
         int id = (isNewAppointment()) ? database.nextAppointmentId() : appointment.getId();
         int custId = appointment.getCustomerId();
         String type = textFieldAppointmentType.getText();
 
-        Appointment newAppointment = new Appointment(id, custId, type, appointmentDateTimePicker.getValue().toString(), appointmentDateTimePicker.getValue().toString());
+        String startTime = appointmentDateTimePicker.getFormattedString();
+        String endTime = appointmentDateTimePicker.getFormattedString(); //todo CHANGE
+
+        //todo change this
+        Appointment newAppointment = new Appointment(id, custId, type, startTime, endTime);
 
         if (isNewAppointment()) {
             database.addAppointment(newAppointment);
@@ -81,11 +81,6 @@ public class AddAppointmentController {
     @FXML
     void handleAppointmentCancel() {
         dialogStage.close();
-    }
-
-    @FXML
-    void handleStartDateChange() {
-        System.out.println("StartDateChange");
     }
 
     /*Returns true if appointment does not exist in the database*/

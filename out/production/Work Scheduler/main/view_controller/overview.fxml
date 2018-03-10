@@ -1,114 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="main.view_controller.OverviewController">
+
+<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.view_controller.OverviewController">
     <children>
-        <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0"
-                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                   AnchorPane.topAnchor="0.0">
+        <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
                 <GridPane prefHeight="379.0" prefWidth="560.0">
                     <children>
                         <HBox GridPane.rowIndex="1">
                             <children>
-                                <Button mnemonicParsing="false" onAction="#handleAddCustomer" text="Add"
-                                        AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0">
+                                <Button mnemonicParsing="false" onAction="#handleAddCustomer" text="Add" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0">
                                     <HBox.margin>
-                                        <Insets/>
+                                        <Insets />
                                     </HBox.margin>
                                 </Button>
-                                <Button layoutX="56.0" layoutY="8.0" mnemonicParsing="false"
-                                        onAction="#handleModifyCustomer" text="Modify" AnchorPane.leftAnchor="64.0"
-                                        AnchorPane.topAnchor="8.0"/>
-                                <Button layoutX="131.0" layoutY="8.0" mnemonicParsing="false"
-                                        onAction="#handleDeleteCustomer" text="Delete" AnchorPane.leftAnchor="139.0"
-                                        AnchorPane.topAnchor="8.0"/>
-                                <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="SOMETIMES"/>
+                                <Button fx:id="modifyCustomerButton" disable="true" layoutX="56.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleModifyCustomer" text="Modify" AnchorPane.leftAnchor="64.0" AnchorPane.topAnchor="8.0" />
+                                <Button fx:id="deleteCustomerButton" disable="true" layoutX="131.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleDeleteCustomer" text="Delete" AnchorPane.leftAnchor="139.0" AnchorPane.topAnchor="8.0" />
+                                <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="SOMETIMES" />
                             </children>
                         </HBox>
                         <TableView fx:id="tableViewCustomer" prefHeight="543.0" prefWidth="776.0" GridPane.rowIndex="2">
                             <columnResizePolicy>
-                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                             </columnResizePolicy>
                             <columns>
-                                <TableColumn fx:id="columnCustId" prefWidth="75.0" text="ID"/>
-                                <TableColumn fx:id="columnCustName" prefWidth="75.0" text="NAME"/>
-                                <TableColumn fx:id="columnCustAddress" prefWidth="75.0" text="ADDRESS"/>
-                                <TableColumn fx:id="columnCustPhone" prefWidth="75.0" text="PHONE"/>
+                                <TableColumn fx:id="columnCustId" editable="false" prefWidth="75.0" sortable="false" text="ID" />
+                                <TableColumn fx:id="columnCustName" editable="false" prefWidth="75.0" sortable="false" text="NAME" />
+                                <TableColumn fx:id="columnCustAddress" editable="false" prefWidth="75.0" sortable="false" text="ADDRESS" />
+                                <TableColumn fx:id="columnCustPhone" editable="false" prefWidth="75.0" sortable="false" text="PHONE" />
                             </columns>
                         </TableView>
                         <Label text="Customers" GridPane.halignment="CENTER">
                             <font>
-                                <Font name="System Bold" size="15.0"/>
+                                <Font name="System Bold" size="15.0" />
                             </font>
                         </Label>
                     </children>
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <padding>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                     </padding>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                 </GridPane>
                 <GridPane prefHeight="379.0" prefWidth="560.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
                         <HBox GridPane.rowIndex="1">
                             <children>
-                                <Button mnemonicParsing="false" onAction="#handleAddAppointment" text="Add"
-                                        AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0">
+                                <Button fx:id="addAppointmentButton" disable="true" mnemonicParsing="false" onAction="#handleAddAppointment" text="Add" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0">
                                     <HBox.margin>
-                                        <Insets/>
+                                        <Insets />
                                     </HBox.margin>
                                 </Button>
-                                <Button layoutX="56.0" layoutY="8.0" mnemonicParsing="false"
-                                        onAction="#handleModifyAppointment" text="Modify" AnchorPane.leftAnchor="64.0"
-                                        AnchorPane.topAnchor="8.0"/>
-                                <Button layoutX="131.0" layoutY="8.0" mnemonicParsing="false"
-                                        onAction="#handleDeleteAppointment" text="Delete" AnchorPane.leftAnchor="139.0"
-                                        AnchorPane.topAnchor="8.0"/>
-                                <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="SOMETIMES"/>
-                                <Button layoutX="721.0" layoutY="14.0" mnemonicParsing="false"
-                                        onAction="#handleShowCalendar" text="View Calendar" AnchorPane.rightAnchor="8.0"
-                                        AnchorPane.topAnchor="8.0"/>
+                                <Button fx:id="modifyAppointmentButton" disable="true" layoutX="56.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleModifyAppointment" text="Modify" AnchorPane.leftAnchor="64.0" AnchorPane.topAnchor="8.0" />
+                                <Button fx:id="deleteAppointmentButton" disable="true" layoutX="131.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleDeleteAppointment" text="Delete" AnchorPane.leftAnchor="139.0" AnchorPane.topAnchor="8.0" />
+                                <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="SOMETIMES" />
+                                <Button layoutX="721.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleShowCalendar" text="View Calendar" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0" />
                             </children>
                         </HBox>
-                        <TableView fx:id="tableViewAppointment" prefHeight="543.0" prefWidth="776.0"
-                                   GridPane.rowIndex="2">
+                        <TableView fx:id="tableViewAppointment" prefHeight="543.0" prefWidth="776.0" GridPane.rowIndex="2">
                             <columns>
-                                <TableColumn fx:id="columnApptId" prefWidth="75.0" text="ID"/>
-                                <TableColumn fx:id="columnApptType" prefWidth="75.0" text="TYPE"/>
-                                <TableColumn fx:id="columnApptStart" prefWidth="75.0" text="START"/>
-                                <TableColumn fx:id="columnApptEnd" prefWidth="75.0" text="END"/>
+                                <TableColumn fx:id="columnApptId" editable="false" prefWidth="75.0" sortable="false" text="ID" />
+                                <TableColumn fx:id="columnApptType" editable="false" prefWidth="75.0" sortable="false" text="TYPE" />
+                                <TableColumn fx:id="columnApptStart" editable="false" prefWidth="75.0" sortable="false" text="START" />
+                                <TableColumn fx:id="columnApptEnd" editable="false" prefWidth="75.0" sortable="false" text="END" />
                             </columns>
                             <columnResizePolicy>
-                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                             </columnResizePolicy>
                         </TableView>
                         <Label text="Appointments" GridPane.halignment="CENTER">
                             <font>
-                                <Font name="System Bold" size="15.0"/>
+                                <Font name="System Bold" size="15.0" />
                             </font>
                         </Label>
                     </children>
                     <padding>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                     </padding>
                 </GridPane>
             </items>

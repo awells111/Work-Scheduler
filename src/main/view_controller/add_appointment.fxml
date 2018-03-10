@@ -41,12 +41,12 @@
                 <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                     <children>
                         <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="SOMETIMES" />
-                        <Button mnemonicParsing="false" onAction="#handleAppointmentSave" text="Save">
+                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleAppointmentSave" text="Save">
                             <HBox.margin>
                                 <Insets />
                             </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#handleAppointmentCancel" text="Cancel">
+                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleAppointmentCancel" text="Cancel">
                             <HBox.margin>
                                 <Insets />
                             </HBox.margin>
