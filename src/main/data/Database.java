@@ -4,23 +4,34 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import main.model.Customer;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import static main.data.DAO.CODE_SUCCESS;
 
 public class Database {
 
+    private static final String FORMAT_DATETIME = "yyyy-MM-dd HH:mm:ss";
+
     public static final int CODE_NEW_CUSTOMER = -1;
+
+    private DateTimeFormatter dateTimeFormatter;
 
     private DbConnection dbConnection;
 
     private ObservableList<Customer> customers;
 
+    private UserDAO userDAO;
     private CustomerDAO customerDAO;
 
     public Database() {
         dbConnection = new DbConnection();
+        userDAO = new UserDAO(dbConnection);
         customerDAO = new CustomerDAO(dbConnection);
+
+        dateTimeFormatter = DateTimeFormatter.ofPattern(FORMAT_DATETIME).withLocale(Locale.getDefault());
     }
 
     private void setCustomers(ObservableList<Customer> customers) {
@@ -33,6 +44,14 @@ public class Database {
 
     public DbConnection getDbConnection() {
         return dbConnection;
+    }
+
+    public UserDAO getUserDAO() {
+        return userDAO;
+    }
+
+    public int login(String username, String password) {
+        return getUserDAO().login(username, password);
     }
 
     public CustomerDAO getCustomerDAO() {
@@ -50,7 +69,7 @@ public class Database {
 
     public void setCustomersFromDatabase() {
         /*Select all customers from the database*/
-        ArrayList<Customer> customers = getCustomerDAO().getCustomers();
+        ArrayList<Customer> customers = getCustomerDAO().getEntities();
         setCustomers(FXCollections.observableList(customers));
     }
 
@@ -95,5 +114,13 @@ public class Database {
         }
 
         return error;
+    }
+
+    public String dateToString(LocalDate localDate) {
+        return dateTimeFormatter.format(localDate);
+    }
+
+    public LocalDate dateFromString(String dateTime) {
+        return LocalDate.parse(dateTime, dateTimeFormatter);
     }
 }

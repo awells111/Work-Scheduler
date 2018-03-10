@@ -1,7 +1,5 @@
 package main.log;
 
-import main.model.ConnectedUser;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -15,10 +13,10 @@ public class UserLog {
 
     private static final String TIMESTAMP_FORMAT = "yyyy.MM.dd.HH.mm.ss";
 
-    private ConnectedUser mConnectedUser;
+    private String username;
 
-    public UserLog(ConnectedUser connectedUser) {
-        mConnectedUser = connectedUser;
+    public UserLog(String username) {
+        this.username = username;
     }
 
     public void logUser() {
@@ -31,10 +29,14 @@ public class UserLog {
             String timeStamp = new SimpleDateFormat(TIMESTAMP_FORMAT).format(new Date());
 
             //Print the timestamp and username to the log
-            fileStream.println(timeStamp + " User Logged In: " + mConnectedUser.getUsername());
+            fileStream.println(timeStamp + " User Logged In: " + getUsername());
 
         } catch (SecurityException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

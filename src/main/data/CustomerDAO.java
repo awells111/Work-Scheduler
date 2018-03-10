@@ -163,7 +163,7 @@ public class CustomerDAO extends DAO {
         return update(statements);
     }
 
-    ArrayList<Customer> getCustomers() {
+    ArrayList getEntities() {
         ArrayList<Customer> customers = new ArrayList<>();
 
         String[][] queries = emptyEntity(CUSTOMER_TABLES.length);

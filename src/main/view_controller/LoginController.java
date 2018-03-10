@@ -5,11 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import main.Main;
-import main.data.DAO;
+import main.data.UserDAO;
 import main.log.UserLog;
-import main.model.ConnectedUser;
 
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import static main.Main.PATH_RB;
@@ -35,24 +33,20 @@ public class LoginController {
     }
 
     @FXML
-    void handleLogin(ActionEvent event) throws SQLException, ClassNotFoundException {
+    void handleLogin(ActionEvent event) {
         textFieldLoginName.setText(removeWhiteSpace(textFieldLoginName.getText()));
         textFieldLoginPassword.setText(removeWhiteSpace(textFieldLoginPassword.getText()));
 
-        String user = textFieldLoginName.getText();
-        String pass = textFieldLoginPassword.getText();
-        int userId = mainApp.getDatabase().getDbConnection().userLogin(user, pass);
+        String username = textFieldLoginName.getText();
+        String password = textFieldLoginPassword.getText();
+        int successCode = mainApp.getDatabase().login(username, password);
 
-        boolean loggedIn = userId != DAO.CODE_ERROR; //Returns true if our login query returned a user
+        boolean loggedIn = successCode == UserDAO.CODE_SUCCESS; //Returns true if our login query returned a user
 
         if (loggedIn) { //If login was successful
-            ConnectedUser connectedUser = new ConnectedUser(userId, user, pass);
-
             /*Add the username and login time to our log file*/
-            UserLog userLog = new UserLog(connectedUser);
+            UserLog userLog = new UserLog(username);
             userLog.logUser();
-
-            mainApp.getDatabase().getDbConnection().setConnectedUser(connectedUser);
 
             mainApp.showOverview(); //Show the overview scene
         } else { //If login failed

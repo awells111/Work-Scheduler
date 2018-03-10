@@ -39,7 +39,7 @@ public class AddCustomerController {
 
     @FXML
     void handleCustomerSave() {
-        if(errorBeforeSave()) { //Check for errors like empty fields
+        if (errorBeforeSave()) { //Check for errors like empty fields
             return;
         }
 
