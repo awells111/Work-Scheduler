@@ -4,72 +4,73 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.data.Database;
-import main.model.Customer;
+import main.model.Appointment;
 
 import static main.data.Database.CODE_NEW_ENTITY;
 
-public class AddCustomerController {
-    public static final String FXML_ADD_CUSTOMER = "view_controller/add_customer.fxml";
+public class AddAppointmentController {
+    public static final String FXML_ADD_APPOINTMENT = "view_controller/add_appointment.fxml";
 
     @FXML
-    private TextField textFieldCustomerName;
+    private TextField textFieldAppointmentType;
 
     @FXML
-    private TextField textFieldCustomerPhone;
+    private TextField textFieldAppointmentStart; //Todo switch to datetime or something
 
     @FXML
-    private TextField textFieldCustomerAddress;
+    private TextField textFieldAppointmentEnd;
 
     private Stage dialogStage;
     private Database database;
-    private Customer customer;
+    private Appointment appointment;
 
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
-    public void setCustomer(Database database, Customer customer) {
+    public void setAppointment(Database database, Appointment appointment) {
         this.database = database;
-        this.customer = customer;
+        this.appointment = appointment;
 
-        textFieldCustomerName.setText(customer.getName());
-        textFieldCustomerAddress.setText(customer.getAddress());
-        textFieldCustomerPhone.setText(customer.getPhone());
+        textFieldAppointmentType.setText(appointment.getType());
+        textFieldAppointmentStart.setText(appointment.getStart());
+        textFieldAppointmentEnd.setText(appointment.getEnd());
     }
 
     @FXML
-    void handleCustomerSave() {
+    void handleAppointmentSave() {
         if (errorBeforeSave()) { //Check for errors like empty fields
             return;
         }
 
-        int id = (isNewCustomer()) ? database.nextCustomerId() : customer.getId();
-        String name = textFieldCustomerName.getText();
-        String address = textFieldCustomerAddress.getText();
-        String phone = textFieldCustomerPhone.getText();
+        int id = (isNewAppointment()) ? database.nextAppointmentId() : appointment.getId();
+        int custId = appointment.getCustomerId();
+        String type = textFieldAppointmentType.getText();
+        String start = textFieldAppointmentStart.getText();
+        String end = textFieldAppointmentEnd.getText();
 
-        Customer newCustomer = new Customer(id, name, address, phone);
+        Appointment newAppointment = new Appointment(id, custId, type, start, end);
 
-        if (isNewCustomer()) {
-            database.addCustomer(newCustomer);
+        if (isNewAppointment()) {
+            database.addAppointment(newAppointment);
         } else {
-            database.updateCustomer(customer, newCustomer);
+            database.updateAppointment(appointment, newAppointment);
         }
 
         dialogStage.close();
     }
 
     @FXML
-    void handleCustomerCancel() {
+    void handleAppointmentCancel() {
         dialogStage.close();
     }
 
-    /*Returns true if customer does not exist in the database*/
-    private boolean isNewCustomer() {
-        return customer.getId() == CODE_NEW_ENTITY;
+    /*Returns true if appointment does not exist in the database*/
+    private boolean isNewAppointment() {
+        return appointment.getId() == CODE_NEW_ENTITY;
     }
 
-    /*Returns false if there are no errors in saving the customer*/
+    /*Returns false if there are no errors in saving the appointment*/
     private boolean errorBeforeSave() {
         return errorBeforeSave(false);
     }

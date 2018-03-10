@@ -2,6 +2,7 @@ package main.data;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import main.model.Appointment;
 import main.model.Customer;
 
 import java.time.LocalDate;
@@ -15,35 +16,26 @@ public class Database {
 
     private static final String FORMAT_DATETIME = "yyyy-MM-dd HH:mm:ss";
 
-    public static final int CODE_NEW_CUSTOMER = -1;
+    public static final int CODE_NEW_ENTITY = -1;
 
     private DateTimeFormatter dateTimeFormatter;
 
     private DbConnection dbConnection;
 
     private ObservableList<Customer> customers;
+    private ObservableList<Appointment> appointments;
 
     private UserDAO userDAO;
     private CustomerDAO customerDAO;
+    private AppointmentDAO appointmentDAO;
 
     public Database() {
         dbConnection = new DbConnection();
         userDAO = new UserDAO(dbConnection);
         customerDAO = new CustomerDAO(dbConnection);
+        appointmentDAO = new AppointmentDAO(dbConnection);
 
         dateTimeFormatter = DateTimeFormatter.ofPattern(FORMAT_DATETIME).withLocale(Locale.getDefault());
-    }
-
-    private void setCustomers(ObservableList<Customer> customers) {
-        this.customers = customers;
-    }
-
-    public ObservableList<Customer> getCustomers() {
-        return customers;
-    }
-
-    public DbConnection getDbConnection() {
-        return dbConnection;
     }
 
     public UserDAO getUserDAO() {
@@ -56,6 +48,14 @@ public class Database {
 
     public CustomerDAO getCustomerDAO() {
         return customerDAO;
+    }
+
+    private void setCustomers(ObservableList<Customer> customers) {
+        this.customers = customers;
+    }
+
+    public ObservableList<Customer> getCustomers() {
+        return customers;
     }
 
     /*Since the database does not use autoincrement, we will take the last customer and increment the id*/
@@ -109,6 +109,77 @@ public class Database {
 
         if (successCode == CODE_SUCCESS) {
             getCustomers().remove(selectedCustomer);
+
+            error = false;
+        }
+
+        return error;
+    }
+
+    public AppointmentDAO getAppointmentDAO() {
+        return appointmentDAO;
+    }
+
+    private void setAppointments(ObservableList<Appointment> appointments) {
+        this.appointments = appointments;
+    }
+
+    public ObservableList<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    /*Since the database does not use autoincrement, we will take the last appointment and increment the id*/
+    public int nextAppointmentId() {
+        if (getAppointments().size() == 0) { //If no appointments exist
+            return 1;
+        }
+
+        return getAppointments().get(getAppointments().size() - 1).getId() + 1; //return 1 + the last appointmentId in the list
+    }
+
+    public void setAppointmentsFromDatabase() {
+        /*Select all appointments from the database*/
+        ArrayList<Appointment> appointments = getAppointmentDAO().getEntities();// todo uncomment
+//        ArrayList<Appointment> appointments = new ArrayList<>();
+        setAppointments(FXCollections.observableList(appointments));
+    }
+
+    /*boolean represents an error -- (error = false) if a appointment is added, else (error = true)*/
+    public boolean addAppointment(Appointment newAppointment) {
+        boolean error = true;
+        int successCode = getAppointmentDAO().insertEntity(newAppointment);
+
+        if (successCode == CODE_SUCCESS) {
+            getAppointments().add(newAppointment);
+
+            error = false;
+        }
+
+        return error;
+    }
+
+    /*boolean represents an error -- (error = false) if a appointment is updated, else (error = true)*/
+    public boolean updateAppointment(Appointment oldAppointment, Appointment updatedAppointment) {
+        boolean error = true;
+        int successCode = getAppointmentDAO().updateEntity(updatedAppointment);
+
+        if (successCode == CODE_SUCCESS) {
+            int oldAppointmentIndex = getAppointments().indexOf(oldAppointment);
+            getAppointments().set(oldAppointmentIndex, updatedAppointment);
+
+            error = false;
+        }
+
+        return error;
+    }
+
+    /*boolean represents an error -- (error = false) if a appointment is deleted, else (error = true)*/
+    public boolean deleteAppointment(Appointment selectedAppointment) {
+        boolean error = true;
+        int successCode = getAppointmentDAO().deleteEntity(selectedAppointment);
+
+        if (successCode == CODE_SUCCESS) {
+            getAppointments().remove(selectedAppointment);
 
             error = false;
         }

@@ -105,7 +105,7 @@ public class CustomerDAO extends DAO {
     }
 
     /**
-     * Insert an existing {@link Customer} in the database
+     * Update an existing {@link Customer} in the database
      *
      * @param updatedCustomer The {@link Customer} that will be updated in the database
      * @return {@value CODE_SUCCESS} if successful, else {@value CODE_ERROR}

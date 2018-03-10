@@ -9,14 +9,14 @@ public class Appointment {
 
     private IntegerProperty id; //appointmentId
     private IntegerProperty customerId; //customerId
-    private StringProperty title; //title
+    private StringProperty type; //type
     private StringProperty start; //start
     private StringProperty end; //end
 
-    public Appointment(int id, int customerId, String title, String start, String end) {
+    public Appointment(int id, int customerId, String type, String start, String end) {
         this.id = new SimpleIntegerProperty(id);
         this.customerId = new SimpleIntegerProperty(customerId);
-        this.title = new SimpleStringProperty(title);
+        this.type = new SimpleStringProperty(type);
         this.start = new SimpleStringProperty(start);
         this.end = new SimpleStringProperty(end);
     }
@@ -45,16 +45,16 @@ public class Appointment {
         this.customerId.set(customerId);
     }
 
-    public String getTitle() {
-        return title.get();
+    public String getType() {
+        return type.get();
     }
 
-    public StringProperty titleProperty() {
-        return title;
+    public StringProperty typeProperty() {
+        return type;
     }
 
-    public void setTitle(String title) {
-        this.title.set(title);
+    public void setType(String type) {
+        this.type.set(type);
     }
 
     public String getStart() {
@@ -86,7 +86,7 @@ public class Appointment {
         return "Appointment{" +
                 "id=" + id +
                 ", customerId=" + customerId +
-                ", title=" + title +
+                ", type=" + type +
                 ", start=" + start +
                 ", end=" + end +
                 '}';

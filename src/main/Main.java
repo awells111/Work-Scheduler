@@ -8,9 +8,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.data.Database;
+import main.model.Appointment;
 import main.model.Customer;
 import main.view.CalendarDialog;
 import main.view.StyledScene;
+import main.view_controller.AddAppointmentController;
 import main.view_controller.AddCustomerController;
 import main.view_controller.LoginController;
 import main.view_controller.OverviewController;
@@ -19,6 +21,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import static main.view_controller.AddAppointmentController.FXML_ADD_APPOINTMENT;
 import static main.view_controller.AddCustomerController.FXML_ADD_CUSTOMER;
 import static main.view_controller.LoginController.FXML_LOGIN;
 import static main.view_controller.OverviewController.FXML_OVERVIEW;
@@ -115,6 +118,31 @@ public class Main extends Application {
             AddCustomerController controller = styledScene.getLoader().getController();
             controller.setDialogStage(dialogStage);
             controller.setCustomer(database, customer);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showAddAppointment(Appointment appointment) {
+        try {
+            StyledScene styledScene = new StyledScene(this, FXML_ADD_APPOINTMENT);
+            //todo lambda for part C
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Add Appointment");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(getWindow());
+            Scene scene = styledScene.create();
+            dialogStage.setScene(scene);
+
+            // Set the customer into the controller.
+            AddAppointmentController controller = styledScene.getLoader().getController();
+            controller.setDialogStage(dialogStage);
+            controller.setAppointment(database, appointment);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
