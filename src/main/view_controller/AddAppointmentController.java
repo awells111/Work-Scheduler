@@ -1,6 +1,7 @@
 package main.view_controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.data.Database;
@@ -16,13 +17,13 @@ public class AddAppointmentController {
     public static final String FXML_ADD_APPOINTMENT = "view_controller/add_appointment.fxml";
 
     @FXML
+    private Label labelCustomerName;
+
+    @FXML
     private TextField textFieldAppointmentType;
 
     @FXML
     private DateTimePicker appointmentDateTimePicker;
-
-    @FXML
-    private TextField appointmentStartTime;
 
     @FXML
     private TextField appointmentDuration;
@@ -35,15 +36,17 @@ public class AddAppointmentController {
         this.dialogStage = dialogStage;
     }
 
-    public void setAppointment(Database database, Appointment appointment) {
+    public void setAppointment(Database database, String customerName, Appointment appointment) {
         this.database = database;
         this.appointment = appointment;
+
+        labelCustomerName.setText(customerName);
 
         textFieldAppointmentType.setText(appointment.getType());
 
         appointmentDuration.setTextFormatter(new NumberFieldConverter().getFormatter()); //appointmentDuration will now only accept numbers as input
 
-//        appointmentDateTimePicker.getEditor().setText(appointmentDateTimePicker.getConverter().toString(LocalDate.now())); //Set the default value of the datepicker
+
         if (isNewAppointment()) {
             appointmentDateTimePicker.setDateTimeValue(LocalDateTime.now());
         } else {

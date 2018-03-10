@@ -132,12 +132,12 @@ public class OverviewController {
     void handleAddAppointment() {
         Appointment newAppointment = new Appointment(Database.CODE_NEW_ENTITY, tableViewCustomer.getSelectionModel().getSelectedItem().getId(), "", "", "");
 
-        mainApp.showAddAppointment(newAppointment);
+        mainApp.showAddAppointment(tableViewCustomer.getSelectionModel().getSelectedItem().getName(), newAppointment);
     }
 
     @FXML
     void handleModifyAppointment() {
-        mainApp.showAddAppointment(tableViewAppointment.getSelectionModel().getSelectedItem());
+        mainApp.showAddAppointment(tableViewCustomer.getSelectionModel().getSelectedItem().getName(), tableViewAppointment.getSelectionModel().getSelectedItem());
     }
 
     @FXML

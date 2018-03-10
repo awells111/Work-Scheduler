@@ -127,7 +127,7 @@ public class Main extends Application {
         }
     }
 
-    public void showAddAppointment(Appointment appointment) {
+    public void showAddAppointment(String customerName, Appointment appointment) {
         try {
             StyledScene styledScene = new StyledScene(this, FXML_ADD_APPOINTMENT);
             //todo lambda for part C
@@ -142,7 +142,7 @@ public class Main extends Application {
             // Set the customer into the controller.
             AddAppointmentController controller = styledScene.getLoader().getController();
             controller.setDialogStage(dialogStage);
-            controller.setAppointment(database, appointment);
+            controller.setAppointment(database, customerName, appointment);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
