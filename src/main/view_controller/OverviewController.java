@@ -1,15 +1,15 @@
 package main.view_controller;
 
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import main.Main;
+import main.data.Database;
 import main.model.Appointment;
 import main.model.Customer;
-import main.data.Database;
-
-import java.util.ArrayList;
 
 public class OverviewController {
     public static final String FXML_OVERVIEW = "view_controller/overview.fxml";
@@ -45,6 +45,8 @@ public class OverviewController {
 
     @FXML
     private TableColumn<Appointment, String> columnApptEnd;
+
+    private FilteredList<Appointment> filteredAppointmentData;
 
     Label selectACustomer; //Will be seen when no customer is selected
     Label addAnAppointment; //Will be seen when a customer is selected but no appointments exist
@@ -95,14 +97,14 @@ public class OverviewController {
         mainApp.getDatabase().setCustomersFromDatabase();
         mainApp.getDatabase().setAppointmentsFromDatabase();
 
-        tableViewCustomer.setItems(mainApp.getDatabase().getCustomers());
-        tableViewAppointment.setItems(mainApp.getDatabase().getAppointments());
-
         selectACustomer = new Label("Select a customer to view its appointments");
         addAnAppointment = new Label("Add appointments for this customer!");
 
         tableViewCustomer.setPlaceholder(new Label("Add a customer to get started"));
         tableViewAppointment.setPlaceholder(selectACustomer);
+
+        tableViewCustomer.setItems(mainApp.getDatabase().getCustomers());
+        initAppointmentFilter();
     }
 
     @FXML
@@ -145,5 +147,37 @@ public class OverviewController {
         Appointment selectedAppointment = tableViewAppointment.getSelectionModel().getSelectedItem();
 
         mainApp.getDatabase().deleteAppointment(selectedAppointment);
+    }
+
+    /*This will filter out appointments based on the selected Customer*/
+    private void initAppointmentFilter() {
+        filteredAppointmentData = new FilteredList<>(mainApp.getDatabase().getAppointments(), p -> true);
+
+        tableViewCustomer.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                filteredAppointmentData.setPredicate(appointment -> {
+
+                    if (newValue == null) { //If selected Customer is null
+                        return false;
+                    }
+
+                    int customerId = newValue.getId();
+
+                    if (customerId == appointment.getId()) {
+                        return true;
+                    }
+
+                    return false; // Does not match.
+                }));
+
+        /*todo By selecting and unselecting a row, the filter will appropriately filter the appointments. I would like to find a better solution for this.*/
+        tableViewCustomer.getSelectionModel().select(0);
+        tableViewCustomer.getSelectionModel().clearSelection();
+
+        tableViewCustomer.refresh();
+        tableViewAppointment.refresh();
+
+        SortedList<Appointment> sortedAppointmentData = new SortedList<>(filteredAppointmentData);
+        sortedAppointmentData.comparatorProperty().bind(tableViewAppointment.comparatorProperty());
+        tableViewAppointment.setItems(sortedAppointmentData);
     }
 }
