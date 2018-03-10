@@ -5,6 +5,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.data.Database;
 import main.model.Appointment;
+import main.view.DateTimePicker;
+import main.view.NumberFieldConverter;
+
+import java.time.LocalDateTime;
 
 import static main.data.Database.CODE_NEW_ENTITY;
 
@@ -15,10 +19,13 @@ public class AddAppointmentController {
     private TextField textFieldAppointmentType;
 
     @FXML
-    private TextField textFieldAppointmentStart; //Todo switch to datetime or something
+    private DateTimePicker appointmentDateTimePicker;
 
     @FXML
-    private TextField textFieldAppointmentEnd;
+    private TextField appointmentStartTime;
+
+    @FXML
+    private TextField appointmentDuration;
 
     private Stage dialogStage;
     private Database database;
@@ -33,8 +40,18 @@ public class AddAppointmentController {
         this.appointment = appointment;
 
         textFieldAppointmentType.setText(appointment.getType());
-        textFieldAppointmentStart.setText(appointment.getStart());
-        textFieldAppointmentEnd.setText(appointment.getEnd());
+
+        appointmentDuration.setTextFormatter(new NumberFieldConverter().getFormatter()); //appointmentDuration will now only accept numbers as input
+
+//        appointmentDateTimePicker.getEditor().setText(appointmentDateTimePicker.getConverter().toString(LocalDate.now())); //Set the default value of the datepicker
+        if (isNewAppointment()) {
+            appointmentDateTimePicker.setDateTimeValue(LocalDateTime.now());
+        } else {
+            appointmentDateTimePicker.setDateTimeValue(database.dateTimeFromString(appointment.getStart()));
+        }
+
+        appointmentDateTimePicker = new DateTimePicker();
+
     }
 
     @FXML
@@ -46,10 +63,8 @@ public class AddAppointmentController {
         int id = (isNewAppointment()) ? database.nextAppointmentId() : appointment.getId();
         int custId = appointment.getCustomerId();
         String type = textFieldAppointmentType.getText();
-        String start = textFieldAppointmentStart.getText();
-        String end = textFieldAppointmentEnd.getText();
 
-        Appointment newAppointment = new Appointment(id, custId, type, start, end);
+        Appointment newAppointment = new Appointment(id, custId, type, appointmentDateTimePicker.getValue().toString(), appointmentDateTimePicker.getValue().toString());
 
         if (isNewAppointment()) {
             database.addAppointment(newAppointment);
@@ -65,6 +80,11 @@ public class AddAppointmentController {
         dialogStage.close();
     }
 
+    @FXML
+    void handleStartDateChange() {
+        System.out.println("StartDateChange");
+    }
+
     /*Returns true if appointment does not exist in the database*/
     private boolean isNewAppointment() {
         return appointment.getId() == CODE_NEW_ENTITY;
@@ -76,7 +96,7 @@ public class AddAppointmentController {
     }
 
     private boolean errorBeforeSave(boolean error) {
-
+        //todo the duration must be 1 or more minutes
         if (error) {
 
         }

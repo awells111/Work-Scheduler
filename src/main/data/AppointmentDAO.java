@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static main.data.Database.MYSQL_DATETIME_FORMAT;
+
 public class AppointmentDAO extends DAO{
 
     /*
@@ -17,25 +19,6 @@ public class AppointmentDAO extends DAO{
     static final String COLUMN_APPOINTMENT_TYPE = "title";
     static final String COLUMN_APPOINTMENT_START = "start";
     static final String COLUMN_APPOINTMENT_END = "end";
-
-    /*Appointment Table Statements*/
-
-//    INSERT INTO `U04TS4`.`appointment`
-//            (`appointmentId`,
-//            `appointmentId`,
-//            `title`,
-//            `start`,
-//            `end`)
-//    VALUES
-//            (
-//          1,
-//        1,
-//        "title",
-//now(),
-//    now());
-
-    static final String QUERY_SELECT_APPOINTMENTS = "SELECT * FROM " + TABLE_APPOINTMENT;
-
 
     /**
      * The tables required to modify an appointment entity
@@ -76,8 +59,9 @@ public class AppointmentDAO extends DAO{
             COLUMN_APPOINTMENT_ID + ", " +
             COLUMN_CUSTOMER_ID + ", " +
             COLUMN_APPOINTMENT_TYPE + ", " +
-            COLUMN_APPOINTMENT_START + ", " +
-            COLUMN_APPOINTMENT_END + ") VALUES (?, ?, ?, ?, ?)";
+            "DATE_FORMAT(" + COLUMN_APPOINTMENT_START + ", " + MYSQL_DATETIME_FORMAT + "), " +
+            "DATE_FORMAT(" + COLUMN_APPOINTMENT_END + ", " + MYSQL_DATETIME_FORMAT + ") VALUES (?, ?, ?, ?, ?)";
+
     /**
      * Insert an {@link Appointment} into the database
      *
@@ -151,6 +135,22 @@ public class AppointmentDAO extends DAO{
         /*Execute the required statements*/
         return update(statements);
     }
+
+
+    static final String QUERY_SELECT_APPOINTMENTS = "SELECT " +
+            COLUMN_APPOINTMENT_ID +
+            ", " +
+            COLUMN_CUSTOMER_ID +
+            ", " +
+            COLUMN_APPOINTMENT_TYPE +
+            ", " +
+            "DATE_FORMAT(" + COLUMN_APPOINTMENT_START + ", " + MYSQL_DATETIME_FORMAT +
+            ") AS " + COLUMN_APPOINTMENT_START +
+            ", " +
+            "DATE_FORMAT(" + COLUMN_APPOINTMENT_END + ", " + MYSQL_DATETIME_FORMAT +
+            ") AS " + COLUMN_APPOINTMENT_END +
+            " FROM " +
+            TABLE_APPOINTMENT;
 
     ArrayList getEntities() {
         ArrayList<Appointment> appointments = new ArrayList<>();

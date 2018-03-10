@@ -6,6 +6,7 @@ import main.model.Appointment;
 import main.model.Customer;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -14,7 +15,9 @@ import static main.data.DAO.CODE_SUCCESS;
 
 public class Database {
 
-    private static final String FORMAT_DATETIME = "yyyy-MM-dd HH:mm:ss";
+    public static final String FORMAT_DATE = "yyyy-MM-dd";
+    public static final String FORMAT_DATETIME = "yyyy-MM-dd HH:mm";
+    public static final String MYSQL_DATETIME_FORMAT = "'%Y-%m-%d %H:%i'"; //MYSQL Equivalent to "yyyy-MM-dd HH:mm"
 
     public static final int CODE_NEW_ENTITY = -1;
 
@@ -193,5 +196,13 @@ public class Database {
 
     public LocalDate dateFromString(String dateTime) {
         return LocalDate.parse(dateTime, dateTimeFormatter);
+    }
+
+    public String dateTimeToString(LocalDateTime localDateTime) {
+        return dateTimeFormatter.format(localDateTime);
+    }
+
+    public LocalDateTime dateTimeFromString(String dateTime) {
+        return LocalDateTime.parse(dateTime, dateTimeFormatter);
     }
 }
