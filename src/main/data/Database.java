@@ -7,6 +7,8 @@ import main.model.Customer;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -15,7 +17,7 @@ import static main.data.DAO.CODE_SUCCESS;
 
 public class Database {
 
-    public static final String FORMAT_DATE = "yyyy-MM-dd";
+    public static final String ZONE_ID_DB = "UTC";
     public static final String FORMAT_DATETIME = "yyyy-MM-dd HH:mm";
     public static final String MYSQL_DATETIME_FORMAT = "'%Y-%m-%d %H:%i'"; //MYSQL Equivalent to "yyyy-MM-dd HH:mm"
 
@@ -36,9 +38,13 @@ public class Database {
         dbConnection = new DbConnection();
         userDAO = new UserDAO(dbConnection);
         customerDAO = new CustomerDAO(dbConnection);
-        appointmentDAO = new AppointmentDAO(dbConnection);
+        appointmentDAO = new AppointmentDAO(this);
 
         dateTimeFormatter = DateTimeFormatter.ofPattern(FORMAT_DATETIME).withLocale(Locale.getDefault());
+    }
+
+    public DbConnection getDbConnection() {
+        return dbConnection;
     }
 
     public UserDAO getUserDAO() {
@@ -190,19 +196,23 @@ public class Database {
         return error;
     }
 
-    public String dateToString(LocalDate localDate) {
-        return dateTimeFormatter.format(localDate);
-    }
-
-    public LocalDate dateFromString(String dateTime) {
-        return LocalDate.parse(dateTime, dateTimeFormatter);
-    }
-
-    public String dateTimeToString(LocalDateTime localDateTime) {
+    public String localDateTimeToString(LocalDateTime localDateTime) {
         return dateTimeFormatter.format(localDateTime);
     }
 
-    public LocalDateTime dateTimeFromString(String dateTime) {
-        return LocalDateTime.parse(dateTime, dateTimeFormatter);
+    public LocalDateTime localDateTimeFromString(String localDateTime) {
+        return LocalDateTime.parse(localDateTime, dateTimeFormatter);
+    }
+
+    public String localTimeToDatabase(String localTime) {
+        LocalDateTime localDateTime = localDateTimeFromString(localTime);
+        ZonedDateTime ldtZoned = localDateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of(ZONE_ID_DB));
+        return dateTimeFormatter.format(ldtZoned.toLocalDateTime());
+    }
+
+    public String databaseTimeToLocal(String databaseTime) {
+        LocalDateTime localDateTime = localDateTimeFromString(databaseTime);
+        ZonedDateTime localTime = localDateTime.atZone(ZoneId.of(ZONE_ID_DB)).withZoneSameInstant(ZoneId.systemDefault());
+        return dateTimeFormatter.format(localTime);
     }
 }

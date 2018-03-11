@@ -55,22 +55,22 @@
                 </HBox>
             <HBox alignment="CENTER_LEFT" GridPane.rowIndex="3">
                <children>
-                  <Label text="Appointment Duration" GridPane.rowIndex="3">
+                  <Label text="Appointment End Time" GridPane.rowIndex="3">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label text=" (In Minutes)" />
+                  <Label text=" (yyyy-MM-dd HH:mm)" />
                </children>
             </HBox>
-            <TextField fx:id="appointmentDuration" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <DateTimePicker fx:id="appointmentDateTimePicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DateTimePicker fx:id="appointmentDateTimePickerStart" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Customer Name">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
             <Label fx:id="labelCustomerName" GridPane.columnIndex="1" />
+            <DateTimePicker fx:id="appointmentDateTimePickerEnd" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             </children>
             <padding>
                 <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />

@@ -60,25 +60,6 @@ public class LoginController {
         alert.setHeaderText(null);
         alert.setContentText(rb.getString("username_password_not_match"));
         alert.showAndWait();
-
-        //If ok is pressed, load next scene?
-//        alert.showAndWait().ifPresent((response -> {
-//            if (response == ButtonType.OK) {
-//                System.out.println("Alerting!");
-//                Parent main = null;
-//                try {
-//                    main = FXMLLoader.load(getClass().getResource("Next.fxml"));
-//                    Scene scene = new Scene(main);
-//
-//                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//                    stage.setScene(scene);
-//
-//                    stage.show();
-//                } catch (IOException ex) {
-//                    ex.printStackTrace();
-//                }
-//            }
-//        }));
     }
 
     /*Removes all whitespaces and non-visible characters (e.g., tab, \n)*/

@@ -1,13 +1,13 @@
 package main.view_controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.data.Database;
 import main.model.Appointment;
 import main.view.DateTimePicker;
-import main.view.NumberFieldConverter;
 
 import java.time.LocalDateTime;
 
@@ -23,10 +23,10 @@ public class AddAppointmentController {
     private TextField textFieldAppointmentType;
 
     @FXML
-    private DateTimePicker appointmentDateTimePicker;
+    private DateTimePicker appointmentDateTimePickerStart;
 
     @FXML
-    private TextField appointmentDuration;
+    private DateTimePicker appointmentDateTimePickerEnd;
 
     private Stage dialogStage;
     private Database database;
@@ -40,33 +40,26 @@ public class AddAppointmentController {
         this.database = database;
         this.appointment = appointment;
 
+        /*Set fields in the controller*/
         labelCustomerName.setText(customerName);
-
         textFieldAppointmentType.setText(appointment.getType());
-
-        appointmentDuration.setTextFormatter(new NumberFieldConverter().getFormatter()); //appointmentDuration will now only accept numbers as input
-
-
-        if (isNewAppointment()) {
-            appointmentDateTimePicker.setDateTimeValue(LocalDateTime.now());
-        } else {
-            appointmentDateTimePicker.setDateTimeValue(database.dateTimeFromString(appointment.getStart()));
-        }
-
-        appointmentDateTimePicker = new DateTimePicker();
-
+        appointmentDateTimePickerStart.setDateTimeValue(database.localDateTimeFromString(appointment.getStart()));
+        appointmentDateTimePickerEnd.setDateTimeValue(database.localDateTimeFromString(appointment.getStart()));
     }
 
     @FXML
     void handleAppointmentSave() {
+        if (errorBeforeSave()) {
+            return;
+        }
+
         int id = (isNewAppointment()) ? database.nextAppointmentId() : appointment.getId();
         int custId = appointment.getCustomerId();
         String type = textFieldAppointmentType.getText();
 
-        String startTime = appointmentDateTimePicker.getFormattedString();
-        String endTime = appointmentDateTimePicker.getFormattedString(); //todo CHANGE
+        String startTime = appointmentDateTimePickerStart.getFormattedString();
+        String endTime = appointmentDateTimePickerStart.getFormattedString(); //todo CHANGE to add the endtime
 
-        //todo change this
         Appointment newAppointment = new Appointment(id, custId, type, startTime, endTime);
 
         if (isNewAppointment()) {
@@ -90,25 +83,33 @@ public class AddAppointmentController {
 
     /*Returns false if there are no errors in saving the appointment*/
     private boolean errorBeforeSave() {
-        return errorBeforeSave(false);
-    }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error Saving Appointment");
+        alert.setHeaderText(null);
 
-    private boolean errorBeforeSave(boolean error) {
-        //todo the duration must be 1 or more minutes
-        if (error) {
-
+        //Display alert for incorrect inputs
+        if (textFieldAppointmentType.getText().equals("")) {
+            alert.setContentText("Type cannot be empty");
+            alert.showAndWait();
+            return true;
         }
 
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setType("Error Saving Part");
-//        alert.setHeaderText(null);
-//
-//        //Display alert for incorrect inputs
-//        if (textfieldPartName.getText().equals("")) {
-//            alert.setContentText("Name cannot be empty");
-//            alert.showAndWait();
-//            return true;
-//        }
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime start = appointmentDateTimePickerStart.getDateTimeValue();
+        LocalDateTime emd = appointmentDateTimePickerEnd.getDateTimeValue();
+
+
+        //todo finish this, will have to pass through a list of all appointments in the current customer
+
+        //If start date is earlier than now
+
+
+        //If end date is before start date OR equals start date
+
+
+
+
+
 //
 //        if (!isInteger(textfieldPartInv.getText())) {
 //            alert.setContentText("Inv must be an integer");
@@ -160,7 +161,6 @@ public class AddAppointmentController {
 //            alert.showAndWait();
 //            return true;
 //        }
-
         return false;
     }
 }

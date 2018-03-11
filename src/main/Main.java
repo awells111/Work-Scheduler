@@ -1,10 +1,10 @@
 package main;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.data.Database;
@@ -18,8 +18,11 @@ import main.view_controller.LoginController;
 import main.view_controller.OverviewController;
 
 import java.io.IOException;
-import java.util.Locale;
+import java.time.*;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.TimeZone;
 
 import static main.view_controller.AddAppointmentController.FXML_ADD_APPOINTMENT;
 import static main.view_controller.AddCustomerController.FXML_ADD_CUSTOMER;
@@ -128,29 +131,70 @@ public class Main extends Application {
     }
 
     public void showAddAppointment(String customerName, Appointment appointment) {
-        try {
-            StyledScene styledScene = new StyledScene(this, FXML_ADD_APPOINTMENT);
-            //todo lambda for part C
-            // Create the dialog Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Add Appointment");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(getWindow());
-            Scene scene = styledScene.create();
-            dialogStage.setScene(scene);
+        //todo delete
+//        try {
+//            StyledScene styledScene = new StyledScene(this, FXML_ADD_APPOINTMENT);
+//
+//            // Create the dialog Stage.
+//            Stage dialogStage = new Stage();
+//            dialogStage.setTitle("Add Appointment");
+//            dialogStage.initModality(Modality.WINDOW_MODAL);
+//            dialogStage.initOwner(getWindow());
+//            Scene scene = styledScene.create();
+//            dialogStage.setScene(scene);
+//
+//            // Set the customer into the controller.
+//            AddAppointmentController controller = styledScene.getLoader().getController();
+//            controller.setDialogStage(dialogStage);
+//            controller.setAppointment(database, customerName, appointment);
+//
+//            // Show the dialog and wait until the user closes it
+//            dialogStage.showAndWait();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
-            // Set the customer into the controller.
-            AddAppointmentController controller = styledScene.getLoader().getController();
-            controller.setDialogStage(dialogStage);
-            controller.setAppointment(database, customerName, appointment);
+        /*This project requires a lambda expression to schedule and maintain appointments. I do not think a lambda
+         * is necessary, but I do not want to fail this requirement.*/
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Add/Modify appointment?");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure?");
 
-            // Show the dialog and wait until the user closes it
-            dialogStage.showAndWait();
+        //If ok is pressed, load next scene?
+        alert.showAndWait().ifPresent((response -> {
+            if (response == ButtonType.OK) {
+                try {
+                    StyledScene styledScene = new StyledScene(this, FXML_ADD_APPOINTMENT);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+                    // Create the dialog Stage.
+                    Stage dialogStage = new Stage();
+                    dialogStage.setTitle("Add Appointment");
+                    dialogStage.initModality(Modality.WINDOW_MODAL);
+                    dialogStage.initOwner(getWindow());
+
+                    Scene scene = styledScene.create();
+                    dialogStage.setScene(scene);
+
+                    // Set the customer into the controller.
+                    AddAppointmentController controller = styledScene.getLoader().getController();
+                    controller.setDialogStage(dialogStage);
+                    controller.setAppointment(database, customerName, appointment);
+
+                    // Show the dialog and wait until the user closes it
+                    dialogStage.showAndWait();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }));
+
+//    } catch(IOException e)
+//    {
+//        e.printStackTrace();
+//    }
+}
 
     public ResourceBundle getRb() {
         return rb;

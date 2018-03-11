@@ -25,14 +25,18 @@ public class AppointmentDAO extends DAO{
      */
     static final String[] APPOINTMENT_TABLES = {TABLE_APPOINTMENT};
 
-    private DbConnection dbConnection;
+    private Database database;
 
-    AppointmentDAO(DbConnection dbConnection) {
-        this.dbConnection = dbConnection;
+    AppointmentDAO(Database database) {
+        this.database = database;
+    }
+
+    public Database getDatabase() {
+        return database;
     }
 
     private DbConnection getDbConnection() {
-        return dbConnection;
+        return database.getDbConnection();
     }
 
     private int update(String[][] statements) {
@@ -78,8 +82,8 @@ public class AppointmentDAO extends DAO{
                 Integer.toString(newAppointment.getId()),
                 Integer.toString(newAppointment.getCustomerId()),
                 newAppointment.getType(),
-                newAppointment.getStart(),
-                newAppointment.getEnd()
+                getDatabase().localTimeToDatabase(newAppointment.getStart()),
+                getDatabase().localTimeToDatabase(newAppointment.getEnd())
         };
 
         /*Execute the required statements*/
@@ -105,8 +109,8 @@ public class AppointmentDAO extends DAO{
         statements[0] = new String[]{
                 STATEMENT_UPDATE_APPOINTMENT,
                 updatedAppointment.getType(),
-                updatedAppointment.getStart(),
-                updatedAppointment.getEnd(),
+                getDatabase().localTimeToDatabase(updatedAppointment.getStart()),
+                getDatabase().localTimeToDatabase(updatedAppointment.getEnd()),
                 Integer.toString(updatedAppointment.getId())
         };
 
@@ -170,8 +174,8 @@ public class AppointmentDAO extends DAO{
                 int apptId = apptRS.getInt(COLUMN_APPOINTMENT_ID);
                 int custId = apptRS.getInt(COLUMN_CUSTOMER_ID);
                 String apptType = apptRS.getString(COLUMN_APPOINTMENT_TYPE);
-                String apptStart = apptRS.getString(COLUMN_APPOINTMENT_START);
-                String apptEnd = apptRS.getString(COLUMN_APPOINTMENT_END);
+                String apptStart = getDatabase().databaseTimeToLocal(apptRS.getString(COLUMN_APPOINTMENT_START));
+                String apptEnd = getDatabase().databaseTimeToLocal(apptRS.getString(COLUMN_APPOINTMENT_END));
 
                 appointments.add(new Appointment(apptId, custId, apptType, apptStart, apptEnd));
             }
