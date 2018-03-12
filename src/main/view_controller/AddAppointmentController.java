@@ -33,13 +33,19 @@ public class AddAppointmentController {
     private Database database;
     private Appointment appointment;
 
+    /*MYSQL character limits by column*/
+    private static final int LIMIT_TYPE = 255;
+
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
+
     }
 
     public void setAppointment(Database database, String customerName, Appointment appointment) {
         this.database = database;
         this.appointment = appointment;
+
+        setFields();
 
         /*Set fields in the controller*/
         labelCustomerName.setText(customerName);
@@ -69,6 +75,7 @@ public class AddAppointmentController {
             appointmentOverlaps(newAppointment);
         } catch (Exception e) {
             e.printStackTrace();
+            return;
         }
 
         if (isNewAppointment()) {
@@ -108,10 +115,14 @@ public class AddAppointmentController {
             throw new Exception("Appointment must be between 8:00 and 22:00 GMT.");
         }
 
-        //todo finish this, will have to pass through a list of all appointments in the current customer
-        //If start date is earlier than now
-        //If end date is before start date OR equals start date
-        /*Only check after all inputs are checked*/
+        LocalDateTime start = appointmentDateTimePickerStart.getDateTimeValue();
+        LocalDateTime end = appointmentDateTimePickerEnd.getDateTimeValue();
+
+        if (end.isBefore(start) || end.equals(start)) {
+            alert.setContentText("Appointment end must be later than appointment start.");
+            alert.show();
+            throw new Exception("Appointment end must be later than appointment start.");
+        }
     }
 
     private Alert buildAlert() {
@@ -130,5 +141,27 @@ public class AddAppointmentController {
             alert.show();
             throw new Exception("This appointment overlaps one or more existing appointments.");
         }
+    }
+
+    private void setFields() {
+        /*Only Accept Letters*/
+        textFieldAppointmentType.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\sa-zA-Z*")) {
+                textFieldAppointmentType.setText(newValue.replaceAll("[^\\sa-zA-Z]", ""));
+            }
+        });
+
+        setLimit(textFieldAppointmentType, LIMIT_TYPE);
+    }
+
+    private void setLimit(TextField textField, int limit) {
+        /*Only allow limit characters*/
+        textField.lengthProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.intValue() > oldValue.intValue()) {
+                if (textField.getText().length() >= limit) {
+                    textField.setText(textField.getText().substring(0, limit));
+                }
+            }
+        });
     }
 }

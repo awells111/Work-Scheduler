@@ -20,8 +20,6 @@ import java.util.ArrayList;
 public class OverviewController {
     public static final String FXML_OVERVIEW = "view_controller/overview.fxml";
 
-    //todo myTableView.setPlaceholder(new Label("My table is empty message"));
-
     @FXML
     private Button modifyCustomerButton;
 

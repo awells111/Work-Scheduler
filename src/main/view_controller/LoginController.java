@@ -44,7 +44,7 @@ public class LoginController {
         loggedin(successCode, username);
     }
 
-    void loggedin(int successCode, String username) throws Exception{
+    void loggedin(int successCode, String username) throws Exception {
         boolean loggedIn = successCode == UserDAO.CODE_SUCCESS; //Returns true if our login query returned a user
 
         if (loggedIn) { //If login was successful

@@ -8,17 +8,16 @@ public class UserDAO extends DAO {
     /*
     User Table
     */
-    static final String TABLE_USER = "user";
-    static final String COLUMN_USER_ID = "userId";
-    static final String COLUMN_USER_USERNAME = "userName";
-    static final String COLUMN_USER_PASSWORD = "password";
+    private static final String TABLE_USER = "user";
+    private static final String COLUMN_USER_USERNAME = "userName";
+    private static final String COLUMN_USER_PASSWORD = "password";
     /*User Table Statements*/
-    static final String QUERY_SELECT_USER = "SELECT * FROM user WHERE userName=? AND password=?";
+    private static final String QUERY_SELECT_USER = "SELECT * FROM user WHERE userName=? AND password=?";
 
     /**
      * The tables required to modify a customer entity
      */
-    static final String[] USER_TABLES = {TABLE_USER};
+    private static final String[] USER_TABLES = {TABLE_USER};
 
     private DbConnection dbConnection;
 

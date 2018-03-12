@@ -40,9 +40,10 @@ public class AddCustomerController {
         textFieldCustomerPhone.setText(customer.getPhone());
     }
 
-    private final int LIMIT_NAME = 45;
-    private final int LIMIT_ADDRESS = 50;
-    private final int LIMIT_PHONE = 20;
+    /*MYSQL character limits by column*/
+    private static final int LIMIT_NAME = 45;
+    private static final int LIMIT_ADDRESS = 50;
+    private static final int LIMIT_PHONE = 20;
 
     @FXML
     void handleCustomerSave() {
@@ -136,7 +137,7 @@ public class AddCustomerController {
 
     private Alert buildAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Error Saving Appointment");
+        alert.setTitle("Error Saving Customer");
         alert.setHeaderText(null);
 
         return alert;
