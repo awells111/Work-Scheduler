@@ -86,19 +86,19 @@ public class AddCustomerController {
         //Display alert for incorrect inputs
         if (textFieldCustomerName.getText().equals("")) {
             alert.setContentText("Name cannot be empty");
-            alert.showAndWait();
+            alert.show();
             throw new Exception("Name cannot be empty");
         }
 
         if (textFieldCustomerAddress.getText().equals("")) {
             alert.setContentText("Address cannot be empty");
-            alert.showAndWait();
+            alert.show();
             throw new Exception("Address cannot be empty");
         }
 
         if (textFieldCustomerPhone.getText().equals("")) {
             alert.setContentText("Phone cannot be empty");
-            alert.showAndWait();
+            alert.show();
             throw new Exception("Phone cannot be empty");
         }
     }

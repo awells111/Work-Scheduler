@@ -100,14 +100,14 @@ public class AddAppointmentController {
         //Display alert for incorrect inputs
         if (textFieldAppointmentType.getText().equals("")) {
             alert.setContentText("Type cannot be empty");
-            alert.showAndWait();
+            alert.show();
             throw new Exception("Type cannot be empty");
         }
 
         if (database.isOutsideBusinessHours(appointmentDateTimePickerStart.getDateTimeValueGMT().getHour()) ||
                 database.isOutsideBusinessHours(appointmentDateTimePickerEnd.getDateTimeValueGMT().getHour())) {
             alert.setContentText("Appointment must be between 8:00 and 22:00 GMT.");
-            alert.showAndWait();
+            alert.show();
             throw new Exception("Appointment must be between 8:00 and 22:00 GMT.");
         }
 

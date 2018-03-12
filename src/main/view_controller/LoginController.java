@@ -64,7 +64,7 @@ public class LoginController {
         alert.setTitle(rb.getString("error"));
         alert.setHeaderText(null);
         alert.setContentText(rb.getString("username_password_not_match"));
-        alert.showAndWait();
+        alert.show();
     }
 
     /*Removes all whitespaces and non-visible characters (e.g., tab, \n)*/
