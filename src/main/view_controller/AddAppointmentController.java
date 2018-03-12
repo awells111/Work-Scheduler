@@ -51,7 +51,10 @@ public class AddAppointmentController {
 
     @FXML
     void handleAppointmentSave() {
-        if (inputError()) {
+        try {
+            inputError();
+        } catch (Exception e) {
+            e.printStackTrace();
             return;
         }
 
@@ -91,88 +94,27 @@ public class AddAppointmentController {
     }
 
     /*Returns false if there are no errors in saving the appointment*/
-    private boolean inputError() {
+    private void inputError() throws Exception {
         Alert alert = buildAlert();
 
         //Display alert for incorrect inputs
         if (textFieldAppointmentType.getText().equals("")) {
             alert.setContentText("Type cannot be empty");
             alert.showAndWait();
-            return true;
+            throw new Exception("Type cannot be empty");
         }
 
         if (database.isOutsideBusinessHours(appointmentDateTimePickerStart.getDateTimeValueGMT().getHour()) ||
                 database.isOutsideBusinessHours(appointmentDateTimePickerEnd.getDateTimeValueGMT().getHour())) {
             alert.setContentText("Appointment must be between 8:00 and 22:00 GMT.");
             alert.showAndWait();
-            return true;
+            throw new Exception("Appointment must be between 8:00 and 22:00 GMT.");
         }
 
-
         //todo finish this, will have to pass through a list of all appointments in the current customer
-
         //If start date is earlier than now
-
-
         //If end date is before start date OR equals start date
-
-
-
         /*Only check after all inputs are checked*/
-
-
-//
-//        if (!isInteger(textfieldPartInv.getText())) {
-//            alert.setContentText("Inv must be an integer");
-//            alert.showAndWait();
-//            return true;
-//        }
-//
-//        if (!isDouble(textfieldPartPrice.getText())) {
-//            alert.setContentText("Price/Cost must be a number");
-//            alert.showAndWait();
-//            return true;
-//        }
-//
-//        if (!isInteger(textfieldPartMin.getText())) {
-//            alert.setContentText("Min must be an integer");
-//            alert.showAndWait();
-//            return true;
-//        }
-//
-//        if (!isInteger(textfieldPartMax.getText())) {
-//            alert.setContentText("Max must be an integer");
-//            alert.showAndWait();
-//            return true;
-//        }
-//
-//        if (radioButtonInHouse.isSelected() && !isInteger(textfieldPartMachineID.getText())) {
-//            alert.setContentText("Machine ID must be an integer");
-//            alert.showAndWait();
-//            return true;
-//        } else if (radioButtonOutSourced.isSelected() && textfieldPartMachineID.getText().equals("")) {
-//            alert.setContentText("Company Name cannot be empty");
-//            alert.showAndWait();
-//            return true;
-//        }
-//
-//
-//        int inv = Integer.parseInt(textfieldPartInv.getText());
-//        int min = Integer.parseInt(textfieldPartMin.getText());
-//        int max = Integer.parseInt(textfieldPartMax.getText());
-//
-//        if (min > max || max < min) { //max < min is redundant but I am including it to meet project specifications
-//            alert.setContentText("Min cannot be higher than Max");
-//            alert.showAndWait();
-//            return true;
-//        }
-//
-//        if (inv < min || inv > max) {
-//            alert.setContentText("Inv must be an integer between Min and Max");
-//            alert.showAndWait();
-//            return true;
-//        }
-        return false;
     }
 
     private Alert buildAlert() {

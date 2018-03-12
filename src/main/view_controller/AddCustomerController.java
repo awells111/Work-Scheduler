@@ -46,7 +46,10 @@ public class AddCustomerController {
 
     @FXML
     void handleCustomerSave() {
-        if (errorBeforeSave()) { //Check for errors like empty fields
+        try {
+            errorBeforeSave();
+        } catch (Exception e) {
+            e.printStackTrace();
             return;
         }
 
@@ -77,29 +80,27 @@ public class AddCustomerController {
     }
 
     /*Returns false if there are no errors in saving the customer*/
-    private boolean errorBeforeSave() {
+    private void errorBeforeSave() throws Exception {
         Alert alert = buildAlert();
 
         //Display alert for incorrect inputs
         if (textFieldCustomerName.getText().equals("")) {
             alert.setContentText("Name cannot be empty");
             alert.showAndWait();
-            return true;
+            throw new Exception("Name cannot be empty");
         }
 
         if (textFieldCustomerAddress.getText().equals("")) {
             alert.setContentText("Address cannot be empty");
             alert.showAndWait();
-            return true;
+            throw new Exception("Address cannot be empty");
         }
 
         if (textFieldCustomerPhone.getText().equals("")) {
             alert.setContentText("Phone cannot be empty");
             alert.showAndWait();
-            return true;
+            throw new Exception("Phone cannot be empty");
         }
-
-        return false;
     }
 
     private void setFields() {

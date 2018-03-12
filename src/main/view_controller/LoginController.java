@@ -33,7 +33,7 @@ public class LoginController {
     }
 
     @FXML
-    void handleLogin(ActionEvent event) {
+    void handleLogin(ActionEvent event) throws Exception {
         textFieldLoginName.setText(removeWhiteSpace(textFieldLoginName.getText()));
         textFieldLoginPassword.setText(removeWhiteSpace(textFieldLoginPassword.getText()));
 
@@ -41,6 +41,10 @@ public class LoginController {
         String password = textFieldLoginPassword.getText();
         int successCode = mainApp.getDatabase().login(username, password);
 
+        loggedin(successCode, username);
+    }
+
+    void loggedin(int successCode, String username) throws Exception{
         boolean loggedIn = successCode == UserDAO.CODE_SUCCESS; //Returns true if our login query returned a user
 
         if (loggedIn) { //If login was successful
@@ -51,6 +55,7 @@ public class LoginController {
             mainApp.showOverview(); //Show the overview scene
         } else { //If login failed
             showErrorAlert();
+            throw new Exception(rb.getString("username_password_not_match"));
         }
     }
 
