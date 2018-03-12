@@ -9,8 +9,6 @@ import main.data.Database;
 import main.model.Appointment;
 import main.view.DateTimePicker;
 
-import java.time.LocalDateTime;
-
 import static main.data.Database.CODE_NEW_ENTITY;
 
 public class AddAppointmentController {
@@ -49,18 +47,25 @@ public class AddAppointmentController {
 
     @FXML
     void handleAppointmentSave() {
-        if (errorBeforeSave()) {
+        if (inputError()) {
             return;
         }
 
         int id = (isNewAppointment()) ? database.nextAppointmentId() : appointment.getId();
         int custId = appointment.getCustomerId();
         String type = textFieldAppointmentType.getText();
-
         String startTime = appointmentDateTimePickerStart.getFormattedString();
-        String endTime = appointmentDateTimePickerStart.getFormattedString(); //todo CHANGE to add the endtime
+        String endTime = appointmentDateTimePickerEnd.getFormattedString();
 
         Appointment newAppointment = new Appointment(id, custId, type, startTime, endTime);
+
+        if (database.appointmentOverlaps(newAppointment)) {
+            Alert alert = buildAlert();
+            alert.setContentText("This appointment overlaps one or more existing appointments.");
+            alert.showAndWait();
+            return;
+        }
+
 
         if (isNewAppointment()) {
             database.addAppointment(newAppointment);
@@ -82,10 +87,8 @@ public class AddAppointmentController {
     }
 
     /*Returns false if there are no errors in saving the appointment*/
-    private boolean errorBeforeSave() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Error Saving Appointment");
-        alert.setHeaderText(null);
+    private boolean inputError() {
+        Alert alert = buildAlert();
 
         //Display alert for incorrect inputs
         if (textFieldAppointmentType.getText().equals("")) {
@@ -94,10 +97,8 @@ public class AddAppointmentController {
             return true;
         }
 
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime start = appointmentDateTimePickerStart.getDateTimeValue();
-        LocalDateTime emd = appointmentDateTimePickerEnd.getDateTimeValue();
-
+        String startTime = appointmentDateTimePickerStart.getFormattedString();
+        String endTime = appointmentDateTimePickerEnd.getFormattedString();
 
         //todo finish this, will have to pass through a list of all appointments in the current customer
 
@@ -108,6 +109,7 @@ public class AddAppointmentController {
 
 
 
+        /*Only check after all inputs are checked*/
 
 
 //
@@ -162,5 +164,13 @@ public class AddAppointmentController {
 //            return true;
 //        }
         return false;
+    }
+
+    private Alert buildAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error Saving Appointment");
+        alert.setHeaderText(null);
+
+        return alert;
     }
 }

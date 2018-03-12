@@ -65,7 +65,6 @@ public class AppointmentDAO extends DAO{
             COLUMN_APPOINTMENT_TYPE + ", " +
             COLUMN_APPOINTMENT_START + ", " +
             COLUMN_APPOINTMENT_END + ") VALUES (?, ?, ?, ?, ?)";
-
     /**
      * Insert an {@link Appointment} into the database
      *
@@ -187,4 +186,54 @@ public class AppointmentDAO extends DAO{
         return appointments;
     }
 
+    /*Check if an appointment overlaps other appointments*/
+    static final String QUERY_SELECT_OVERLAPPED_APPOINTMENTS = "SELECT count(*) FROM " +
+            TABLE_APPOINTMENT +
+            " WHERE " + COLUMN_CUSTOMER_ID + " = ? AND ((? > " + //WHERE customerId is the same
+            COLUMN_APPOINTMENT_START +
+            " AND ? < " +//AND (one of three things)
+            COLUMN_APPOINTMENT_END + //appt start time is between the start date and end date
+            ") OR (? > " + // OR appt end time is between the start date and end date
+            COLUMN_APPOINTMENT_START +
+            " AND ? < " +
+            COLUMN_APPOINTMENT_END +
+            ") OR (? <= " + //OR the appt start time is before/equal to the start date, and the appt end time is equal to/after the end date
+            COLUMN_APPOINTMENT_START +
+            " AND ? >= " +
+            COLUMN_APPOINTMENT_END + "))";
+
+    int selectOverlappedAppointments(Appointment appointment) {
+        int count = 0;
+
+        String[][] queries = emptyEntity(APPOINTMENT_TABLES.length);
+
+        String apptStart = getDatabase().localTimeToDatabase(appointment.getStart());
+        String apptEnd = getDatabase().localTimeToDatabase(appointment.getEnd());
+
+        queries[0] = new String[]{
+                QUERY_SELECT_OVERLAPPED_APPOINTMENTS,
+                Integer.toString(appointment.getCustomerId()),
+                apptStart,
+                apptStart,
+                apptEnd,
+                apptEnd,
+                apptStart,
+                apptEnd
+        };
+
+        ResultSet[] resultSets = getResultSets(queries);
+
+        try {
+            ResultSet rs = resultSets[0]; //todo Can we just put resultSets[0] in the while loop
+
+            while (rs.next()) { //For each result
+                count = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
 }

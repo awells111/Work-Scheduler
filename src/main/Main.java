@@ -159,7 +159,7 @@ public class Main extends Application {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Add/Modify appointment?");
         alert.setHeaderText(null);
-        alert.setContentText("Are you sure?");
+        alert.setContentText("Add/Modify Appointment?");
 
         //If ok is pressed, load next scene?
         alert.showAndWait().ifPresent((response -> {

@@ -47,16 +47,16 @@ public class DateTimePicker extends DatePicker {
             setValue(newValue == null ? null : newValue.toLocalDate());
         });
 
-        getEditor().focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue)
-                simulateEnterPressed();
-        });
+//        getEditor().focusedProperty().addListener((observable, oldValue, newValue) -> {
+//            if (!newValue)
+//                simulateEnterPressed();
+//        });
 
     }
-
-    private void simulateEnterPressed() {
-        getEditor().fireEvent(new KeyEvent(getEditor(), getEditor(), KeyEvent.KEY_PRESSED, null, null, KeyCode.ENTER, false, false, false, false));
-    }
+//
+//    private void simulateEnterPressed() {
+//        getEditor().fireEvent(new KeyEvent(getEditor(), getEditor(), KeyEvent.KEY_PRESSED, null, null, KeyCode.ENTER, false, false, false, false));
+//    }
 
     public LocalDateTime getDateTimeValue() {
         return dateTimeValue.get();

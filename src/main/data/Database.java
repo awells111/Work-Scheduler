@@ -196,6 +196,11 @@ public class Database {
         return error;
     }
 
+    public boolean appointmentOverlaps(Appointment appointment) {
+        //If this appointment is not overlapping any other appointments, return false
+        return getAppointmentDAO().selectOverlappedAppointments(appointment) != 0;
+    }
+
     public String localDateTimeToString(LocalDateTime localDateTime) {
         return dateTimeFormatter.format(localDateTime);
     }

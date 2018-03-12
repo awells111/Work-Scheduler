@@ -15,4 +15,5 @@ Problem: No minimum value exceptions are set for any field.
 
 Problem: No maximum value exceptions are set in accordance with the database.
 
-Problem: Appointments need to be updated based on the selected customer.
+Problem: The application is currently retrieving the DATETIME as a String, then converting it back and forth between a LocalDateTime and a String.
+Solution: The TimeStamp should be retrieved from the database, then converted into a LocalDateTime and placed into the Appointment object.
