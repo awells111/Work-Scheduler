@@ -139,6 +139,11 @@ public class OverviewController {
     }
 
     @FXML
+    void handleShowReports() {
+        mainApp.showReports();
+    }
+
+    @FXML
     void handleAddCustomer() {
         Customer newCustomer = new Customer(Database.CODE_NEW_ENTITY, "", "", "");
 
@@ -221,13 +226,13 @@ public class OverviewController {
         tableViewAppointment.setItems(sortedAppointmentData);
     }
 
-
     private void showCloseAppointments() {
         ArrayList<Appointment> closeAppointments = mainApp.getDatabase().getCloseAppointments();
 
         if (closeAppointments.size() > 0) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Appointments Start Soon");
+            alert.setHeaderText(null);
             alert.setContentText("One or more appointments start soon");
 
             StringBuilder sb = new StringBuilder();
@@ -249,7 +254,7 @@ public class OverviewController {
             GridPane expContent = new GridPane();
             expContent.setMaxWidth(Double.MAX_VALUE);
             expContent.add(textArea, 0, 1);
-            
+
             alert.getDialogPane().setContent(expContent);
 
             alert.showAndWait();
