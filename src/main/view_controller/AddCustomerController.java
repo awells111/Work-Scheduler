@@ -1,6 +1,7 @@
 package main.view_controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.data.Database;
@@ -32,10 +33,16 @@ public class AddCustomerController {
         this.database = database;
         this.customer = customer;
 
+        setFields();
+
         textFieldCustomerName.setText(customer.getName());
         textFieldCustomerAddress.setText(customer.getAddress());
         textFieldCustomerPhone.setText(customer.getPhone());
     }
+
+    private final int LIMIT_NAME = 45;
+    private final int LIMIT_ADDRESS = 50;
+    private final int LIMIT_PHONE = 20;
 
     @FXML
     void handleCustomerSave() {
@@ -71,77 +78,66 @@ public class AddCustomerController {
 
     /*Returns false if there are no errors in saving the customer*/
     private boolean errorBeforeSave() {
-        return errorBeforeSave(false);
-    }
+        Alert alert = buildAlert();
 
-    private boolean errorBeforeSave(boolean error) {
-
-        if (error) {
-
+        //Display alert for incorrect inputs
+        if (textFieldCustomerName.getText().equals("")) {
+            alert.setContentText("Name cannot be empty");
+            alert.showAndWait();
+            return true;
         }
 
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setType("Error Saving Part");
-//        alert.setHeaderText(null);
-//
-//        //Display alert for incorrect inputs
-//        if (textfieldPartName.getText().equals("")) {
-//            alert.setContentText("Name cannot be empty");
-//            alert.showAndWait();
-//            return true;
-//        }
-//
-//        if (!isInteger(textfieldPartInv.getText())) {
-//            alert.setContentText("Inv must be an integer");
-//            alert.showAndWait();
-//            return true;
-//        }
-//
-//        if (!isDouble(textfieldPartPrice.getText())) {
-//            alert.setContentText("Price/Cost must be a number");
-//            alert.showAndWait();
-//            return true;
-//        }
-//
-//        if (!isInteger(textfieldPartMin.getText())) {
-//            alert.setContentText("Min must be an integer");
-//            alert.showAndWait();
-//            return true;
-//        }
-//
-//        if (!isInteger(textfieldPartMax.getText())) {
-//            alert.setContentText("Max must be an integer");
-//            alert.showAndWait();
-//            return true;
-//        }
-//
-//        if (radioButtonInHouse.isSelected() && !isInteger(textfieldPartMachineID.getText())) {
-//            alert.setContentText("Machine ID must be an integer");
-//            alert.showAndWait();
-//            return true;
-//        } else if (radioButtonOutSourced.isSelected() && textfieldPartMachineID.getText().equals("")) {
-//            alert.setContentText("Company Name cannot be empty");
-//            alert.showAndWait();
-//            return true;
-//        }
-//
-//
-//        int inv = Integer.parseInt(textfieldPartInv.getText());
-//        int min = Integer.parseInt(textfieldPartMin.getText());
-//        int max = Integer.parseInt(textfieldPartMax.getText());
-//
-//        if (min > max || max < min) { //max < min is redundant but I am including it to meet project specifications
-//            alert.setContentText("Min cannot be higher than Max");
-//            alert.showAndWait();
-//            return true;
-//        }
-//
-//        if (inv < min || inv > max) {
-//            alert.setContentText("Inv must be an integer between Min and Max");
-//            alert.showAndWait();
-//            return true;
-//        }
+        if (textFieldCustomerAddress.getText().equals("")) {
+            alert.setContentText("Address cannot be empty");
+            alert.showAndWait();
+            return true;
+        }
+
+        if (textFieldCustomerPhone.getText().equals("")) {
+            alert.setContentText("Phone cannot be empty");
+            alert.showAndWait();
+            return true;
+        }
 
         return false;
+    }
+
+    private void setFields() {
+        /*Only Accept Letters*/
+        textFieldCustomerName.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\sa-zA-Z*")) {
+                textFieldCustomerName.setText(newValue.replaceAll("[^\\sa-zA-Z]", ""));
+            }
+        });
+
+        /*Only Accept Digits*/
+        textFieldCustomerPhone.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                textFieldCustomerPhone.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+
+        setLimit(textFieldCustomerName, LIMIT_NAME);
+        setLimit(textFieldCustomerAddress, LIMIT_ADDRESS);
+        setLimit(textFieldCustomerPhone, LIMIT_PHONE);
+    }
+
+    private void setLimit(TextField textField, int limit) {
+        /*Only allow limit characters*/
+        textField.lengthProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.intValue() > oldValue.intValue()) {
+                if (textField.getText().length() >= limit) {
+                    textField.setText(textField.getText().substring(0, limit));
+                }
+            }
+        });
+    }
+
+    private Alert buildAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error Saving Appointment");
+        alert.setHeaderText(null);
+
+        return alert;
     }
 }
