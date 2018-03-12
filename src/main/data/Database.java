@@ -5,10 +5,7 @@ import javafx.collections.ObservableList;
 import main.model.Appointment;
 import main.model.Customer;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -19,7 +16,10 @@ public class Database {
 
     public static final String ZONE_ID_DB = "UTC";
     public static final String FORMAT_DATETIME = "yyyy-MM-dd HH:mm";
-    public static final String MYSQL_DATETIME_FORMAT = "'%Y-%m-%d %H:%i'"; //MYSQL Equivalent to "yyyy-MM-dd HH:mm"
+    static final String MYSQL_DATETIME_FORMAT = "'%Y-%m-%d %H:%i'"; //MYSQL Equivalent to "yyyy-MM-dd HH:mm"
+
+    private static final int GMT_OPEN_HOUR = 8; //Opens at 8:00 GMT
+    private static final int GMT_CLOSE_HOUR = 22; //Closes at 22:00 GMT
 
     public static final int CODE_NEW_ENTITY = -1;
 
@@ -148,8 +148,7 @@ public class Database {
 
     public void setAppointmentsFromDatabase() {
         /*Select all appointments from the database*/
-        ArrayList<Appointment> appointments = getAppointmentDAO().getEntities();// todo uncomment
-//        ArrayList<Appointment> appointments = new ArrayList<>();
+        ArrayList<Appointment> appointments = getAppointmentDAO().getEntities();
         setAppointments(FXCollections.observableList(appointments));
     }
 
@@ -209,15 +208,19 @@ public class Database {
         return LocalDateTime.parse(localDateTime, dateTimeFormatter);
     }
 
-    public String localTimeToDatabase(String localTime) {
-        LocalDateTime localDateTime = localDateTimeFromString(localTime);
+    public String localDateTimeToDatabase(String localDateTimeString) {
+        LocalDateTime localDateTime = localDateTimeFromString(localDateTimeString);
         ZonedDateTime ldtZoned = localDateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of(ZONE_ID_DB));
         return dateTimeFormatter.format(ldtZoned.toLocalDateTime());
     }
 
-    public String databaseTimeToLocal(String databaseTime) {
-        LocalDateTime localDateTime = localDateTimeFromString(databaseTime);
+    public String databaseDateTimeToLocal(String databaseTimeString) {
+        LocalDateTime localDateTime = localDateTimeFromString(databaseTimeString);
         ZonedDateTime localTime = localDateTime.atZone(ZoneId.of(ZONE_ID_DB)).withZoneSameInstant(ZoneId.systemDefault());
         return dateTimeFormatter.format(localTime);
+    }
+
+    public boolean isOutsideBusinessHours(int hour) {
+        return hour < GMT_OPEN_HOUR || hour > GMT_CLOSE_HOUR;
     }
 }

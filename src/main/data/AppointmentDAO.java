@@ -81,8 +81,8 @@ public class AppointmentDAO extends DAO{
                 Integer.toString(newAppointment.getId()),
                 Integer.toString(newAppointment.getCustomerId()),
                 newAppointment.getType(),
-                getDatabase().localTimeToDatabase(newAppointment.getStart()),
-                getDatabase().localTimeToDatabase(newAppointment.getEnd())
+                getDatabase().localDateTimeToDatabase(newAppointment.getStart()),
+                getDatabase().localDateTimeToDatabase(newAppointment.getEnd())
         };
 
         /*Execute the required statements*/
@@ -108,8 +108,8 @@ public class AppointmentDAO extends DAO{
         statements[0] = new String[]{
                 STATEMENT_UPDATE_APPOINTMENT,
                 updatedAppointment.getType(),
-                getDatabase().localTimeToDatabase(updatedAppointment.getStart()),
-                getDatabase().localTimeToDatabase(updatedAppointment.getEnd()),
+                getDatabase().localDateTimeToDatabase(updatedAppointment.getStart()),
+                getDatabase().localDateTimeToDatabase(updatedAppointment.getEnd()),
                 Integer.toString(updatedAppointment.getId())
         };
 
@@ -173,8 +173,8 @@ public class AppointmentDAO extends DAO{
                 int apptId = apptRS.getInt(COLUMN_APPOINTMENT_ID);
                 int custId = apptRS.getInt(COLUMN_CUSTOMER_ID);
                 String apptType = apptRS.getString(COLUMN_APPOINTMENT_TYPE);
-                String apptStart = getDatabase().databaseTimeToLocal(apptRS.getString(COLUMN_APPOINTMENT_START));
-                String apptEnd = getDatabase().databaseTimeToLocal(apptRS.getString(COLUMN_APPOINTMENT_END));
+                String apptStart = getDatabase().databaseDateTimeToLocal(apptRS.getString(COLUMN_APPOINTMENT_START));
+                String apptEnd = getDatabase().databaseDateTimeToLocal(apptRS.getString(COLUMN_APPOINTMENT_END));
 
                 appointments.add(new Appointment(apptId, custId, apptType, apptStart, apptEnd));
             }
@@ -207,8 +207,8 @@ public class AppointmentDAO extends DAO{
 
         String[][] queries = emptyEntity(APPOINTMENT_TABLES.length);
 
-        String apptStart = getDatabase().localTimeToDatabase(appointment.getStart());
-        String apptEnd = getDatabase().localTimeToDatabase(appointment.getEnd());
+        String apptStart = getDatabase().localDateTimeToDatabase(appointment.getStart());
+        String apptEnd = getDatabase().localDateTimeToDatabase(appointment.getEnd());
 
         queries[0] = new String[]{
                 QUERY_SELECT_OVERLAPPED_APPOINTMENTS,

@@ -7,12 +7,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.StringConverter;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 import static main.data.Database.FORMAT_DATETIME;
+import static main.data.Database.ZONE_ID_DB;
 
 public class DateTimePicker extends DatePicker {
 
@@ -47,19 +46,14 @@ public class DateTimePicker extends DatePicker {
             setValue(newValue == null ? null : newValue.toLocalDate());
         });
 
-//        getEditor().focusedProperty().addListener((observable, oldValue, newValue) -> {
-//            if (!newValue)
-//                simulateEnterPressed();
-//        });
-
     }
-//
-//    private void simulateEnterPressed() {
-//        getEditor().fireEvent(new KeyEvent(getEditor(), getEditor(), KeyEvent.KEY_PRESSED, null, null, KeyCode.ENTER, false, false, false, false));
-//    }
 
     public LocalDateTime getDateTimeValue() {
         return dateTimeValue.get();
+    }
+
+    public ZonedDateTime getDateTimeValueGMT() {
+        return getDateTimeValue().atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of(ZONE_ID_DB));
     }
 
     public void setDateTimeValue(LocalDateTime dateTimeValue) {

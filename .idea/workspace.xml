@@ -73,8 +73,8 @@
       <file leaf-file-name="OverviewController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/view_controller/OverviewController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="156" column="0" lean-forward="false" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
+            <state relative-caret-position="1629">
+              <caret line="157" column="24" lean-forward="false" selection-start-line="157" selection-start-column="24" selection-end-line="157" selection-end-column="24" />
               <folding>
                 <element signature="method#initialize#0;class#OverviewController#0" expanded="false" />
                 <element signature="method#handleAddCustomer#0;class#OverviewController#0" expanded="false" />
@@ -92,44 +92,82 @@
       <file leaf-file-name="LoginController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/view_controller/LoginController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="903">
-              <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="61" selection-end-column="28" />
+            <state relative-caret-position="366">
+              <caret line="64" column="49" lean-forward="true" selection-start-line="64" selection-start-column="49" selection-end-line="64" selection-end-column="49" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AddAppointmentController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AddAppointmentController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/view_controller/AddAppointmentController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-44">
-              <caret line="66" column="9" lean-forward="false" selection-start-line="66" selection-start-column="9" selection-end-line="66" selection-end-column="9" />
+            <state relative-caret-position="3339">
+              <caret line="178" column="61" lean-forward="false" selection-start-line="178" selection-start-column="61" selection-end-line="178" selection-end-column="61" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AppointmentDAO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/data/AppointmentDAO.java">
+      <file leaf-file-name="AddCustomerController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/view_controller/AddCustomerController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3591">
-              <caret line="221" column="10" lean-forward="true" selection-start-line="221" selection-start-column="10" selection-end-line="221" selection-end-column="10" />
+            <state relative-caret-position="-2112">
+              <caret line="11" column="14" lean-forward="false" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
               <folding>
-                <element signature="docComment;method#insertEntity#0;class#AppointmentDAO#0" expanded="false" />
-                <element signature="method#insertEntity#0;class#AppointmentDAO#0" expanded="false" />
-                <element signature="docComment;method#deleteEntity#0;class#AppointmentDAO#0" expanded="false" />
-                <element signature="method#deleteEntity#0;class#AppointmentDAO#0" expanded="false" />
+                <element signature="method#setCustomer#0;class#AddCustomerController#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2119">
-              <caret line="164" column="28" lean-forward="true" selection-start-line="164" selection-start-column="28" selection-end-line="164" selection-end-column="28" />
+            <state relative-caret-position="184">
+              <caret line="186" column="40" lean-forward="true" selection-start-line="186" selection-start-column="40" selection-end-line="186" selection-end-column="40" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DateTimePicker.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/view/DateTimePicker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="54" column="36" lean-forward="false" selection-start-line="54" selection-start-column="36" selection-end-line="54" selection-end-column="36" />
+              <folding>
+                <element signature="e#1752#1753#0" expanded="true" />
+                <element signature="e#1794#1795#0" expanded="true" />
+                <element signature="class#InternalConverter#0;class#DateTimePicker#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Database.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/data/Database.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1713">
+              <caret line="20" column="41" lean-forward="false" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
+              <folding>
+                <element signature="e#1445#1446#0" expanded="true" />
+                <element signature="e#1480#1481#0" expanded="true" />
+                <element signature="method#nextCustomerId#0;class#Database#0" expanded="false" />
+                <element signature="method#setCustomersFromDatabase#0;class#Database#0" expanded="false" />
+                <element signature="method#addCustomer#0;class#Database#0" expanded="false" />
+                <element signature="method#updateCustomer#0;class#Database#0" expanded="false" />
+                <element signature="method#deleteCustomer#0;class#Database#0" expanded="false" />
+                <element signature="method#nextAppointmentId#0;class#Database#0" expanded="false" />
+                <element signature="method#setAppointmentsFromDatabase#0;class#Database#0" expanded="false" />
+                <element signature="method#addAppointment#0;class#Database#0" expanded="false" />
+                <element signature="method#updateAppointment#0;class#Database#0" expanded="false" />
+                <element signature="method#deleteAppointment#0;class#Database#0" expanded="false" />
+                <element signature="e#6669#6670#0" expanded="true" />
+                <element signature="e#6731#6732#0" expanded="true" />
+                <element signature="e#7626#7627#0" expanded="true" />
+                <element signature="e#7694#7695#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -147,8 +185,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>todo</find>
-      <find>taskstream</find>
       <find>hiya</find>
       <find>system.out.</find>
       <find>insertent</find>
@@ -177,6 +213,8 @@
       <find>CODE_</find>
       <find>next</find>
       <find>are you su</find>
+      <find>withzone</find>
+      <find>parse</find>
     </findStrings>
     <replaceStrings>
       <replace>appointment</replace>
@@ -236,11 +274,12 @@
         <option value="$PROJECT_DIR$/src/main/view_controller/OverviewController.java" />
         <option value="$PROJECT_DIR$/src/main/view_controller/LoginController.java" />
         <option value="$PROJECT_DIR$/src/main/data/DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/data/Database.java" />
-        <option value="$PROJECT_DIR$/src/main/view_controller/AddAppointmentController.java" />
-        <option value="$PROJECT_DIR$/src/main/view/DateTimePicker.java" />
         <option value="$PROJECT_DIR$/src/main/data/AppointmentDAO.java" />
         <option value="$PROJECT_DIR$/src/main/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/data/testClass.java" />
+        <option value="$PROJECT_DIR$/src/main/view/DateTimePicker.java" />
+        <option value="$PROJECT_DIR$/src/main/data/Database.java" />
+        <option value="$PROJECT_DIR$/src/main/view_controller/AddAppointmentController.java" />
       </list>
     </option>
   </component>
@@ -572,6 +611,25 @@
       <module name="" />
       <envs />
     </configuration>
+    <configuration name="testClass" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="main.data.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="main.data.testClass" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="Work Scheduler" />
+      <envs />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -644,15 +702,17 @@
       <Host>localhost</Host>
       <Port>5050</Port>
     </configuration>
-    <list size="3">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Application.Main" />
       <item index="1" class="java.lang.String" itemvalue="Application.TestConnection" />
       <item index="2" class="java.lang.String" itemvalue="Application.NumberTest" />
+      <item index="3" class="java.lang.String" itemvalue="Application.testClass" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Application.NumberTest" />
-        <item index="1" class="java.lang.String" itemvalue="Application.TestConnection" />
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="Application.testClass" />
+        <item index="1" class="java.lang.String" itemvalue="Application.NumberTest" />
+        <item index="2" class="java.lang.String" itemvalue="Application.TestConnection" />
       </list>
     </recent_temporary>
   </component>
@@ -733,14 +793,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/view_controller/login.fxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -897,16 +949,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/AddCustomerController.java" />
     <entry file="file://$PROJECT_DIR$/src/main/add_customer.fxml" />
-    <entry file="file://$PROJECT_DIR$/src/main/view_controller/AddCustomerController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="11" column="14" lean-forward="false" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
-          <folding>
-            <element signature="method#setCustomer#0;class#AddCustomerController#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/view_controller/add_customer.fxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="441">
@@ -990,23 +1032,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/view_controller/OverviewController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="156" column="0" lean-forward="false" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
-          <folding>
-            <element signature="method#initialize#0;class#OverviewController#0" expanded="false" />
-            <element signature="method#handleAddCustomer#0;class#OverviewController#0" expanded="false" />
-            <element signature="method#handleDeleteCustomer#0;class#OverviewController#0" expanded="false" />
-            <element signature="method#handleModifyAppointment#0;class#OverviewController#0" expanded="false" />
-            <element signature="method#handleDeleteAppointment#0;class#OverviewController#0" expanded="false" />
-            <element signature="method#initAppointmentFilter#0;class#OverviewController#0" expanded="false" />
-            <element signature="e#5455#6546#0" expanded="false" />
-            <marker date="1520727710311" expanded="false" signature="3682:3761" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/data/CustomerDAO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="484">
@@ -1021,50 +1046,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/view_controller/LoginController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/data/testClass.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="903">
-          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="61" selection-end-column="28" />
+        <state relative-caret-position="429">
+          <caret line="31" column="55" lean-forward="true" selection-start-line="31" selection-start-column="55" selection-end-line="31" selection-end-column="55" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/view/DateTimePicker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-          <folding>
-            <element signature="class#InternalConverter#0;class#DateTimePicker#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/data/Database.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="198" column="65" lean-forward="false" selection-start-line="198" selection-start-column="65" selection-end-line="198" selection-end-column="65" />
-          <folding>
-            <element signature="e#1408#1409#0" expanded="true" />
-            <element signature="e#1443#1444#0" expanded="true" />
-            <element signature="method#nextCustomerId#0;class#Database#0" expanded="false" />
-            <element signature="method#addCustomer#0;class#Database#0" expanded="false" />
-            <element signature="method#updateCustomer#0;class#Database#0" expanded="false" />
-            <element signature="method#deleteCustomer#0;class#Database#0" expanded="false" />
-            <element signature="method#nextAppointmentId#0;class#Database#0" expanded="false" />
-            <element signature="method#updateAppointment#0;class#Database#0" expanded="false" />
-            <element signature="method#deleteAppointment#0;class#Database#0" expanded="false" />
-            <element signature="e#6716#6717#0" expanded="true" />
-            <element signature="e#6778#6779#0" expanded="true" />
-            <element signature="method#localDateTimeFromString#0;class#Database#0" expanded="false" />
-            <element signature="method#localTimeToDatabase#0;class#Database#0" expanded="false" />
-            <element signature="method#databaseTimeToLocal#0;class#Database#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/data/DAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="502">
+        <state relative-caret-position="261">
           <caret line="104" column="47" lean-forward="false" selection-start-line="104" selection-start-column="47" selection-end-line="104" selection-end-column="47" />
           <folding>
             <element signature="method#buildPreparedStatements#0;class#DAO#0" expanded="false" />
@@ -1074,29 +1066,100 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/data/AppointmentDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3591">
-          <caret line="221" column="10" lean-forward="true" selection-start-line="221" selection-start-column="10" selection-end-line="221" selection-end-column="10" />
+        <state relative-caret-position="-2469">
+          <caret line="84" column="30" lean-forward="false" selection-start-line="84" selection-start-column="30" selection-end-line="84" selection-end-column="30" />
           <folding>
             <element signature="docComment;method#insertEntity#0;class#AppointmentDAO#0" expanded="false" />
-            <element signature="method#insertEntity#0;class#AppointmentDAO#0" expanded="false" />
             <element signature="docComment;method#deleteEntity#0;class#AppointmentDAO#0" expanded="false" />
             <element signature="method#deleteEntity#0;class#AppointmentDAO#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/main/data/Database.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2119">
-          <caret line="164" column="28" lean-forward="true" selection-start-line="164" selection-start-column="28" selection-end-line="164" selection-end-column="28" />
-          <folding />
+        <state relative-caret-position="-1713">
+          <caret line="20" column="41" lean-forward="false" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
+          <folding>
+            <element signature="e#1445#1446#0" expanded="true" />
+            <element signature="e#1480#1481#0" expanded="true" />
+            <element signature="method#nextCustomerId#0;class#Database#0" expanded="false" />
+            <element signature="method#setCustomersFromDatabase#0;class#Database#0" expanded="false" />
+            <element signature="method#addCustomer#0;class#Database#0" expanded="false" />
+            <element signature="method#updateCustomer#0;class#Database#0" expanded="false" />
+            <element signature="method#deleteCustomer#0;class#Database#0" expanded="false" />
+            <element signature="method#nextAppointmentId#0;class#Database#0" expanded="false" />
+            <element signature="method#setAppointmentsFromDatabase#0;class#Database#0" expanded="false" />
+            <element signature="method#addAppointment#0;class#Database#0" expanded="false" />
+            <element signature="method#updateAppointment#0;class#Database#0" expanded="false" />
+            <element signature="method#deleteAppointment#0;class#Database#0" expanded="false" />
+            <element signature="e#6669#6670#0" expanded="true" />
+            <element signature="e#6731#6732#0" expanded="true" />
+            <element signature="e#7626#7627#0" expanded="true" />
+            <element signature="e#7694#7695#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/view/DateTimePicker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="54" column="36" lean-forward="false" selection-start-line="54" selection-start-column="36" selection-end-line="54" selection-end-column="36" />
+          <folding>
+            <element signature="e#1752#1753#0" expanded="true" />
+            <element signature="e#1794#1795#0" expanded="true" />
+            <element signature="class#InternalConverter#0;class#DateTimePicker#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/view_controller/AddAppointmentController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-44">
-          <caret line="66" column="9" lean-forward="false" selection-start-line="66" selection-start-column="9" selection-end-line="66" selection-end-column="9" />
+        <state relative-caret-position="3339">
+          <caret line="178" column="61" lean-forward="false" selection-start-line="178" selection-start-column="61" selection-end-line="178" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/view_controller/AddCustomerController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2112">
+          <caret line="11" column="14" lean-forward="false" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+          <folding>
+            <element signature="method#setCustomer#0;class#AddCustomerController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/view_controller/LoginController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="64" column="49" lean-forward="true" selection-start-line="64" selection-start-column="49" selection-end-line="64" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/view_controller/OverviewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1629">
+          <caret line="157" column="24" lean-forward="false" selection-start-line="157" selection-start-column="24" selection-end-line="157" selection-end-column="24" />
+          <folding>
+            <element signature="method#initialize#0;class#OverviewController#0" expanded="false" />
+            <element signature="method#handleAddCustomer#0;class#OverviewController#0" expanded="false" />
+            <element signature="method#handleDeleteCustomer#0;class#OverviewController#0" expanded="false" />
+            <element signature="method#handleModifyAppointment#0;class#OverviewController#0" expanded="false" />
+            <element signature="method#handleDeleteAppointment#0;class#OverviewController#0" expanded="false" />
+            <element signature="method#initAppointmentFilter#0;class#OverviewController#0" expanded="false" />
+            <element signature="e#5455#6546#0" expanded="false" />
+            <marker date="1520727710311" expanded="false" signature="3682:3761" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="186" column="40" lean-forward="true" selection-start-line="186" selection-start-column="40" selection-end-line="186" selection-end-column="40" />
           <folding />
         </state>
       </provider>

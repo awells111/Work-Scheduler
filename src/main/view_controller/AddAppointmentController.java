@@ -9,6 +9,10 @@ import main.data.Database;
 import main.model.Appointment;
 import main.view.DateTimePicker;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
+
 import static main.data.Database.CODE_NEW_ENTITY;
 
 public class AddAppointmentController {
@@ -97,8 +101,13 @@ public class AddAppointmentController {
             return true;
         }
 
-        String startTime = appointmentDateTimePickerStart.getFormattedString();
-        String endTime = appointmentDateTimePickerEnd.getFormattedString();
+        if (database.isOutsideBusinessHours(appointmentDateTimePickerStart.getDateTimeValueGMT().getHour()) ||
+                database.isOutsideBusinessHours(appointmentDateTimePickerEnd.getDateTimeValueGMT().getHour())) {
+            alert.setContentText("Appointment must be between 8:00 and 22:00 GMT.");
+            alert.showAndWait();
+            return true;
+        }
+
 
         //todo finish this, will have to pass through a list of all appointments in the current customer
 
