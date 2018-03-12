@@ -236,4 +236,54 @@ public class AppointmentDAO extends DAO{
 
         return count;
     }
+
+    /*Select appointments within 15 minutes of now*/
+    static final String QUERY_SELECT_CLOSE_APPOINTMENTS = "SELECT " +
+            COLUMN_APPOINTMENT_ID +
+            ", " +
+            COLUMN_CUSTOMER_ID +
+            ", " +
+            COLUMN_APPOINTMENT_TYPE +
+            ", " +
+            "DATE_FORMAT(" + COLUMN_APPOINTMENT_START + ", " + MYSQL_DATETIME_FORMAT +
+            ") AS " + COLUMN_APPOINTMENT_START +
+            ", " +
+            "DATE_FORMAT(" + COLUMN_APPOINTMENT_END + ", " + MYSQL_DATETIME_FORMAT +
+            ") AS " + COLUMN_APPOINTMENT_END +
+            " FROM appointment WHERE (now() < " +
+            COLUMN_APPOINTMENT_START +
+            ") AND (" +
+            COLUMN_APPOINTMENT_START +
+            " < (now() + INTERVAL 15 MINUTE))";
+
+    ArrayList<Appointment> getCloseAppointments() {
+        ArrayList<Appointment> appointments = new ArrayList<>();
+
+        String[][] queries = emptyEntity(APPOINTMENT_TABLES.length);
+
+        queries[0] = new String[]{
+                QUERY_SELECT_CLOSE_APPOINTMENTS
+        };
+
+        ResultSet[] resultSets = getResultSets(queries);
+
+        try {
+            ResultSet apptRS = resultSets[0];
+
+            while (apptRS.next()) { //For each result
+                int apptId = apptRS.getInt(COLUMN_APPOINTMENT_ID);
+                int custId = apptRS.getInt(COLUMN_CUSTOMER_ID);
+                String apptType = apptRS.getString(COLUMN_APPOINTMENT_TYPE);
+                String apptStart = getDatabase().databaseDateTimeToLocal(apptRS.getString(COLUMN_APPOINTMENT_START));
+                String apptEnd = getDatabase().databaseDateTimeToLocal(apptRS.getString(COLUMN_APPOINTMENT_END));
+
+                appointments.add(new Appointment(apptId, custId, apptType, apptStart, apptEnd));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return appointments;
+    }
 }

@@ -223,4 +223,8 @@ public class Database {
     public boolean isOutsideBusinessHours(int hour) {
         return hour < GMT_OPEN_HOUR || hour > GMT_CLOSE_HOUR;
     }
+
+    public ArrayList<Appointment> getCloseAppointments() {
+        return getAppointmentDAO().getCloseAppointments();
+    }
 }

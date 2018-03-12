@@ -3,15 +3,19 @@ package main.view_controller;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import main.Main;
 import main.data.Database;
 import main.model.Appointment;
 import main.model.Customer;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class OverviewController {
     public static final String FXML_OVERVIEW = "view_controller/overview.fxml";
@@ -125,6 +129,8 @@ public class OverviewController {
         });
 
         initAppointmentFilter();
+
+        showCloseAppointments();
     }
 
     @FXML
@@ -213,5 +219,40 @@ public class OverviewController {
         SortedList<Appointment> sortedAppointmentData = new SortedList<>(filteredAppointmentData);
         sortedAppointmentData.comparatorProperty().bind(tableViewAppointment.comparatorProperty());
         tableViewAppointment.setItems(sortedAppointmentData);
+    }
+
+
+    private void showCloseAppointments() {
+        ArrayList<Appointment> closeAppointments = mainApp.getDatabase().getCloseAppointments();
+
+        if (closeAppointments.size() > 0) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Appointments Start Soon");
+            alert.setContentText("One or more appointments start soon");
+
+            StringBuilder sb = new StringBuilder();
+
+            for (Appointment a: closeAppointments) {
+                sb.append(a.toStringUserFriendly());
+                sb.append(System.lineSeparator());
+            }
+
+            TextArea textArea = new TextArea(sb.toString());
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
+
+            textArea.setMaxWidth(Double.MAX_VALUE);
+            textArea.setMaxHeight(Double.MAX_VALUE);
+            GridPane.setVgrow(textArea, Priority.ALWAYS);
+            GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+            GridPane expContent = new GridPane();
+            expContent.setMaxWidth(Double.MAX_VALUE);
+            expContent.add(textArea, 0, 1);
+            
+            alert.getDialogPane().setContent(expContent);
+
+            alert.showAndWait();
+        }
     }
 }

@@ -66,13 +66,11 @@ public class AddAppointmentController {
 
         Appointment newAppointment = new Appointment(id, custId, type, startTime, endTime);
 
-        if (database.appointmentOverlaps(newAppointment)) {
-            Alert alert = buildAlert();
-            alert.setContentText("This appointment overlaps one or more existing appointments.");
-            alert.showAndWait();
-            return;
+        try {
+            appointmentOverlaps(newAppointment);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
 
         if (isNewAppointment()) {
             database.addAppointment(newAppointment);
@@ -123,5 +121,15 @@ public class AddAppointmentController {
         alert.setHeaderText(null);
 
         return alert;
+    }
+
+    private void appointmentOverlaps(Appointment newAppointment) throws Exception {
+        if (database.appointmentOverlaps(newAppointment)) {
+
+            Alert alert = buildAlert();
+            alert.setContentText("This appointment overlaps one or more existing appointments.");
+            alert.show();
+            throw new Exception("This appointment overlaps one or more existing appointments.");
+        }
     }
 }

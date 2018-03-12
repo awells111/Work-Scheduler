@@ -91,4 +91,12 @@ public class Appointment {
                 ", end=" + end +
                 '}';
     }
+
+    public String toStringUserFriendly() {
+        return "Appointment Id: " + getId() +
+                ", Customer Id: " + getCustomerId() +
+                ", Type: " + getType() +
+                ", Start: " + getStart() +
+                ", End : " + getEnd();
+    }
 }
