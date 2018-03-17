@@ -37,24 +37,12 @@ public class Appointment {
         return customerId.get();
     }
 
-    public IntegerProperty customerIdProperty() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId.set(customerId);
-    }
-
     public String getType() {
         return type.get();
     }
 
     public StringProperty typeProperty() {
         return type;
-    }
-
-    public void setType(String type) {
-        this.type.set(type);
     }
 
     public String getStart() {
@@ -65,20 +53,12 @@ public class Appointment {
         return start;
     }
 
-    public void setStart(String start) {
-        this.start.set(start);
-    }
-
     public String getEnd() {
         return end.get();
     }
 
     public StringProperty endProperty() {
         return end;
-    }
-
-    public void setEnd(String end) {
-        this.end.set(end);
     }
 
     @Override

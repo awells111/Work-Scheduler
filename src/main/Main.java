@@ -19,7 +19,6 @@ import main.view_controller.OverviewController;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.function.BiConsumer;
 
 import static main.view_controller.AddAppointmentController.FXML_ADD_APPOINTMENT;
 import static main.view_controller.AddCustomerController.FXML_ADD_CUSTOMER;
@@ -97,7 +96,7 @@ public class Main extends Application {
 
     //Show a calendar in a new window
     public void showCalendar() {
-        CalendarDialog calendarDialog = new CalendarDialog(new DatePicker());
+        CalendarDialog calendarDialog = new CalendarDialog(database, new DatePicker());
 
         calendarDialog.showDialog(getWindow());
     }

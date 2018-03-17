@@ -51,7 +51,7 @@ public class AddAppointmentController {
         labelCustomerName.setText(customerName);
         textFieldAppointmentType.setText(appointment.getType());
         appointmentDateTimePickerStart.setDateTimeValue(database.localDateTimeFromString(appointment.getStart()));
-        appointmentDateTimePickerEnd.setDateTimeValue(database.localDateTimeFromString(appointment.getStart()));
+        appointmentDateTimePickerEnd.setDateTimeValue(database.localDateTimeFromString(appointment.getEnd()));
     }
 
     @FXML
