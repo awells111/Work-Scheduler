@@ -10,13 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/data/ConnectionInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Work_Scheduler_jar/Work Scheduler.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Work_Scheduler_jar/Work Scheduler.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Work Scheduler/main/data/CustomerDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Work Scheduler/main/data/CustomerDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Work Scheduler/main/data/DbConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Work Scheduler/main/data/DbConnection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/data/DbConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/data/DbConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/data/CustomerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/data/CustomerDAO.java" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -92,8 +86,8 @@
       <file leaf-file-name="AddCustomerController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/view_controller/AddCustomerController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1224">
-              <caret line="87" selection-start-line="87" selection-end-line="87" />
+            <state relative-caret-position="238">
+              <caret line="23" column="47" lean-forward="true" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
               <folding>
                 <element signature="method#setFields#0;class#AddCustomerController#0" />
                 <element signature="method#setLimit#0;class#AddCustomerController#0" />
@@ -123,27 +117,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DbConnection.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/data/DbConnection.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConnectionInfo.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/data/ConnectionInfo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="45" lean-forward="true" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Database.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/data/Database.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -153,11 +126,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CustomerDAO.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CustomerDAO.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/data/CustomerDAO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="22" column="137" lean-forward="true" selection-start-line="22" selection-start-column="137" selection-end-line="22" selection-end-column="137" />
+            <state relative-caret-position="68">
+              <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -175,7 +148,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>/</find>
       <find>dbconn</find>
       <find>addanapp</find>
       <find>setite</find>
@@ -205,6 +177,7 @@
       <find>isoutside</find>
       <find>cascad</find>
       <find>casc</find>
+      <find>addressId</find>
     </findStrings>
     <replaceStrings>
       <replace>appointment</replace>
@@ -268,10 +241,10 @@
         <option value="$PROJECT_DIR$/src/main/view_controller/AddCustomerController.java" />
         <option value="$PROJECT_DIR$/src/main/rb_fr.properties" />
         <option value="$PROJECT_DIR$/src/main/data/Database.java" />
-        <option value="$PROJECT_DIR$/src/main/data/CustomerDAO.java" />
         <option value="$PROJECT_DIR$/src/main/Main.java" />
         <option value="$PROJECT_DIR$/src/main/data/DbConnection.java" />
         <option value="$PROJECT_DIR$/src/main/data/ConnectionInfo.java" />
+        <option value="$PROJECT_DIR$/src/main/data/CustomerDAO.java" />
       </list>
     </option>
   </component>
@@ -677,11 +650,11 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3293348" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33333334" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.33333334" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.1875" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.1875" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3292517" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -982,18 +955,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/view_controller/AddCustomerController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1224">
-          <caret line="87" selection-start-line="87" selection-end-line="87" />
-          <folding>
-            <element signature="method#setFields#0;class#AddCustomerController#0" />
-            <element signature="method#setLimit#0;class#AddCustomerController#0" />
-            <element signature="method#buildAlert#0;class#AddCustomerController#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/view_controller/AddAppointmentController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1530">
@@ -1014,10 +975,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/data/CustomerDAO.java">
+    <entry file="file://$PROJECT_DIR$/src/main/data/DbConnection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="22" column="137" lean-forward="true" selection-start-line="22" selection-start-column="137" selection-end-line="22" selection-end-column="137" />
+        <state relative-caret-position="238">
+          <caret line="14" column="47" lean-forward="true" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1039,20 +1003,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/data/DbConnection.java">
+    <entry file="file://$PROJECT_DIR$/src/main/data/ConnectionInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
+        <state relative-caret-position="68">
+          <caret line="4" column="60" selection-start-line="4" selection-start-column="60" selection-end-line="4" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/view_controller/AddCustomerController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="23" column="47" lean-forward="true" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#setFields#0;class#AddCustomerController#0" />
+            <element signature="method#setLimit#0;class#AddCustomerController#0" />
+            <element signature="method#buildAlert#0;class#AddCustomerController#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/data/ConnectionInfo.java">
+    <entry file="file://$PROJECT_DIR$/src/main/data/CustomerDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="45" lean-forward="true" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="45" />
+        <state relative-caret-position="68">
+          <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
         </state>
       </provider>
     </entry>

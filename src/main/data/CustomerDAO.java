@@ -9,38 +9,55 @@ import java.util.HashMap;
 
 public class CustomerDAO extends DAO {
 
-    //todo concatenate all statements with the table and column constants
-
     /*
     Customer Table
     */
-    static final String TABLE_CUSTOMER = "customer";
-    static final String COLUMN_CUSTOMER_ID = "customerId";
-    static final String COLUMN_CUSTOMER_NAME = "customerName";
+    private static final String TABLE_CUSTOMER = "customer";
+    private static final String COLUMN_CUSTOMER_ID = "customerId";
+    private static final String COLUMN_CUSTOMER_NAME = "customerName";
+    private static final String COLUMN_CUSTOMER_ADDRESS_ID = "addressId"; //todo delete because the addressId is unnecessary
 
     /*Customer Table Statements*/
-    static final String QUERY_SELECT_CUSTOMERS = "SELECT * FROM customer";
-    static final String STATEMENT_INSERT_CUSTOMER = "INSERT INTO `customer`(`customerId`, `customerName`, `addressId`) VALUES (?, ?, ?)";
-    static final String STATEMENT_UPDATE_CUSTOMER = "UPDATE customer SET customerName = ? WHERE customerId = ?";
-    static final String STATEMENT_DELETE_CUSTOMER = "DELETE FROM customer WHERE customerId = ?";
+    private static final String QUERY_SELECT_CUSTOMERS = "SELECT * FROM " + TABLE_CUSTOMER;
+
+    private static final String STATEMENT_INSERT_CUSTOMER = "INSERT INTO `" + TABLE_CUSTOMER + "`(`" +
+            COLUMN_CUSTOMER_ID + "`, `" +
+            COLUMN_CUSTOMER_NAME + "`, `" +
+            COLUMN_CUSTOMER_ADDRESS_ID +
+            "`) VALUES (?, ?, ?)";
+
+    private static final String STATEMENT_UPDATE_CUSTOMER = "UPDATE " + TABLE_CUSTOMER + " SET " +
+            COLUMN_CUSTOMER_NAME + " = ? WHERE " +
+            COLUMN_CUSTOMER_ID + " = ?";
+
+    private static final String STATEMENT_DELETE_CUSTOMER = "DELETE FROM " + TABLE_CUSTOMER +
+            " WHERE " + COLUMN_CUSTOMER_ID + " = ?";
 
     /*
     Address Table
     */
-    static final String TABLE_ADDRESS = "address";
-    static final String COLUMN_ADDRESS_ID = "addressId"; //todo Change addressId to customerId when I create my own database
-    static final String COLUMN_ADDRESS_NAME = "address";
-    static final String COLUMN_ADDRESS_PHONE = "phone";
+    private static final String TABLE_ADDRESS = "address";
+    private static final String COLUMN_ADDRESS_ID = "customerId"; //todo Change addressId to customerId when I create my own database
+    private static final String COLUMN_ADDRESS_NAME = "address";
+    private static final String COLUMN_ADDRESS_PHONE = "phone";
 
     /*Address Table Statements*/
-    static final String QUERY_SELECT_ADDRESSES = "SELECT * FROM address";
-    static final String STATEMENT_INSERT_ADDRESS = "INSERT INTO `address`(`addressId`, `address`, `phone`) VALUES (?, ?, ?)";
-    static final String STATEMENT_UPDATE_ADDRESS = "UPDATE address SET address = ?, phone = ? WHERE addressId = ?";
+    private static final String QUERY_SELECT_ADDRESSES = "SELECT * FROM " + TABLE_ADDRESS;
+
+    private static final String STATEMENT_INSERT_ADDRESS = "INSERT INTO `" + TABLE_ADDRESS + "`(`" +
+            COLUMN_ADDRESS_ID + "`, `" +
+            COLUMN_ADDRESS_NAME + "`, `" +
+            COLUMN_ADDRESS_PHONE + "`) VALUES (?, ?, ?)";
+
+    private static final String STATEMENT_UPDATE_ADDRESS = "UPDATE " + TABLE_ADDRESS + " SET " +
+            COLUMN_ADDRESS_NAME + " = ?, " +
+            COLUMN_ADDRESS_PHONE + " = ? WHERE " +
+            COLUMN_ADDRESS_ID + " = ?";
 
     /**
      * The tables required to modify a customer entity
      */
-    static final String[] CUSTOMER_TABLES = {TABLE_CUSTOMER, TABLE_ADDRESS};
+    private static final String[] CUSTOMER_TABLES = {TABLE_CUSTOMER, TABLE_ADDRESS};
 
     private DbConnection dbConnection;
 
@@ -94,7 +111,7 @@ public class CustomerDAO extends DAO {
         /*Insert Address Statement*/
         statements[1] = new String[]{
                 STATEMENT_INSERT_ADDRESS,
-                id, //addressId
+                id, //customerId
                 newCustomer.getAddress(), //address
                 newCustomer.getPhone() //phone
         };
@@ -127,7 +144,7 @@ public class CustomerDAO extends DAO {
                 STATEMENT_UPDATE_ADDRESS,
                 updatedCustomer.getAddress(), //address
                 updatedCustomer.getPhone(), //phone
-                id //addressId
+                id //customerId
         };
 
         /*Execute the required statements*/
