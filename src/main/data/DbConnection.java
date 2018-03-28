@@ -2,14 +2,17 @@ package main.data;
 
 import java.sql.*;
 
+import static main.data.ConnectionInfo.*;
+
 public class DbConnection {
 
     //todo use connection pool
     private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String DB_NAME = "U04TS4";
-    private static final String DB_URL = "jdbc:mysql://52.206.157.109/U04TS4";
-    private static final String DB_USER = "U04TS4";
-    private static final String DB_PASS = "53688339332";
+
+//    private static final String DB_NAME = "";
+//    private static final String DB_URL = "";
+//    private static final String DB_USER = "";
+//    private static final String DB_PASS = "";
 
     public Connection getConnection() throws SQLException, ClassNotFoundException {
         Connection conn;
@@ -20,8 +23,4 @@ public class DbConnection {
 
         return conn;
     }
-
-    //              Test Usernames  Test Passwords
-    //              "test"          "test"
-    //              "t"             "t"
 }
