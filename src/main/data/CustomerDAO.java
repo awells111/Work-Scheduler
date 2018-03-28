@@ -28,7 +28,7 @@ public class CustomerDAO extends DAO {
     Address Table
     */
     static final String TABLE_ADDRESS = "address";
-    static final String COLUMN_ADDRESS_ID = "addressId";
+    static final String COLUMN_ADDRESS_ID = "addressId"; //todo Change addressId to customerId when I create my own database
     static final String COLUMN_ADDRESS_NAME = "address";
     static final String COLUMN_ADDRESS_PHONE = "phone";
 
@@ -36,7 +36,6 @@ public class CustomerDAO extends DAO {
     static final String QUERY_SELECT_ADDRESSES = "SELECT * FROM address";
     static final String STATEMENT_INSERT_ADDRESS = "INSERT INTO `address`(`addressId`, `address`, `phone`) VALUES (?, ?, ?)";
     static final String STATEMENT_UPDATE_ADDRESS = "UPDATE address SET address = ?, phone = ? WHERE addressId = ?";
-    static final String STATEMENT_DELETE_ADDRESS = "DELETE FROM address WHERE addressId = ?";
 
     /**
      * The tables required to modify a customer entity
@@ -145,18 +144,12 @@ public class CustomerDAO extends DAO {
         String id = Integer.toString(selectedCustomer.getId()); //The same ID is used for both Address and Customer
 
         /*Build the statements required to delete a customer*/
-        String[][] statements = emptyEntity(CUSTOMER_TABLES.length);
+        String[][] statements = emptyEntity(1); //Only deleting the customer because the address will cascade delete.
 
         /*Delete Customer Statement*/
         statements[0] = new String[]{
                 STATEMENT_DELETE_CUSTOMER,
                 id //customerId
-        };
-
-        /*Delete Address Statement*/
-        statements[1] = new String[]{
-                STATEMENT_DELETE_ADDRESS,
-                id //addressId
         };
 
         /*Execute the required statements*/
