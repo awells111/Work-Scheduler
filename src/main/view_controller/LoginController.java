@@ -1,6 +1,5 @@
 package main.view_controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -10,8 +9,6 @@ import main.log.UserLog;
 
 import java.util.ResourceBundle;
 
-import static main.Main.PATH_RB;
-
 public class LoginController {
     public static final String FXML_LOGIN = "view_controller/login.fxml";
 
@@ -19,21 +16,17 @@ public class LoginController {
     private TextField textFieldLoginName;
     @FXML
     private TextField textFieldLoginPassword;
-
-    private ResourceBundle rb;
+    @FXML
+    private ResourceBundle resources;
 
     private Main mainApp;
-
-    public LoginController() {
-        rb = ResourceBundle.getBundle(PATH_RB);
-    }
 
     public void setMainApp(Main mainApp) {
         this.mainApp = mainApp;
     }
 
     @FXML
-    void handleLogin(ActionEvent event) throws Exception {
+    void handleLogin() throws Exception {
         textFieldLoginName.setText(removeWhiteSpace(textFieldLoginName.getText()));
         textFieldLoginPassword.setText(removeWhiteSpace(textFieldLoginPassword.getText()));
 
@@ -55,15 +48,15 @@ public class LoginController {
             mainApp.showOverview(); //Show the overview scene
         } else { //If login failed
             showErrorAlert();
-            throw new Exception(rb.getString("username_password_not_match"));
+            throw new Exception(resources.getString("username_password_not_match"));
         }
     }
 
     void showErrorAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(rb.getString("error"));
+        alert.setTitle(resources.getString("Error"));
         alert.setHeaderText(null);
-        alert.setContentText(rb.getString("username_password_not_match"));
+        alert.setContentText(resources.getString("username_password_not_match"));
         alert.show();
     }
 

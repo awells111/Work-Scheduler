@@ -1,16 +1,16 @@
 package main.view_controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import main.Main;
 import main.data.Database;
 import main.model.Appointment;
 import main.view.DateTimePicker;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
+import java.util.ResourceBundle;
 
 import static main.data.Database.CODE_NEW_ENTITY;
 
@@ -28,6 +28,9 @@ public class AddAppointmentController {
 
     @FXML
     private DateTimePicker appointmentDateTimePickerEnd;
+
+    @FXML
+    private ResourceBundle resources;
 
     private Stage dialogStage;
     private Database database;
@@ -56,10 +59,7 @@ public class AddAppointmentController {
 
     @FXML
     void handleAppointmentSave() {
-        try {
-            inputError();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (inputError()) {
             return;
         }
 
@@ -71,10 +71,7 @@ public class AddAppointmentController {
 
         Appointment newAppointment = new Appointment(id, custId, type, startTime, endTime);
 
-        try {
-            appointmentOverlaps(newAppointment);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (appointmentOverlaps(newAppointment)) {
             return;
         }
 
@@ -98,49 +95,52 @@ public class AddAppointmentController {
     }
 
     /*Returns false if there are no errors in saving the appointment*/
-    private void inputError() throws Exception {
+    private boolean inputError() {
         Alert alert = buildAlert();
 
         //Display alert for incorrect inputs
         if (textFieldAppointmentType.getText().equals("")) {
-            alert.setContentText("Type cannot be empty");
+            alert.setContentText(resources.getString("Type_cannot_be_empty"));
             alert.show();
-            throw new Exception("Type cannot be empty");
+            return true;
         }
 
         if (database.isOutsideBusinessHours(appointmentDateTimePickerStart.getDateTimeValueGMT().getHour()) ||
                 database.isOutsideBusinessHours(appointmentDateTimePickerEnd.getDateTimeValueGMT().getHour())) {
-            alert.setContentText("Appointment must be between 8:00 and 22:00 GMT.");
+            alert.setContentText(resources.getString("not_between_business_hours"));
             alert.show();
-            throw new Exception("Appointment must be between 8:00 and 22:00 GMT.");
+            return true;
         }
 
         LocalDateTime start = appointmentDateTimePickerStart.getDateTimeValue();
         LocalDateTime end = appointmentDateTimePickerEnd.getDateTimeValue();
 
         if (end.isBefore(start) || end.equals(start)) {
-            alert.setContentText("Appointment end must be later than appointment start.");
+            alert.setContentText(resources.getString("end_not_after_start"));
             alert.show();
-            throw new Exception("Appointment end must be later than appointment start.");
+            return true;
         }
+
+        return false;
     }
 
     private Alert buildAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Error Saving Appointment");
+        alert.setTitle(resources.getString("Error_Saving_Appointment"));
         alert.setHeaderText(null);
 
         return alert;
     }
 
-    private void appointmentOverlaps(Appointment newAppointment) throws Exception {
+    private boolean appointmentOverlaps(Appointment newAppointment) {
         if (database.appointmentOverlaps(newAppointment)) {
-
             Alert alert = buildAlert();
-            alert.setContentText("This appointment overlaps one or more existing appointments.");
+            alert.setContentText(resources.getString("appointment_overlaps"));
             alert.show();
-            throw new Exception("This appointment overlaps one or more existing appointments.");
+            return true;
         }
+
+        return false;
     }
 
     private void setFields() {

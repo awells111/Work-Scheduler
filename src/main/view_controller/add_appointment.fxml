@@ -22,14 +22,14 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM"/>
             </rowConstraints>
             <children>
-                <Label text="Type" GridPane.rowIndex="1">
+                <Label text="%Type" GridPane.rowIndex="1">
                     <font>
                         <Font name="System Bold" size="15.0"/>
                     </font>
                 </Label>
                 <HBox alignment="CENTER_LEFT" GridPane.rowIndex="2">
                     <children>
-                        <Label text="Appointment Start Time" GridPane.rowIndex="2">
+                        <Label text="%Appointment_Start_Time" GridPane.rowIndex="2">
                             <font>
                                 <Font name="System Bold" size="15.0"/>
                             </font>
@@ -42,13 +42,13 @@
                     <children>
                         <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="SOMETIMES"/>
                         <Button defaultButton="true" mnemonicParsing="false" onAction="#handleAppointmentSave"
-                                text="Save">
+                                text="%Save">
                             <HBox.margin>
                                 <Insets/>
                             </HBox.margin>
                         </Button>
                         <Button cancelButton="true" mnemonicParsing="false" onAction="#handleAppointmentCancel"
-                                text="Cancel">
+                                text="%Cancel">
                             <HBox.margin>
                                 <Insets/>
                             </HBox.margin>
@@ -57,7 +57,7 @@
                 </HBox>
                 <HBox alignment="CENTER_LEFT" GridPane.rowIndex="3">
                     <children>
-                        <Label text="Appointment End Time" GridPane.rowIndex="3">
+                        <Label text="%Appointment_End_Time" GridPane.rowIndex="3">
                             <font>
                                 <Font name="System Bold" size="15.0"/>
                             </font>
@@ -66,7 +66,7 @@
                     </children>
                 </HBox>
                 <DateTimePicker fx:id="appointmentDateTimePickerStart" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                <Label text="Customer Name">
+                <Label text="%Customer_Name">
                     <font>
                         <Font name="System Bold" size="15.0"/>
                     </font>

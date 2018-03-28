@@ -6,19 +6,19 @@ import javafx.scene.layout.AnchorPane;
 import main.Main;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class StyledScene {
-
-    /*Create a scene that uses the resource bundle and style sheet*/
 
     private static final String PATH_CSS = "resources/style.css";
 
     private FXMLLoader loader;
 
-    public StyledScene(Main mainApp, String fxml) {
-        this.loader = new FXMLLoader(Main.class.getResource(fxml), mainApp.getRb());
+    public StyledScene(String fxml, ResourceBundle resourceBundle) {
+        this.loader = new FXMLLoader(Main.class.getResource(fxml), resourceBundle);
     }
 
+    /*Create a scene that uses the resource bundle and style sheet*/
     public Scene create() throws IOException {
         AnchorPane rootLayout = loader.load();
         Scene scene = new Scene(rootLayout);

@@ -113,6 +113,7 @@ public class Database {
         return error;
     }
 
+    //todo Delete customer's appointments as well. Should be set as cascade in database.
     /*boolean represents an error -- (error = false) if a customer is deleted, else (error = true)*/
     public boolean deleteCustomer(Customer selectedCustomer) {
         boolean error = true;

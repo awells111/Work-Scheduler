@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 import main.data.Database;
 import main.model.Customer;
 
+import java.util.ResourceBundle;
+
 import static main.data.Database.CODE_NEW_ENTITY;
 
 public class AddCustomerController {
@@ -20,6 +22,9 @@ public class AddCustomerController {
 
     @FXML
     private TextField textFieldCustomerAddress;
+
+    @FXML
+    private ResourceBundle resources;
 
     private Stage dialogStage;
     private Database database;
@@ -47,11 +52,8 @@ public class AddCustomerController {
 
     @FXML
     void handleCustomerSave() {
-        try {
-            errorBeforeSave();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
+        if(inputError()) {
+          return;
         }
 
         int id = (isNewCustomer()) ? database.nextCustomerId() : customer.getId();
@@ -81,27 +83,29 @@ public class AddCustomerController {
     }
 
     /*Returns false if there are no errors in saving the customer*/
-    private void errorBeforeSave() throws Exception {
+    private boolean inputError() {
         Alert alert = buildAlert();
 
         //Display alert for incorrect inputs
         if (textFieldCustomerName.getText().equals("")) {
-            alert.setContentText("Name cannot be empty");
+            alert.setContentText(resources.getString("Name_cannot_be_empty"));
             alert.show();
-            throw new Exception("Name cannot be empty");
+            return true;
         }
 
         if (textFieldCustomerAddress.getText().equals("")) {
-            alert.setContentText("Address cannot be empty");
+            alert.setContentText(resources.getString("Address_cannot_be_empty"));
             alert.show();
-            throw new Exception("Address cannot be empty");
+            return true;
         }
 
         if (textFieldCustomerPhone.getText().equals("")) {
-            alert.setContentText("Phone cannot be empty");
+            alert.setContentText(resources.getString("Phone_cannot_be_empty"));
             alert.show();
-            throw new Exception("Phone cannot be empty");
+            return true;
         }
+
+        return false;
     }
 
     private void setFields() {
@@ -137,7 +141,7 @@ public class AddCustomerController {
 
     private Alert buildAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Error Saving Customer");
+        alert.setTitle(resources.getString("Error_Saving_Customer"));
         alert.setHeaderText(null);
 
         return alert;

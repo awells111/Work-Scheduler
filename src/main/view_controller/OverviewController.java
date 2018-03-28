@@ -16,6 +16,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class OverviewController {
     public static final String FXML_OVERVIEW = "view_controller/overview.fxml";
@@ -64,6 +65,9 @@ public class OverviewController {
 
     @FXML
     private TableColumn<Appointment, String> columnApptEnd;
+
+    @FXML
+    private ResourceBundle resources;
 
     private FilteredList<Appointment> filteredAppointmentData;
 
@@ -229,9 +233,9 @@ public class OverviewController {
 
         if (closeAppointments.size() > 0) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Appointments Start Soon");
+            alert.setTitle(resources.getString("Appointments_Start_Soon"));
             alert.setHeaderText(null);
-            alert.setContentText("One or more appointments start soon");
+            alert.setContentText(resources.getString("One_or_more_appointments"));
 
             StringBuilder sb = new StringBuilder();
 
