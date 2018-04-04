@@ -10,6 +10,16 @@ public abstract class DAO {
     public static final int CODE_ERROR = -1;
     public static final int CODE_SUCCESS = 1;
 
+    private DbConnection dbConnection;
+
+    protected DbConnection getDbConnection() {
+        return dbConnection;
+    }
+
+    protected void setDbConnection(DbConnection dbConnection) {
+        this.dbConnection = dbConnection;
+    }
+
     /**
      * @param statementsCount The number of statements required to execute an update
      * @return An empty String[][] that subclasses will fill to create an entity
@@ -63,7 +73,7 @@ public abstract class DAO {
      * @param statements A String[][] representing the entity to be inserted, updated, or deleted
      * @return {@value CODE_SUCCESS} if successful, else {@value CODE_ERROR}
      */
-    int update(Connection conn, String[][] statements) {
+    private int update(Connection conn, String[][] statements) {
         try {
             conn.setAutoCommit(false); //By setting AutoCommit to false, the we can cancel the first statement if the second one fails
             try {
@@ -94,7 +104,16 @@ public abstract class DAO {
         return CODE_SUCCESS;
     }
 
-    ResultSet[] getResultSets(Connection conn, String[][] statements) {
+    protected int update(String[][] statements) {
+        try {
+            return update(getDbConnection().getConnection(), statements);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return CODE_ERROR;
+        }
+    }
+
+    private ResultSet[] getResultSets(Connection conn, String[][] statements) {
 
         ResultSet[] resultSets = new ResultSet[statements.length];
 
@@ -110,6 +129,16 @@ public abstract class DAO {
         }
 
         return resultSets;
+    }
+
+    protected ResultSet[] getResultSets(String[][] statements) {
+        try {
+            return getResultSets(getDbConnection().getConnection(), statements);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return new ResultSet[0];
     }
 
 }

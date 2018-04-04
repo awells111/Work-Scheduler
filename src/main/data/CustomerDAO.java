@@ -5,7 +5,6 @@ import main.model.Customer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CustomerDAO extends DAO {
 
@@ -29,35 +28,9 @@ public class CustomerDAO extends DAO {
      */
     private static final String[] CUSTOMER_TABLES = {TABLE_CUSTOMER, TABLE_ADDRESS};
 
-    private DbConnection dbConnection;
-
     CustomerDAO(DbConnection dbConnection) {
-        this.dbConnection = dbConnection;
+        setDbConnection(dbConnection);
     }
-
-    private DbConnection getDbConnection() {
-        return dbConnection;
-    }
-
-    private int update(String[][] statements) {
-        try {
-            return super.update(getDbConnection().getConnection(), statements);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return CODE_ERROR;
-        }
-    }
-
-    private ResultSet[] getResultSets(String[][] statements) {
-        try {
-            return super.getResultSets(getDbConnection().getConnection(), statements);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return new ResultSet[0];
-    }
-
 
     private static final String STATEMENT_INSERT_CUSTOMER = "INSERT INTO `" + TABLE_CUSTOMER + "`(`" +
             COLUMN_CUSTOMER_ID + "`, `" +
@@ -105,6 +78,7 @@ public class CustomerDAO extends DAO {
             COLUMN_ADDRESS_NAME + " = ?, " +
             COLUMN_ADDRESS_PHONE + " = ? WHERE " +
             COLUMN_ADDRESS_ID + " = ?";
+
     /**
      * Update an existing {@link Customer} in the database
      *
@@ -139,6 +113,7 @@ public class CustomerDAO extends DAO {
 
     private static final String STATEMENT_DELETE_CUSTOMER = "DELETE FROM " + TABLE_CUSTOMER +
             " WHERE " + COLUMN_CUSTOMER_ID + " = ?";
+
     /**
      * Delete an existing {@link Customer} in the database
      *

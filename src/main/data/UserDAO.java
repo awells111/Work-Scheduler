@@ -19,24 +19,8 @@ public class UserDAO extends DAO {
      */
     private static final String[] USER_TABLES = {TABLE_USER};
 
-    private DbConnection dbConnection;
-
     UserDAO(DbConnection dbConnection) {
-        this.dbConnection = dbConnection;
-    }
-
-    private DbConnection getDbConnection() {
-        return dbConnection;
-    }
-
-    private ResultSet[] getResultSets(String[][] statements) {
-        try {
-            return super.getResultSets(getDbConnection().getConnection(), statements);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return new ResultSet[0];
+        setDbConnection(dbConnection);
     }
 
     int login(String username, String password) {

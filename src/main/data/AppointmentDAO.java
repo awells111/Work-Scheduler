@@ -13,53 +13,30 @@ public class AppointmentDAO extends DAO{
     /*
     Appointment Table
     */
-    static final String TABLE_APPOINTMENT = "appointment";
-    static final String COLUMN_APPOINTMENT_ID = "appointmentId";
-    static final String COLUMN_CUSTOMER_ID = "customerId";
-    static final String COLUMN_APPOINTMENT_TYPE = "title";
-    static final String COLUMN_APPOINTMENT_START = "start";
-    static final String COLUMN_APPOINTMENT_END = "end";
+    private static final String TABLE_APPOINTMENT = "appointment";
+    private static final String COLUMN_APPOINTMENT_ID = "appointmentId";
+    private static final String COLUMN_CUSTOMER_ID = "customerId";
+    private static final String COLUMN_APPOINTMENT_TYPE = "title";
+    private static final String COLUMN_APPOINTMENT_START = "start";
+    private static final String COLUMN_APPOINTMENT_END = "end";
 
     /**
      * The tables required to modify an appointment entity
      */
-    static final String[] APPOINTMENT_TABLES = {TABLE_APPOINTMENT};
+    private static final String[] APPOINTMENT_TABLES = {TABLE_APPOINTMENT};
 
     private Database database;
 
     AppointmentDAO(Database database) {
         this.database = database;
+        setDbConnection(database.getDbConnection());
     }
 
     public Database getDatabase() {
         return database;
     }
 
-    private DbConnection getDbConnection() {
-        return database.getDbConnection();
-    }
-
-    private int update(String[][] statements) {
-        try {
-            return super.update(getDbConnection().getConnection(), statements);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return CODE_ERROR;
-        }
-    }
-
-    private ResultSet[] getResultSets(String[][] statements) {
-        try {
-            return super.getResultSets(getDbConnection().getConnection(), statements);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return new ResultSet[0];
-    }
-
-
-    static final String STATEMENT_INSERT_APPOINTMENT = "INSERT INTO " + TABLE_APPOINTMENT + "(" +
+    private static final String STATEMENT_INSERT_APPOINTMENT = "INSERT INTO " + TABLE_APPOINTMENT + "(" +
             COLUMN_APPOINTMENT_ID + ", " +
             COLUMN_CUSTOMER_ID + ", " +
             COLUMN_APPOINTMENT_TYPE + ", " +
@@ -89,7 +66,7 @@ public class AppointmentDAO extends DAO{
         return update(statements);
     }
 
-    static final String STATEMENT_UPDATE_APPOINTMENT = "UPDATE " + TABLE_APPOINTMENT +
+    private static final String STATEMENT_UPDATE_APPOINTMENT = "UPDATE " + TABLE_APPOINTMENT +
             " SET " + COLUMN_APPOINTMENT_TYPE + " = ?, " +
             COLUMN_APPOINTMENT_START + " = ?, " +
             COLUMN_APPOINTMENT_END + " = ? WHERE " +
@@ -117,7 +94,7 @@ public class AppointmentDAO extends DAO{
         return update(statements);
     }
 
-    static final String STATEMENT_DELETE_APPOINTMENT = "DELETE FROM " + TABLE_APPOINTMENT + " WHERE " +
+    private static final String STATEMENT_DELETE_APPOINTMENT = "DELETE FROM " + TABLE_APPOINTMENT + " WHERE " +
             COLUMN_APPOINTMENT_ID + " = ?";
     /**
      * Delete an existing {@link Appointment} in the database
@@ -140,7 +117,7 @@ public class AppointmentDAO extends DAO{
     }
 
 
-    static final String QUERY_SELECT_APPOINTMENTS = "SELECT " +
+    private static final String QUERY_SELECT_APPOINTMENTS = "SELECT " +
             COLUMN_APPOINTMENT_ID +
             ", " +
             COLUMN_CUSTOMER_ID +
@@ -187,7 +164,7 @@ public class AppointmentDAO extends DAO{
     }
 
     /*Check if an appointment overlaps other appointments*/
-    static final String QUERY_SELECT_OVERLAPPED_APPOINTMENTS = "SELECT count(*) FROM " +
+    private static final String QUERY_SELECT_OVERLAPPED_APPOINTMENTS = "SELECT count(*) FROM " +
             TABLE_APPOINTMENT +
             " WHERE " + COLUMN_CUSTOMER_ID + " = ? AND ((? > " + //WHERE customerId is the same
             COLUMN_APPOINTMENT_START +
@@ -238,7 +215,7 @@ public class AppointmentDAO extends DAO{
     }
 
     /*Select appointments within 15 minutes of now*/
-    static final String QUERY_SELECT_CLOSE_APPOINTMENTS = "SELECT " +
+    private static final String QUERY_SELECT_CLOSE_APPOINTMENTS = "SELECT " +
             COLUMN_APPOINTMENT_ID +
             ", " +
             COLUMN_CUSTOMER_ID +
