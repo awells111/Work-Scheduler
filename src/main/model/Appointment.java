@@ -1,24 +1,23 @@
 package main.model;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
+
+import java.time.LocalDateTime;
 
 public class Appointment {
 
     private IntegerProperty id; //appointmentId
     private IntegerProperty customerId; //customerId
     private StringProperty type; //type
-    private StringProperty start; //start
-    private StringProperty end; //end
+    private ObjectProperty<LocalDateTime> start;
+    private ObjectProperty<LocalDateTime> end;
 
-    public Appointment(int id, int customerId, String type, String start, String end) {
+    public Appointment(int id, int customerId, String type, LocalDateTime start, LocalDateTime end) {
         this.id = new SimpleIntegerProperty(id);
         this.customerId = new SimpleIntegerProperty(customerId);
         this.type = new SimpleStringProperty(type);
-        this.start = new SimpleStringProperty(start);
-        this.end = new SimpleStringProperty(end);
+        this.start = new SimpleObjectProperty<>(start);
+        this.end = new SimpleObjectProperty<>(end);
     }
 
     public int getId() {
@@ -45,30 +44,30 @@ public class Appointment {
         return type;
     }
 
-    public String getStart() {
+    public LocalDateTime getStart() {
         return start.get();
     }
 
-    public StringProperty startProperty() {
+    public ObjectProperty<LocalDateTime> startProperty() {
         return start;
     }
 
-    public String getEnd() {
+    public LocalDateTime getEnd() {
         return end.get();
     }
 
-    public StringProperty endProperty() {
+    public ObjectProperty<LocalDateTime> endProperty() {
         return end;
     }
 
     @Override
     public String toString() {
         return "Appointment{" +
-                "id=" + id +
-                ", customerId=" + customerId +
-                ", type=" + type +
-                ", start=" + start +
-                ", end=" + end +
+                "id=" + getId() +
+                "customerId=" + getCustomerId() +
+                ", type=" + getType() +
+                ", start=" + getStart() +
+                ", end=" + getEnd() +
                 '}';
     }
 

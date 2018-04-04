@@ -4,6 +4,7 @@ import main.model.Appointment;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import static main.data.Database.MYSQL_DATETIME_FORMAT;
@@ -150,8 +151,13 @@ public class AppointmentDAO extends DAO{
                 int apptId = apptRS.getInt(COLUMN_APPOINTMENT_ID);
                 int custId = apptRS.getInt(COLUMN_CUSTOMER_ID);
                 String apptType = apptRS.getString(COLUMN_APPOINTMENT_TYPE);
-                String apptStart = getDatabase().databaseDateTimeToLocal(apptRS.getString(COLUMN_APPOINTMENT_START));
-                String apptEnd = getDatabase().databaseDateTimeToLocal(apptRS.getString(COLUMN_APPOINTMENT_END));
+
+                //todo check and see if this can be simplified
+                String apptStartString = apptRS.getString(COLUMN_APPOINTMENT_START);
+                String apptEndString = apptRS.getString(COLUMN_APPOINTMENT_END);
+
+                LocalDateTime apptStart = getDatabase().databaseDateTimeToLocal(apptStartString);
+                LocalDateTime apptEnd = getDatabase().databaseDateTimeToLocal(apptEndString);
 
                 appointments.add(new Appointment(apptId, custId, apptType, apptStart, apptEnd));
             }
@@ -251,8 +257,13 @@ public class AppointmentDAO extends DAO{
                 int apptId = apptRS.getInt(COLUMN_APPOINTMENT_ID);
                 int custId = apptRS.getInt(COLUMN_CUSTOMER_ID);
                 String apptType = apptRS.getString(COLUMN_APPOINTMENT_TYPE);
-                String apptStart = getDatabase().databaseDateTimeToLocal(apptRS.getString(COLUMN_APPOINTMENT_START));
-                String apptEnd = getDatabase().databaseDateTimeToLocal(apptRS.getString(COLUMN_APPOINTMENT_END));
+
+                //todo check and see if this can be simplified
+                String apptStartString = apptRS.getString(COLUMN_APPOINTMENT_START);
+                String apptEndString = apptRS.getString(COLUMN_APPOINTMENT_END);
+
+                LocalDateTime apptStart = getDatabase().databaseDateTimeToLocal(apptStartString);
+                LocalDateTime apptEnd = getDatabase().databaseDateTimeToLocal(apptEndString);
 
                 appointments.add(new Appointment(apptId, custId, apptType, apptStart, apptEnd));
             }

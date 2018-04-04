@@ -11,9 +11,6 @@ import main.data.Database;
 import main.model.Appointment;
 import main.model.Customer;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -61,10 +58,10 @@ public class OverviewController {
     private TableColumn<Appointment, String> columnApptType;
 
     @FXML
-    private TableColumn<Appointment, String> columnApptStart;
+    private TableColumn<Appointment, LocalDateTime> columnApptStart;
 
     @FXML
-    private TableColumn<Appointment, String> columnApptEnd;
+    private TableColumn<Appointment, LocalDateTime> columnApptEnd;
 
     @FXML
     private ResourceBundle resources;
@@ -102,7 +99,7 @@ public class OverviewController {
         );
 
         columnApptStart.setCellValueFactory(
-                cellData -> cellData.getValue().startProperty()
+                cellData -> cellData.getValue().startProperty() //todo start and end print in wrong format
         );
 
         columnApptEnd.setCellValueFactory(
@@ -165,7 +162,7 @@ public class OverviewController {
 
     @FXML
     void handleAddAppointment() {
-        String now = mainApp.getDatabase().localDateTimeToString(LocalDateTime.now());
+        LocalDateTime now = LocalDateTime.now();
         Appointment newAppointment = new Appointment(Database.CODE_NEW_ENTITY, tableViewCustomer.getSelectionModel().getSelectedItem().getId(), "", now, now);
 
         mainApp.showAddAppointment(tableViewCustomer.getSelectionModel().getSelectedItem().getName(), newAppointment);
@@ -239,7 +236,7 @@ public class OverviewController {
 
             StringBuilder sb = new StringBuilder();
 
-            for (Appointment a: closeAppointments) {
+            for (Appointment a : closeAppointments) {
                 sb.append(a.toStringUserFriendly());
                 sb.append(System.lineSeparator());
             }

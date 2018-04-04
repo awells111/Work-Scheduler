@@ -53,8 +53,8 @@ public class AddAppointmentController {
         /*Set fields in the controller*/
         labelCustomerName.setText(customerName);
         textFieldAppointmentType.setText(appointment.getType());
-        appointmentDateTimePickerStart.setDateTimeValue(database.localDateTimeFromString(appointment.getStart()));
-        appointmentDateTimePickerEnd.setDateTimeValue(database.localDateTimeFromString(appointment.getEnd()));
+        appointmentDateTimePickerStart.setDateTimeValue(appointment.getStart());
+        appointmentDateTimePickerEnd.setDateTimeValue(appointment.getEnd());
     }
 
     @FXML
@@ -66,10 +66,10 @@ public class AddAppointmentController {
         int id = (isNewAppointment()) ? database.nextAppointmentId() : appointment.getId();
         int custId = appointment.getCustomerId();
         String type = textFieldAppointmentType.getText();
-        String startTime = appointmentDateTimePickerStart.getFormattedString();
-        String endTime = appointmentDateTimePickerEnd.getFormattedString();
+        LocalDateTime start = appointmentDateTimePickerStart.getDateTimeValue();
+        LocalDateTime end = appointmentDateTimePickerEnd.getDateTimeValue();
 
-        Appointment newAppointment = new Appointment(id, custId, type, startTime, endTime);
+        Appointment newAppointment = new Appointment(id, custId, type, start, end);
 
         if (appointmentOverlaps(newAppointment)) {
             return;

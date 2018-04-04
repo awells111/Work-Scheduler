@@ -140,7 +140,7 @@ public class Database {
     }
 
     /*Since the database does not use autoincrement, we will take the last appointment and increment the id*/
-    public int nextAppointmentId() {
+    public int nextAppointmentId() { //todo Use primary key autoincrement and remove all nextId() methods
         if (getAppointments().size() == 0) { //If no appointments exist
             return 1;
         }
@@ -210,16 +210,16 @@ public class Database {
         return LocalDateTime.parse(localDateTime, dateTimeFormatter);
     }
 
-    public String localDateTimeToDatabase(String localDateTimeString) {
-        LocalDateTime localDateTime = localDateTimeFromString(localDateTimeString);
+    public String localDateTimeToDatabase(LocalDateTime localDateTime) {
         ZonedDateTime ldtZoned = localDateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of(ZONE_ID_DB));
-        return dateTimeFormatter.format(ldtZoned.toLocalDateTime());
+        return dateTimeFormatter.format(ldtZoned.toLocalDateTime()); //todo Is this redundant?
     }
 
-    public String databaseDateTimeToLocal(String databaseTimeString) {
+
+    public LocalDateTime databaseDateTimeToLocal(String databaseTimeString) {
         LocalDateTime localDateTime = localDateTimeFromString(databaseTimeString);
         ZonedDateTime localTime = localDateTime.atZone(ZoneId.of(ZONE_ID_DB)).withZoneSameInstant(ZoneId.systemDefault());
-        return dateTimeFormatter.format(localTime);
+        return localTime.toLocalDateTime(); //todo check this
     }
 
     public boolean isOutsideBusinessHours(int hour) {

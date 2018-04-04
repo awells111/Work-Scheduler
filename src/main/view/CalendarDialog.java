@@ -38,7 +38,7 @@ public class CalendarDialog extends DatePickerSkin {
 
         for (int i = 0; i < appointments.size(); i++) {
             Appointment current = appointments.get(i);
-            LocalDateTime localDateTime = database.localDateTimeFromString(current.getStart());
+            LocalDateTime localDateTime = current.getStart();
             MonthDay monthDay = MonthDay.from(localDateTime);
 
             appointmentHashMap.putIfAbsent(monthDay, new ArrayList<>());

@@ -75,7 +75,7 @@ public abstract class DAO {
      */
     private int update(Connection conn, String[][] statements) {
         try {
-            conn.setAutoCommit(false); //By setting AutoCommit to false, the we can cancel the first statement if the second one fails
+            conn.setAutoCommit(false); //By setting AutoCommit to false, the we can cancel the first statement if the second one fails //todo When we use connection pool, will setAutocommit be reset on close?
             try {
                 /*Build the prepared statements required to update the database*/
                 PreparedStatement[] preparedStatements = buildPreparedStatements(conn, statements);
