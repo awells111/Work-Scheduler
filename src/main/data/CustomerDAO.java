@@ -16,41 +16,13 @@ public class CustomerDAO extends DAO {
     private static final String COLUMN_CUSTOMER_ID = "customerId";
     private static final String COLUMN_CUSTOMER_NAME = "customerName";
 
-    /*Customer Table Statements*/
-    private static final String QUERY_SELECT_CUSTOMERS = "SELECT * FROM " + TABLE_CUSTOMER;
-
-    private static final String STATEMENT_INSERT_CUSTOMER = "INSERT INTO `" + TABLE_CUSTOMER + "`(`" +
-            COLUMN_CUSTOMER_ID + "`, `" +
-            COLUMN_CUSTOMER_NAME +
-            "`) VALUES (?, ?)";
-
-    private static final String STATEMENT_UPDATE_CUSTOMER = "UPDATE " + TABLE_CUSTOMER + " SET " +
-            COLUMN_CUSTOMER_NAME + " = ? WHERE " +
-            COLUMN_CUSTOMER_ID + " = ?";
-
-    private static final String STATEMENT_DELETE_CUSTOMER = "DELETE FROM " + TABLE_CUSTOMER +
-            " WHERE " + COLUMN_CUSTOMER_ID + " = ?";
-
     /*
     Address Table
     */
     private static final String TABLE_ADDRESS = "address";
-    private static final String COLUMN_ADDRESS_ID = "customerId"; //todo Change addressId to customerId when I create my own database
+    private static final String COLUMN_ADDRESS_ID = "customerId";
     private static final String COLUMN_ADDRESS_NAME = "address";
     private static final String COLUMN_ADDRESS_PHONE = "phone";
-
-    /*Address Table Statements*/
-    private static final String QUERY_SELECT_ADDRESSES = "SELECT * FROM " + TABLE_ADDRESS;
-
-    private static final String STATEMENT_INSERT_ADDRESS = "INSERT INTO `" + TABLE_ADDRESS + "`(`" +
-            COLUMN_ADDRESS_ID + "`, `" +
-            COLUMN_ADDRESS_NAME + "`, `" +
-            COLUMN_ADDRESS_PHONE + "`) VALUES (?, ?, ?)";
-
-    private static final String STATEMENT_UPDATE_ADDRESS = "UPDATE " + TABLE_ADDRESS + " SET " +
-            COLUMN_ADDRESS_NAME + " = ?, " +
-            COLUMN_ADDRESS_PHONE + " = ? WHERE " +
-            COLUMN_ADDRESS_ID + " = ?";
 
     /**
      * The tables required to modify a customer entity
@@ -86,6 +58,15 @@ public class CustomerDAO extends DAO {
         return new ResultSet[0];
     }
 
+
+    private static final String STATEMENT_INSERT_CUSTOMER = "INSERT INTO `" + TABLE_CUSTOMER + "`(`" +
+            COLUMN_CUSTOMER_ID + "`, `" +
+            COLUMN_CUSTOMER_NAME +
+            "`) VALUES (?, ?)";
+    private static final String STATEMENT_INSERT_ADDRESS = "INSERT INTO `" + TABLE_ADDRESS + "`(`" +
+            COLUMN_ADDRESS_ID + "`, `" +
+            COLUMN_ADDRESS_NAME + "`, `" +
+            COLUMN_ADDRESS_PHONE + "`) VALUES (?, ?, ?)";
     /**
      * Insert a {@link Customer} into the database
      *
@@ -117,6 +98,13 @@ public class CustomerDAO extends DAO {
         return update(statements);
     }
 
+    private static final String STATEMENT_UPDATE_CUSTOMER = "UPDATE " + TABLE_CUSTOMER + " SET " +
+            COLUMN_CUSTOMER_NAME + " = ? WHERE " +
+            COLUMN_CUSTOMER_ID + " = ?";
+    private static final String STATEMENT_UPDATE_ADDRESS = "UPDATE " + TABLE_ADDRESS + " SET " +
+            COLUMN_ADDRESS_NAME + " = ?, " +
+            COLUMN_ADDRESS_PHONE + " = ? WHERE " +
+            COLUMN_ADDRESS_ID + " = ?";
     /**
      * Update an existing {@link Customer} in the database
      *
@@ -148,6 +136,9 @@ public class CustomerDAO extends DAO {
         return update(statements);
     }
 
+
+    private static final String STATEMENT_DELETE_CUSTOMER = "DELETE FROM " + TABLE_CUSTOMER +
+            " WHERE " + COLUMN_CUSTOMER_ID + " = ?";
     /**
      * Delete an existing {@link Customer} in the database
      *
@@ -170,47 +161,37 @@ public class CustomerDAO extends DAO {
         return update(statements);
     }
 
+    private static final String QUERY_SELECT_CUSTOMERS = "SELECT " +
+            TABLE_CUSTOMER + "." + COLUMN_CUSTOMER_ID + ", " +
+            COLUMN_CUSTOMER_NAME + ", " +
+            COLUMN_ADDRESS_NAME + ", " +
+            COLUMN_ADDRESS_PHONE + " FROM " +
+            TABLE_CUSTOMER + ", " +
+            TABLE_ADDRESS + " WHERE " +
+            TABLE_CUSTOMER + "." + COLUMN_CUSTOMER_ID + " = " +
+            TABLE_ADDRESS + "." + COLUMN_ADDRESS_ID;
+
     ArrayList getEntities() {
         ArrayList<Customer> customers = new ArrayList<>();
 
-        String[][] queries = emptyEntity(CUSTOMER_TABLES.length);
+        String[][] queries = emptyEntity(1); //We only need one query
 
         queries[0] = new String[]{
                 QUERY_SELECT_CUSTOMERS
         };
 
-        queries[1] = new String[]{
-                QUERY_SELECT_ADDRESSES
-        };
-
         ResultSet[] resultSets = getResultSets(queries);
 
         try {
-            HashMap<Integer, Integer> hashMap = new HashMap<>(); //Will hold the index of an object in the arraylist
-            int arrayListIndex = 0;
-
             ResultSet custRS = resultSets[0];
 
             while (custRS.next()) { //For each result
                 int rsCustId = custRS.getInt(CustomerDAO.COLUMN_CUSTOMER_ID);
                 String rsCustName = custRS.getString(CustomerDAO.COLUMN_CUSTOMER_NAME);
+                String rsAddrName = custRS.getString(CustomerDAO.COLUMN_ADDRESS_NAME);
+                String rsAddrPhone = custRS.getString(CustomerDAO.COLUMN_ADDRESS_PHONE);
 
-                hashMap.put(rsCustId, arrayListIndex++);
-
-                customers.add(new Customer(rsCustId, rsCustName, "", ""));
-            }
-
-
-            ResultSet addrRS = resultSets[1];
-
-            while (addrRS.next()) { //For each result
-                int rsAddrId = addrRS.getInt(CustomerDAO.COLUMN_ADDRESS_ID);
-                String rsAddrName = addrRS.getString(CustomerDAO.COLUMN_ADDRESS_NAME);
-                String rsAddrPhone = addrRS.getString(CustomerDAO.COLUMN_ADDRESS_PHONE);
-
-                Customer current = customers.get(hashMap.get(rsAddrId));
-                current.setAddress(rsAddrName);
-                current.setPhone(rsAddrPhone);
+                customers.add(new Customer(rsCustId, rsCustName, rsAddrName, rsAddrPhone));
             }
 
         } catch (SQLException e) {
