@@ -15,16 +15,14 @@ public class CustomerDAO extends DAO {
     private static final String TABLE_CUSTOMER = "customer";
     private static final String COLUMN_CUSTOMER_ID = "customerId";
     private static final String COLUMN_CUSTOMER_NAME = "customerName";
-    private static final String COLUMN_CUSTOMER_ADDRESS_ID = "addressId"; //todo delete because the addressId is unnecessary
 
     /*Customer Table Statements*/
     private static final String QUERY_SELECT_CUSTOMERS = "SELECT * FROM " + TABLE_CUSTOMER;
 
     private static final String STATEMENT_INSERT_CUSTOMER = "INSERT INTO `" + TABLE_CUSTOMER + "`(`" +
             COLUMN_CUSTOMER_ID + "`, `" +
-            COLUMN_CUSTOMER_NAME + "`, `" +
-            COLUMN_CUSTOMER_ADDRESS_ID +
-            "`) VALUES (?, ?, ?)";
+            COLUMN_CUSTOMER_NAME +
+            "`) VALUES (?, ?)";
 
     private static final String STATEMENT_UPDATE_CUSTOMER = "UPDATE " + TABLE_CUSTOMER + " SET " +
             COLUMN_CUSTOMER_NAME + " = ? WHERE " +
@@ -105,7 +103,6 @@ public class CustomerDAO extends DAO {
                 STATEMENT_INSERT_CUSTOMER,
                 id, //customerId
                 newCustomer.getName(), //customerName
-                id //addressId
         };
 
         /*Insert Address Statement*/
