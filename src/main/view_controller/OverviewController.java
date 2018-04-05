@@ -6,14 +6,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.util.Callback;
 import main.Main;
 import main.data.Database;
 import main.model.Appointment;
 import main.model.Customer;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
+
+import static main.data.Database.FORMAT_DATETIME;
 
 public class OverviewController {
     public static final String FXML_OVERVIEW = "view_controller/overview.fxml";
@@ -73,7 +78,7 @@ public class OverviewController {
     @FXML
     private void initialize() {
 
-        //Need to add .asObject() for non-Strings in JavaFX
+        /*Set the properties that will be shown in the table*/
         columnCustId.setCellValueFactory(
                 cellData -> cellData.getValue().idProperty().asObject()
         );
@@ -99,13 +104,19 @@ public class OverviewController {
         );
 
         columnApptStart.setCellValueFactory(
-                cellData -> cellData.getValue().startProperty() //todo start and end print in wrong format
+                cellData -> cellData.getValue().startProperty()
         );
 
         columnApptEnd.setCellValueFactory(
                 cellData -> cellData.getValue().endProperty()
         );
 
+
+        /*Format the start and end columns*/
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(FORMAT_DATETIME).withLocale(Locale.getDefault());
+
+        columnApptStart.setCellFactory(createDateCellFactory(dateTimeFormatter));
+        columnApptEnd.setCellFactory(createDateCellFactory(dateTimeFormatter));
     }
 
     public void setMainApp(Main mainApp) {
@@ -162,7 +173,7 @@ public class OverviewController {
 
     @FXML
     void handleAddAppointment() {
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now().withNano(0); //We do not use milliseconds so we are setting it to 0
         Appointment newAppointment = new Appointment(Database.CODE_NEW_ENTITY, tableViewCustomer.getSelectionModel().getSelectedItem().getId(), "", now, now);
 
         mainApp.showAddAppointment(tableViewCustomer.getSelectionModel().getSelectedItem().getName(), newAppointment);
@@ -258,5 +269,25 @@ public class OverviewController {
 
             alert.showAndWait();
         }
+    }
+
+    /*Used to display formatted dates in a TableColumn*/
+    private Callback<TableColumn<Appointment, LocalDateTime>, TableCell<Appointment, LocalDateTime>> createDateCellFactory(DateTimeFormatter dateTimeFormatter) {
+        return new Callback<TableColumn<Appointment, LocalDateTime>, TableCell<Appointment, LocalDateTime>>() {
+            @Override
+            public TableCell<Appointment, LocalDateTime> call(TableColumn<Appointment, LocalDateTime> col) {
+                return new TableCell<Appointment, LocalDateTime>() {
+                    @Override
+                    protected void updateItem(LocalDateTime item, boolean empty) {
+
+                        super.updateItem(item, empty);
+                        if (empty)
+                            setText(null);
+                        else
+                            setText(item.format(dateTimeFormatter));
+                    }
+                };
+            }
+        };
     }
 }

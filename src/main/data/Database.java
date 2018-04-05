@@ -2,13 +2,15 @@ package main.data;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.util.Callback;
 import main.model.Appointment;
 import main.model.Customer;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import static main.data.DAO.CODE_SUCCESS;
 
@@ -16,14 +18,11 @@ public class Database {
 
     public static final String ZONE_ID_DB = "UTC";
     public static final String FORMAT_DATETIME = "yyyy-MM-dd HH:mm";
-    static final String MYSQL_DATETIME_FORMAT = "'%Y-%m-%d %H:%i'"; //MYSQL Equivalent to "yyyy-MM-dd HH:mm"
 
-    private static final int GMT_OPEN_HOUR = 8; //Opens at 8:00 GMT
-    private static final int GMT_CLOSE_HOUR = 22; //Closes at 22:00 GMT
+    private static final int GMT_OPEN_HOUR = 8; //The business opens at 8:00 GMT
+    private static final int GMT_CLOSE_HOUR = 22; //The business closes at 22:00 GMT
 
     public static final int CODE_NEW_ENTITY = -1;
-
-    private DbConnection dbConnection;
 
     private ObservableList<Customer> customers;
     private ObservableList<Appointment> appointments;
@@ -33,14 +32,10 @@ public class Database {
     private AppointmentDAO appointmentDAO;
 
     public Database() {
-        dbConnection = new DbConnection();
+        DbConnection dbConnection = new DbConnection();
         userDAO = new UserDAO(dbConnection);
         customerDAO = new CustomerDAO(dbConnection);
-        appointmentDAO = new AppointmentDAO(dbConnection); //todo fix this
-    }
-
-    public DbConnection getDbConnection() {
-        return dbConnection;
+        appointmentDAO = new AppointmentDAO(dbConnection);
     }
 
     public UserDAO getUserDAO() {

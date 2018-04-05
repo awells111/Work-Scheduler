@@ -10,11 +10,9 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import main.data.Database;
 import main.model.Appointment;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.MonthDay;
@@ -56,7 +54,7 @@ public class CalendarDialog extends DatePickerSkin {
                     StringBuilder sb = new StringBuilder();
                     ArrayList<Integer> list = appointmentHashMap.get(MonthDay.from(date));
 
-                    for (int i = 0; i < list.size();) {
+                    for (int i = 0; i < list.size(); ) {
                         Integer index = list.get(i);
                         sb.append(appointments.get(index).toStringUserFriendly());
 
@@ -79,7 +77,7 @@ public class CalendarDialog extends DatePickerSkin {
 
         // Create the dialog Stage.
         Stage dialogStage = new Stage();
-        dialogStage.setTitle("Calendar");
+        dialogStage.setTitle("Calendar"); //todo ResourceBundle
         dialogStage.initModality(Modality.WINDOW_MODAL);
         dialogStage.initOwner(window);
         Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());

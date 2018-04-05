@@ -10,8 +10,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/data/AppointmentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/data/AppointmentDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/Work_Scheduler_jar/Work Scheduler.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Work_Scheduler_jar/Work Scheduler.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Work Scheduler/main/data/AppointmentDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Work Scheduler/main/data/AppointmentDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Work Scheduler/main/data/Database.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Work Scheduler/main/data/Database.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Work Scheduler/main/model/Appointment.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Work Scheduler/main/model/Appointment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Work Scheduler/main/view/CalendarDialog$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Work Scheduler/main/view/CalendarDialog$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Work Scheduler/main/view/CalendarDialog.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Work Scheduler/main/view/CalendarDialog.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Work Scheduler/main/view/DateTimePicker$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Work Scheduler/main/view/DateTimePicker$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Work Scheduler/main/view/DateTimePicker$InternalConverter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Work Scheduler/main/view/DateTimePicker$InternalConverter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Work Scheduler/main/view/DateTimePicker.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Work Scheduler/main/view/DateTimePicker.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Work Scheduler/main/view_controller/OverviewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Work Scheduler/main/view_controller/OverviewController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/data/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/data/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/model/Appointment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/CalendarDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/CalendarDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view/DateTimePicker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view/DateTimePicker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/view_controller/OverviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/view_controller/OverviewController.java" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -72,8 +86,8 @@
       <file leaf-file-name="AddAppointmentController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/view_controller/AddAppointmentController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="55" column="42" selection-start-line="55" selection-start-column="42" selection-end-line="55" selection-end-column="42" />
+            <state relative-caret-position="143">
+              <caret line="107" column="75" selection-start-line="107" selection-start-column="75" selection-end-line="107" selection-end-column="75" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#buildAlert#0;class#AddAppointmentController#0" />
@@ -84,57 +98,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OverviewController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="OverviewController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/view_controller/OverviewController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1793">
-              <caret line="114" column="56" selection-start-line="114" selection-start-column="56" selection-end-line="114" selection-end-column="56" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DateTimePicker.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/view/DateTimePicker.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
-              <caret line="59" column="22" lean-forward="true" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="22" />
+            <state relative-caret-position="1479">
+              <caret line="116" column="8" selection-start-line="116" selection-start-column="8" selection-end-line="116" selection-end-column="8" />
               <folding>
-                <element signature="e#2072#2073#0" expanded="true" />
-                <element signature="e#2125#2126#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AppointmentDAO.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/data/AppointmentDAO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1025#1026#0" expanded="true" />
-                <element signature="e#1070#1071#0" expanded="true" />
-                <element signature="docComment;method#insertEntity#0;class#AppointmentDAO#0" />
-                <element signature="docComment;method#updateEntity#0;class#AppointmentDAO#0" />
-                <element signature="docComment;method#deleteEntity#0;class#AppointmentDAO#0" />
-                <element signature="method#deleteEntity#0;class#AppointmentDAO#0" />
-                <marker date="1522951582311" expanded="false" signature="249:654" ph="..." />
-                <marker date="1522951582311" expanded="false" signature="731:806" ph="..." />
-                <marker date="1522951582311" expanded="true" signature="807:900" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CustomerDAO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/data/CustomerDAO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="30" selection-start-line="30" selection-end-line="32" selection-end-column="5" />
-              <folding>
-                <element signature="e#895#896#0" expanded="true" />
-                <element signature="e#940#941#0" expanded="true" />
+                <element signature="e#10546#10976#0" expanded="true" />
+                <element signature="e#10975#10976#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -143,23 +114,8 @@
       <file leaf-file-name="Database.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/data/Database.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="38" column="56" selection-start-line="38" selection-start-column="56" selection-end-line="38" selection-end-column="56" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DAO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/data/DAO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-777">
-              <caret line="12" column="75" selection-start-line="12" selection-start-column="75" selection-end-line="12" selection-end-column="75" />
-              <folding>
-                <element signature="docComment;method#emptyEntity#0;class#DAO#0" />
-                <element signature="method#buildPreparedStatements#0;class#DAO#0" />
-                <element signature="method#getResultSets#0;class#DAO#0" />
-                <element signature="method#getResultSets#1;class#DAO#0" />
-              </folding>
+            <state relative-caret-position="291">
+              <caret line="199" column="5" selection-start-line="199" selection-start-column="5" selection-end-line="199" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -262,18 +218,18 @@
         <option value="$PROJECT_DIR$/src/main/rb_fr.properties" />
         <option value="$PROJECT_DIR$/src/main/Main.java" />
         <option value="$PROJECT_DIR$/src/main/data/DbConnection.java" />
-        <option value="$PROJECT_DIR$/src/main/data/ConnectionInfo.java" />
         <option value="$PROJECT_DIR$/src/main/data/UserDAO.java" />
         <option value="$PROJECT_DIR$/src/main/view_controller/AddAppointmentController.java" />
-        <option value="$PROJECT_DIR$/src/main/view/CalendarDialog.java" />
-        <option value="$PROJECT_DIR$/src/main/view_controller/OverviewController.java" />
         <option value="$PROJECT_DIR$/src/main/data/TimeUtil.java" />
         <option value="$PROJECT_DIR$/src/main/data/DAO.java" />
+        <option value="$PROJECT_DIR$/src/main/data/CustomerDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/data/AppointmentDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/view/CalendarDialog.java" />
+        <option value="$PROJECT_DIR$/src/main/data/ConnectionInfo.java" />
         <option value="$PROJECT_DIR$/src/main/view/DateTimePicker.java" />
         <option value="$PROJECT_DIR$/src/main/model/Appointment.java" />
         <option value="$PROJECT_DIR$/src/main/data/Database.java" />
-        <option value="$PROJECT_DIR$/src/main/data/CustomerDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/data/AppointmentDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/view_controller/OverviewController.java" />
       </list>
     </option>
   </component>
@@ -698,13 +654,13 @@
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3292517" />
       <window_info anchor="right" id="Maven Projects" order="3" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.33286518" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.33286518" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.1932886" />
-      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.3286517" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.1932886" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3286517" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
@@ -925,34 +881,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/view/CalendarDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="46" column="5" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/data/DbConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/data/ConnectionInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/data/UserDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/model/Customer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="415">
@@ -995,74 +923,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/view_controller/AddAppointmentController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="55" column="42" selection-start-line="55" selection-start-column="42" selection-end-line="55" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#buildAlert#0;class#AddAppointmentController#0" />
-            <element signature="method#setFields#0;class#AddAppointmentController#0" />
-            <element signature="method#setLimit#0;class#AddAppointmentController#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/view_controller/OverviewController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1793">
-          <caret line="114" column="56" selection-start-line="114" selection-start-column="56" selection-end-line="114" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/model/Appointment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="67" column="19" selection-start-line="67" selection-start-column="19" selection-end-line="67" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2091#2092#0" expanded="true" />
-            <element signature="e#2132#2133#0" expanded="true" />
-            <element signature="e#2191#2192#0" expanded="true" />
-            <element signature="e#2243#2244#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/view/DateTimePicker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="59" column="22" lean-forward="true" selection-start-line="59" selection-start-column="22" selection-end-line="59" selection-end-column="22" />
-          <folding>
-            <element signature="e#2072#2073#0" expanded="true" />
-            <element signature="e#2125#2126#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/data/DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-777">
-          <caret line="12" column="75" selection-start-line="12" selection-start-column="75" selection-end-line="12" selection-end-column="75" />
-          <folding>
-            <element signature="docComment;method#emptyEntity#0;class#DAO#0" />
-            <element signature="method#buildPreparedStatements#0;class#DAO#0" />
-            <element signature="method#getResultSets#0;class#DAO#0" />
-            <element signature="method#getResultSets#1;class#DAO#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/data/Database.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="38" column="56" selection-start-line="38" selection-start-column="56" selection-end-line="38" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/data/CustomerDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
+        <state relative-caret-position="442">
           <caret line="30" selection-start-line="30" selection-end-line="32" selection-end-column="5" />
           <folding>
             <element signature="e#895#896#0" expanded="true" />
@@ -1073,12 +936,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/data/AppointmentDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+        <state relative-caret-position="357">
+          <caret line="28" column="5" lean-forward="true" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1025#1026#0" expanded="true" />
-            <element signature="e#1070#1071#0" expanded="true" />
             <element signature="docComment;method#insertEntity#0;class#AppointmentDAO#0" />
             <element signature="docComment;method#updateEntity#0;class#AppointmentDAO#0" />
             <element signature="docComment;method#deleteEntity#0;class#AppointmentDAO#0" />
@@ -1086,6 +947,101 @@
             <marker date="1522951582311" expanded="false" signature="249:654" ph="..." />
             <marker date="1522951582311" expanded="false" signature="731:806" ph="..." />
             <marker date="1522951582311" expanded="true" signature="807:900" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/data/DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="12" column="75" selection-start-line="12" selection-start-column="75" selection-end-line="12" selection-end-column="75" />
+          <folding>
+            <element signature="docComment;method#emptyEntity#0;class#DAO#0" />
+            <element signature="method#buildPreparedStatements#0;class#DAO#0" />
+            <element signature="method#getResultSets#0;class#DAO#0" />
+            <element signature="method#getResultSets#1;class#DAO#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/data/DbConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/data/UserDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/view/CalendarDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1003">
+          <caret line="79" column="63" selection-start-line="79" selection-start-column="63" selection-end-line="79" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/data/ConnectionInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/view_controller/AddAppointmentController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="107" column="75" selection-start-line="107" selection-start-column="75" selection-end-line="107" selection-end-column="75" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#buildAlert#0;class#AddAppointmentController#0" />
+            <element signature="method#setFields#0;class#AddAppointmentController#0" />
+            <element signature="method#setLimit#0;class#AddAppointmentController#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/view/DateTimePicker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="33" column="50" lean-forward="true" selection-start-line="33" selection-start-column="50" selection-end-line="33" selection-end-column="50" />
+          <folding>
+            <element signature="e#595#786#0" expanded="true" />
+            <element signature="e#785#786#0" expanded="true" />
+            <element signature="e#2072#2073#0" expanded="true" />
+            <element signature="e#2125#2126#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/model/Appointment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1241">
+          <caret line="97" column="1" lean-forward="true" selection-start-line="97" selection-start-column="1" selection-end-line="97" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/data/Database.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="199" column="5" selection-start-line="199" selection-start-column="5" selection-end-line="199" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/view_controller/OverviewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1479">
+          <caret line="116" column="8" selection-start-line="116" selection-start-column="8" selection-end-line="116" selection-end-column="8" />
+          <folding>
+            <element signature="e#10546#10976#0" expanded="true" />
+            <element signature="e#10975#10976#0" expanded="true" />
           </folding>
         </state>
       </provider>
