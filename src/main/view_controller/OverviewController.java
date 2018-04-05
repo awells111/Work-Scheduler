@@ -12,6 +12,7 @@ import main.data.Database;
 import main.model.Appointment;
 import main.model.Customer;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -120,7 +121,7 @@ public class OverviewController {
         columnApptEnd.setCellFactory(createDateCellFactory(dateTimeFormatter));
     }
 
-    public void setMainApp(Main mainApp) {
+    public void setMainApp(Main mainApp) throws SQLException, ClassNotFoundException {
         this.mainApp = mainApp;
 
         mainApp.getDatabase().setCustomersFromDatabase();
@@ -169,7 +170,12 @@ public class OverviewController {
     @FXML
     void handleDeleteCustomer() {
         Customer selectedCustomer = tableViewCustomer.getSelectionModel().getSelectedItem();
-        mainApp.getDatabase().deleteCustomer(selectedCustomer);
+        try {
+            mainApp.getDatabase().deleteCustomer(selectedCustomer);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            mainApp.showDatabaseErrorAlert();
+        }
     }
 
     @FXML
@@ -188,8 +194,12 @@ public class OverviewController {
     @FXML
     void handleDeleteAppointment() {
         Appointment selectedAppointment = tableViewAppointment.getSelectionModel().getSelectedItem();
-
-        mainApp.getDatabase().deleteAppointment(selectedAppointment);
+        try {
+            mainApp.getDatabase().deleteAppointment(selectedAppointment);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            mainApp.showDatabaseErrorAlert();
+        }
     }
 
     /*This will filter out Appointments based on the selected Customer*/
@@ -238,7 +248,13 @@ public class OverviewController {
     }
 
     private void showCloseAppointments() {
-        LinkedList<Appointment> closeAppointments = mainApp.getDatabase().getCloseAppointments();
+        LinkedList<Appointment> closeAppointments;
+        try {
+            closeAppointments = mainApp.getDatabase().getCloseAppointments();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return;
+        }
 
         if (closeAppointments.size() > 0) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

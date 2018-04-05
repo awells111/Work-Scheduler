@@ -18,6 +18,7 @@ import main.view_controller.LoginController;
 import main.view_controller.OverviewController;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 
 import static main.view_controller.AddAppointmentController.FXML_ADD_APPOINTMENT;
@@ -81,7 +82,15 @@ public class Main extends Application {
             getWindow().setScene(scene);
             getWindow().show();
             OverviewController controller = styledScene.getLoader().getController();
-            controller.setMainApp(this);
+
+            /*If Customers or Appointments do not load properly, go back to the login screen*/
+            try {
+                controller.setMainApp(this);
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+                showDatabaseErrorAlert();
+                showLogin();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -111,6 +120,7 @@ public class Main extends Application {
             AddCustomerController controller = styledScene.getLoader().getController();
             controller.setDialogStage(dialogStage);
             controller.setCustomer(database, customer);
+            controller.setMainApp(this);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
@@ -136,6 +146,7 @@ public class Main extends Application {
             AddAppointmentController controller = styledScene.getLoader().getController();
             controller.setDialogStage(dialogStage);
             controller.setAppointment(database, customerName, appointment);
+            controller.setMainApp(this);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
@@ -212,7 +223,7 @@ public class Main extends Application {
                     StringBuilder s = appointmentMap.get(c.getId());
                     sb.append("Schedule of: ").append(c.getName()).append(System.lineSeparator());
 
-                    if(s.toString().equals("")) {
+                    if (s.toString().equals("")) {
                         sb.append("This customer has no appointments.");
                     } else {
                         sb.append(s);
@@ -235,7 +246,7 @@ public class Main extends Application {
                 for (Customer c : getDatabase().getCustomers()) {
                     sb.append(c.getName()).append(" has ");
 
-                    if(hashMap.get(c.getId()) == null) {
+                    if (hashMap.get(c.getId()) == null) {
                         sb.append("0");
                     } else {
                         sb.append(Integer.toString(hashMap.get(c.getId())));
@@ -257,5 +268,17 @@ public class Main extends Application {
 
     private ResourceBundle getRb() {
         return rb;
+    }
+
+    public void showDatabaseErrorAlert() {
+        showDatabaseErrorAlert(getRb().getString("Database_Connection_Error"));
+    }
+
+    public void showDatabaseErrorAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(getRb().getString("Database_Connection_Error"));
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

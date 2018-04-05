@@ -7,10 +7,7 @@ import java.sql.SQLException;
 
 public abstract class DAO {
 
-    public static final int CODE_ERROR = -1;
-    public static final int CODE_SUCCESS = 1;
-
-    protected static final String VALUE_FROM_UNIXTIME = "FROM_UNIXTIME(?)";
+    static final String VALUE_FROM_UNIXTIME = "FROM_UNIXTIME(?)";
 
     private DbConnection dbConnection;
 
@@ -73,74 +70,47 @@ public abstract class DAO {
      *
      * @param conn       A pre-existing instance of {@link java.sql.Connection} set by {@link DbConnection}
      * @param statements A String[][] representing the entity to be inserted, updated, or deleted
-     * @return {@value CODE_SUCCESS} if successful, else {@value CODE_ERROR}
      */
-    private int update(Connection conn, String[][] statements) {
+    private void update(Connection conn, String[][] statements) throws SQLException {
+        conn.setAutoCommit(false); //By setting AutoCommit to false, the we can cancel the first statement if the second one fails
+
+        /*Build the prepared statements required to update the database*/
+        PreparedStatement[] preparedStatements = buildPreparedStatements(conn, statements);
+
         try {
-            conn.setAutoCommit(false); //By setting AutoCommit to false, the we can cancel the first statement if the second one fails
-            try {
-                /*Build the prepared statements required to update the database*/
-                PreparedStatement[] preparedStatements = buildPreparedStatements(conn, statements);
-
-                /*Execute all of the PreparedStatements that were just built*/
-                for (PreparedStatement p : preparedStatements) {
-                    p.executeUpdate();
-                }
-
-                /*If no exceptions were thrown, commit the update*/
-                conn.commit();
-            } catch (SQLException e) {
-
-                /*If an exception was thrown, cancel the update and rollback any changes that were made*/
-                conn.rollback();
-                throw e;
+            /*Execute all of the PreparedStatements that were just built*/
+            for (PreparedStatement p : preparedStatements) {
+                p.executeUpdate();
             }
 
-            conn.close();
-        } catch (
-                SQLException e) {
+            /*If no exceptions were thrown, commit the update*/
+            conn.commit();
+        } catch (SQLException e) {
             e.printStackTrace();
-            return CODE_ERROR;
-        }
-
-        return CODE_SUCCESS;
-    }
-
-    protected int update(String[][] statements) {
-        try {
-            return update(getDbConnection().getConnection(), statements);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return CODE_ERROR;
         }
     }
 
-    private ResultSet[] getResultSets(Connection conn, String[][] statements) {
+    protected void update(String[][] statements) throws SQLException, ClassNotFoundException {
+        try (Connection conn = getDbConnection().getConnection()) {
+            update(conn, statements);
+        }
+    }
+
+    private ResultSet[] getResultSets(Connection conn, String[][] statements) throws SQLException {
 
         ResultSet[] resultSets = new ResultSet[statements.length];
 
-        try {
-            PreparedStatement[] preparedStatements = buildPreparedStatements(conn, statements);
+        PreparedStatement[] preparedStatements = buildPreparedStatements(conn, statements);
 
-            for (int i = 0; i < resultSets.length; i++) {
-                resultSets[i] = preparedStatements[i].executeQuery();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        for (int i = 0; i < resultSets.length; i++) {
+            resultSets[i] = preparedStatements[i].executeQuery();
         }
 
         return resultSets;
     }
 
-    protected ResultSet[] getResultSets(String[][] statements) {
-        try {
-            return getResultSets(getDbConnection().getConnection(), statements);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return new ResultSet[0];
+    protected ResultSet[] getResultSets(String[][] statements) throws SQLException, ClassNotFoundException {
+        return getResultSets(getDbConnection().getConnection(), statements);
     }
 
 }

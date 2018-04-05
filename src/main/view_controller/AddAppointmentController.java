@@ -5,10 +5,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import main.Main;
 import main.data.Database;
 import main.model.Appointment;
 import main.view.DateTimePicker;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
@@ -35,6 +37,8 @@ public class AddAppointmentController {
     private Stage dialogStage;
     private Database database;
     private Appointment appointment;
+
+    private Main mainApp;
 
     /*MYSQL character limits by column*/
     private static final int LIMIT_TYPE = 255;
@@ -76,9 +80,21 @@ public class AddAppointmentController {
         }
 
         if (isNewAppointment()) {
-            database.addAppointment(newAppointment);
+            try {
+                database.addAppointment(newAppointment);
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+                mainApp.showDatabaseErrorAlert(resources.getString("Error_Saving_Appointment"));
+                return;
+            }
         } else {
-            database.updateAppointment(appointment, newAppointment);
+            try {
+                database.updateAppointment(appointment, newAppointment);
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+                mainApp.showDatabaseErrorAlert(resources.getString("Error_Saving_Appointment"));
+                return;
+            }
         }
 
         dialogStage.close();
@@ -133,10 +149,16 @@ public class AddAppointmentController {
     }
 
     private boolean appointmentOverlaps(Appointment newAppointment) {
-        if (database.appointmentOverlaps(newAppointment)) {
-            Alert alert = buildAlert();
-            alert.setContentText(resources.getString("appointment_overlaps"));
-            alert.show();
+        try {
+            if (database.appointmentOverlaps(newAppointment)) {
+                Alert alert = buildAlert();
+                alert.setContentText(resources.getString("appointment_overlaps"));
+                alert.show();
+                return true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            mainApp.showDatabaseErrorAlert();
             return true;
         }
 
@@ -163,5 +185,9 @@ public class AddAppointmentController {
                 }
             }
         });
+    }
+
+    public void setMainApp(Main mainApp) {
+        this.mainApp = mainApp;
     }
 }

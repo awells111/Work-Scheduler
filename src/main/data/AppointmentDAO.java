@@ -40,9 +40,8 @@ public class AppointmentDAO extends DAO {
      * Insert an {@link Appointment} into the database
      *
      * @param newAppointment The {@link Appointment} that will be inserted into the database
-     * @return {@value CODE_SUCCESS} if successful, else {@value CODE_ERROR}
      */
-    int insertEntity(Appointment newAppointment) {
+    void insertEntity(Appointment newAppointment) throws SQLException, ClassNotFoundException {
         /*Build the statements required to insert a appointment*/
         String[][] statements = emptyEntity(APPOINTMENT_TABLES.length);
 
@@ -57,7 +56,7 @@ public class AppointmentDAO extends DAO {
         };
 
         /*Execute the required statements*/
-        return update(statements);
+        update(statements);
     }
 
     private static final String STATEMENT_UPDATE_APPOINTMENT = "UPDATE " + TABLE_APPOINTMENT +
@@ -70,9 +69,8 @@ public class AppointmentDAO extends DAO {
      * Update an existing {@link Appointment} in the database
      *
      * @param updatedAppointment The {@link Appointment} that will be updated in the database
-     * @return {@value CODE_SUCCESS} if successful, else {@value CODE_ERROR}
      */
-    int updateEntity(Appointment updatedAppointment) {
+    void updateEntity(Appointment updatedAppointment) throws SQLException, ClassNotFoundException {
         /*Build the statements required to delete a appointment*/
         String[][] statements = emptyEntity(APPOINTMENT_TABLES.length);
 
@@ -86,7 +84,7 @@ public class AppointmentDAO extends DAO {
         };
 
         /*Execute the required statements*/
-        return update(statements);
+        update(statements);
     }
 
     private static final String STATEMENT_DELETE_APPOINTMENT = "DELETE FROM " + TABLE_APPOINTMENT + " WHERE " +
@@ -96,9 +94,8 @@ public class AppointmentDAO extends DAO {
      * Delete an existing {@link Appointment} in the database
      *
      * @param selectedAppointment The {@link Appointment} that will be deleted in the database
-     * @return {@value CODE_SUCCESS} if successful, else {@value CODE_ERROR}
      */
-    int deleteEntity(Appointment selectedAppointment) {
+    void deleteEntity(Appointment selectedAppointment) throws SQLException, ClassNotFoundException {
         /*Build the statements required to delete a appointment*/
         String[][] statements = emptyEntity(APPOINTMENT_TABLES.length);
 
@@ -109,12 +106,11 @@ public class AppointmentDAO extends DAO {
         };
 
         /*Execute the required statements*/
-        return update(statements);
+        update(statements);
     }
 
     private static final String QUERY_SELECT_APPOINTMENTS = "SELECT * FROM " + TABLE_APPOINTMENT;
-
-    ArrayList getEntities() {
+    ArrayList<Appointment> getEntities() throws SQLException, ClassNotFoundException {
         ArrayList<Appointment> appointments = new ArrayList<>();
 
         String[][] queries = emptyEntity(APPOINTMENT_TABLES.length);
@@ -125,27 +121,22 @@ public class AppointmentDAO extends DAO {
 
         ResultSet[] resultSets = getResultSets(queries);
 
-        try {
-            ResultSet apptRS = resultSets[0];
+        ResultSet apptRS = resultSets[0];
 
-            while (apptRS.next()) { //For each result
-                int apptId = apptRS.getInt(COLUMN_APPOINTMENT_ID);
-                int custId = apptRS.getInt(COLUMN_CUSTOMER_ID);
-                String apptType = apptRS.getString(COLUMN_APPOINTMENT_TYPE);
-                LocalDateTime apptStart = apptRS.getTimestamp(COLUMN_APPOINTMENT_START).toLocalDateTime();
-                LocalDateTime apptEnd = apptRS.getTimestamp(COLUMN_APPOINTMENT_END).toLocalDateTime();
+        while (apptRS.next()) { //For each result
+            int apptId = apptRS.getInt(COLUMN_APPOINTMENT_ID);
+            int custId = apptRS.getInt(COLUMN_CUSTOMER_ID);
+            String apptType = apptRS.getString(COLUMN_APPOINTMENT_TYPE);
+            LocalDateTime apptStart = apptRS.getTimestamp(COLUMN_APPOINTMENT_START).toLocalDateTime();
+            LocalDateTime apptEnd = apptRS.getTimestamp(COLUMN_APPOINTMENT_END).toLocalDateTime();
 
-                appointments.add(new Appointment(apptId, custId, apptType, apptStart, apptEnd));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            appointments.add(new Appointment(apptId, custId, apptType, apptStart, apptEnd));
         }
 
         return appointments;
     }
 
-    /*Check if an appointment overlaps other appointments*/
+    /*Check if an appointment overlaps any other appointments*/
     private static final String QUERY_SELECT_OVERLAPPED_APPOINTMENTS = "SELECT count(*) FROM " + TABLE_APPOINTMENT + //SELECT all appointments
             " WHERE " + COLUMN_CUSTOMER_ID + " = ? " + //WHERE customerId is the same
             "AND " + COLUMN_APPOINTMENT_ID + " != ? " + //AND only look at other appointments
@@ -165,8 +156,7 @@ public class AppointmentDAO extends DAO {
             ") OR (" +
             VALUE_FROM_UNIXTIME + " <= " + COLUMN_APPOINTMENT_START + " AND "
             + VALUE_FROM_UNIXTIME + " >= " + COLUMN_APPOINTMENT_END + "))";
-
-    int selectOverlappedAppointments(Appointment appointment) {
+    int selectOverlappedAppointments(Appointment appointment) throws SQLException, ClassNotFoundException {
         int count = 0;
 
         String[][] queries = emptyEntity(APPOINTMENT_TABLES.length);
@@ -188,15 +178,10 @@ public class AppointmentDAO extends DAO {
 
         ResultSet[] resultSets = getResultSets(queries);
 
-        try {
-            ResultSet rs = resultSets[0];
+        ResultSet rs = resultSets[0];
 
-            while (rs.next()) { //For each result
-                count = rs.getInt(1);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        while (rs.next()) { //For each result
+            count = rs.getInt(1);
         }
 
         return count;
@@ -209,39 +194,7 @@ public class AppointmentDAO extends DAO {
             ") AND (" +
             COLUMN_APPOINTMENT_START +
             " < (now() + INTERVAL 15 MINUTE))";
-
-//    ArrayList<Appointment> getCloseAppointments() {
-//        ArrayList<Appointment> appointments = new ArrayList<>(); //todo LinkedList
-//
-//        String[][] queries = emptyEntity(APPOINTMENT_TABLES.length);
-//
-//        queries[0] = new String[]{
-//                QUERY_SELECT_CLOSE_APPOINTMENTS
-//        };
-//
-//        ResultSet[] resultSets = getResultSets(queries);
-//
-//        try {
-//            ResultSet apptRS = resultSets[0];
-//
-//            while (apptRS.next()) { //For each result
-//                int apptId = apptRS.getInt(COLUMN_APPOINTMENT_ID);
-//                int custId = apptRS.getInt(COLUMN_CUSTOMER_ID);
-//                String apptType = apptRS.getString(COLUMN_APPOINTMENT_TYPE);
-//                LocalDateTime apptStart = apptRS.getTimestamp(COLUMN_APPOINTMENT_START).toLocalDateTime();
-//                LocalDateTime apptEnd = apptRS.getTimestamp(COLUMN_APPOINTMENT_END).toLocalDateTime();
-//
-//                appointments.add(new Appointment(apptId, custId, apptType, apptStart, apptEnd));
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return appointments;
-//    }
-
-    LinkedList<Appointment> getCloseAppointments() {
+    LinkedList<Appointment> getCloseAppointments() throws SQLException, ClassNotFoundException {
         LinkedList<Appointment> appointments = new LinkedList<>();
 
         String[][] queries = emptyEntity(APPOINTMENT_TABLES.length);
@@ -252,21 +205,16 @@ public class AppointmentDAO extends DAO {
 
         ResultSet[] resultSets = getResultSets(queries);
 
-        try {
-            ResultSet apptRS = resultSets[0];
+        ResultSet apptRS = resultSets[0];
 
-            while (apptRS.next()) { //For each result
-                int apptId = apptRS.getInt(COLUMN_APPOINTMENT_ID);
-                int custId = apptRS.getInt(COLUMN_CUSTOMER_ID);
-                String apptType = apptRS.getString(COLUMN_APPOINTMENT_TYPE);
-                LocalDateTime apptStart = apptRS.getTimestamp(COLUMN_APPOINTMENT_START).toLocalDateTime();
-                LocalDateTime apptEnd = apptRS.getTimestamp(COLUMN_APPOINTMENT_END).toLocalDateTime();
+        while (apptRS.next()) { //For each result
+            int apptId = apptRS.getInt(COLUMN_APPOINTMENT_ID);
+            int custId = apptRS.getInt(COLUMN_CUSTOMER_ID);
+            String apptType = apptRS.getString(COLUMN_APPOINTMENT_TYPE);
+            LocalDateTime apptStart = apptRS.getTimestamp(COLUMN_APPOINTMENT_START).toLocalDateTime();
+            LocalDateTime apptEnd = apptRS.getTimestamp(COLUMN_APPOINTMENT_END).toLocalDateTime();
 
-                appointments.add(new Appointment(apptId, custId, apptType, apptStart, apptEnd));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            appointments.add(new Appointment(apptId, custId, apptType, apptStart, apptEnd));
         }
 
         return appointments;

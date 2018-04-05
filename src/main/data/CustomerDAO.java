@@ -44,9 +44,8 @@ public class CustomerDAO extends DAO {
      * Insert a {@link Customer} into the database
      *
      * @param newCustomer The {@link Customer} that will be inserted into the database
-     * @return {@value CODE_SUCCESS} if successful, else {@value CODE_ERROR}
      */
-    int insertEntity(Customer newCustomer) {
+    void insertEntity(Customer newCustomer) throws SQLException, ClassNotFoundException {
         String id = Integer.toString(newCustomer.getId()); //The same ID is used for both Address and Customer
 
         /*Build the statements required to insert a customer*/
@@ -68,7 +67,7 @@ public class CustomerDAO extends DAO {
         };
 
         /*Execute the required statements*/
-        return update(statements);
+        update(statements);
     }
 
     private static final String STATEMENT_UPDATE_CUSTOMER = "UPDATE " + TABLE_CUSTOMER + " SET " +
@@ -83,9 +82,8 @@ public class CustomerDAO extends DAO {
      * Update an existing {@link Customer} in the database
      *
      * @param updatedCustomer The {@link Customer} that will be updated in the database
-     * @return {@value CODE_SUCCESS} if successful, else {@value CODE_ERROR}
      */
-    int updateEntity(Customer updatedCustomer) {
+    void updateEntity(Customer updatedCustomer) throws SQLException, ClassNotFoundException {
         String id = Integer.toString(updatedCustomer.getId()); //The same ID is used for both Address and Customer
 
         /*Build the statements required to delete a customer*/
@@ -107,7 +105,7 @@ public class CustomerDAO extends DAO {
         };
 
         /*Execute the required statements*/
-        return update(statements);
+        update(statements);
     }
 
 
@@ -118,9 +116,8 @@ public class CustomerDAO extends DAO {
      * Delete an existing {@link Customer} in the database
      *
      * @param selectedCustomer The {@link Customer} that will be deleted in the database
-     * @return {@value CODE_SUCCESS} if successful, else {@value CODE_ERROR}
      */
-    int deleteEntity(Customer selectedCustomer) {
+    void deleteEntity(Customer selectedCustomer) throws SQLException, ClassNotFoundException {
         String id = Integer.toString(selectedCustomer.getId()); //The same ID is used for both Address and Customer
 
         /*Build the statements required to delete a customer*/
@@ -133,7 +130,7 @@ public class CustomerDAO extends DAO {
         };
 
         /*Execute the required statements*/
-        return update(statements);
+        update(statements);
     }
 
     private static final String QUERY_SELECT_CUSTOMERS = "SELECT " +
@@ -146,7 +143,7 @@ public class CustomerDAO extends DAO {
             TABLE_CUSTOMER + "." + COLUMN_CUSTOMER_ID + " = " +
             TABLE_ADDRESS + "." + COLUMN_ADDRESS_ID;
 
-    ArrayList getEntities() {
+    ArrayList<Customer> getEntities() throws SQLException, ClassNotFoundException {
         ArrayList<Customer> customers = new ArrayList<>();
 
         String[][] queries = emptyEntity(1); //We only need one query
@@ -157,20 +154,15 @@ public class CustomerDAO extends DAO {
 
         ResultSet[] resultSets = getResultSets(queries);
 
-        try {
-            ResultSet custRS = resultSets[0];
+        ResultSet custRS = resultSets[0];
 
-            while (custRS.next()) { //For each result
-                int rsCustId = custRS.getInt(CustomerDAO.COLUMN_CUSTOMER_ID);
-                String rsCustName = custRS.getString(CustomerDAO.COLUMN_CUSTOMER_NAME);
-                String rsAddrName = custRS.getString(CustomerDAO.COLUMN_ADDRESS_NAME);
-                String rsAddrPhone = custRS.getString(CustomerDAO.COLUMN_ADDRESS_PHONE);
+        while (custRS.next()) { //For each result
+            int rsCustId = custRS.getInt(CustomerDAO.COLUMN_CUSTOMER_ID);
+            String rsCustName = custRS.getString(CustomerDAO.COLUMN_CUSTOMER_NAME);
+            String rsAddrName = custRS.getString(CustomerDAO.COLUMN_ADDRESS_NAME);
+            String rsAddrPhone = custRS.getString(CustomerDAO.COLUMN_ADDRESS_PHONE);
 
-                customers.add(new Customer(rsCustId, rsCustName, rsAddrName, rsAddrPhone));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            customers.add(new Customer(rsCustId, rsCustName, rsAddrName, rsAddrPhone));
         }
 
         return customers;

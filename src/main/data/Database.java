@@ -5,10 +5,9 @@ import javafx.collections.ObservableList;
 import main.model.Appointment;
 import main.model.Customer;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-
-import static main.data.DAO.CODE_SUCCESS;
 
 public class Database {
 
@@ -38,7 +37,8 @@ public class Database {
         return userDAO;
     }
 
-    public int login(String username, String password) {
+    /*Returns true if logged in, else false*/
+    public boolean login(String username, String password) throws SQLException, ClassNotFoundException {
         return getUserDAO().login(username, password);
     }
 
@@ -63,53 +63,27 @@ public class Database {
         return getCustomers().get(getCustomers().size() - 1).getId() + 1; //return 1 + the last customerId in the list
     }
 
-    public void setCustomersFromDatabase() {
+    public void setCustomersFromDatabase() throws SQLException, ClassNotFoundException {
         /*Select all customers from the database*/
         ArrayList<Customer> customers = getCustomerDAO().getEntities();
         setCustomers(FXCollections.observableList(customers));
     }
 
-    /*boolean represents an error -- (error = false) if a customer is added, else (error = true)*/
-    public boolean addCustomer(Customer newCustomer) { //todo Fix error checking in all methods
-        boolean error = true;
-        int successCode = getCustomerDAO().insertEntity(newCustomer);
-
-        if (successCode == CODE_SUCCESS) {
-            getCustomers().add(newCustomer);
-
-            error = false;
-        }
-
-        return error;
+    public void addCustomer(Customer newCustomer) throws SQLException, ClassNotFoundException {
+        getCustomerDAO().insertEntity(newCustomer);
+        getCustomers().add(newCustomer);
     }
 
-    /*boolean represents an error -- (error = false) if a customer is updated, else (error = true)*/
-    public boolean updateCustomer(Customer oldCustomer, Customer updatedCustomer) {
-        boolean error = true;
-        int successCode = getCustomerDAO().updateEntity(updatedCustomer);
+    public void updateCustomer(Customer oldCustomer, Customer updatedCustomer) throws SQLException, ClassNotFoundException {
+        getCustomerDAO().updateEntity(updatedCustomer);
 
-        if (successCode == CODE_SUCCESS) {
-            int oldCustomerIndex = getCustomers().indexOf(oldCustomer);
-            getCustomers().set(oldCustomerIndex, updatedCustomer);
-
-            error = false;
-        }
-
-        return error;
+        int oldCustomerIndex = getCustomers().indexOf(oldCustomer);
+        getCustomers().set(oldCustomerIndex, updatedCustomer);
     }
 
-    /*boolean represents an error -- (error = false) if a customer is deleted, else (error = true)*/
-    public boolean deleteCustomer(Customer selectedCustomer) {
-        boolean error = true;
-        int successCode = getCustomerDAO().deleteEntity(selectedCustomer);
-
-        if (successCode == CODE_SUCCESS) {
-            getCustomers().remove(selectedCustomer);
-
-            error = false;
-        }
-
-        return error;
+    public void deleteCustomer(Customer selectedCustomer) throws SQLException, ClassNotFoundException {
+        getCustomerDAO().deleteEntity(selectedCustomer);
+        getCustomers().remove(selectedCustomer);
     }
 
     public AppointmentDAO getAppointmentDAO() {
@@ -133,56 +107,31 @@ public class Database {
         return getAppointments().get(getAppointments().size() - 1).getId() + 1; //return 1 + the last appointmentId in the list
     }
 
-    public void setAppointmentsFromDatabase() {
+    public void setAppointmentsFromDatabase() throws SQLException, ClassNotFoundException {
         /*Select all appointments from the database*/
         ArrayList<Appointment> appointments = getAppointmentDAO().getEntities();
         setAppointments(FXCollections.observableList(appointments));
     }
 
     /*boolean represents an error -- (error = false) if a appointment is added, else (error = true)*/
-    public boolean addAppointment(Appointment newAppointment) {
-        boolean error = true;
-        int successCode = getAppointmentDAO().insertEntity(newAppointment);
-
-        if (successCode == CODE_SUCCESS) {
-            getAppointments().add(newAppointment);
-
-            error = false;
-        }
-
-        return error;
+    public void addAppointment(Appointment newAppointment) throws SQLException, ClassNotFoundException {
+        getAppointmentDAO().insertEntity(newAppointment);
+        getAppointments().add(newAppointment);
     }
 
-    /*boolean represents an error -- (error = false) if a appointment is updated, else (error = true)*/
-    public boolean updateAppointment(Appointment oldAppointment, Appointment updatedAppointment) {
-        boolean error = true;
-        int successCode = getAppointmentDAO().updateEntity(updatedAppointment);
+    public void updateAppointment(Appointment oldAppointment, Appointment updatedAppointment) throws SQLException, ClassNotFoundException {
+        getAppointmentDAO().updateEntity(updatedAppointment);
 
-        if (successCode == CODE_SUCCESS) {
-            int oldAppointmentIndex = getAppointments().indexOf(oldAppointment);
-            getAppointments().set(oldAppointmentIndex, updatedAppointment);
-
-            error = false;
-        }
-
-        return error;
+        int oldAppointmentIndex = getAppointments().indexOf(oldAppointment);
+        getAppointments().set(oldAppointmentIndex, updatedAppointment);
     }
 
-    /*boolean represents an error -- (error = false) if a appointment is deleted, else (error = true)*/
-    public boolean deleteAppointment(Appointment selectedAppointment) {
-        boolean error = true;
-        int successCode = getAppointmentDAO().deleteEntity(selectedAppointment);
-
-        if (successCode == CODE_SUCCESS) {
-            getAppointments().remove(selectedAppointment);
-
-            error = false;
-        }
-
-        return error;
+    public void deleteAppointment(Appointment selectedAppointment) throws SQLException, ClassNotFoundException {
+        getAppointmentDAO().deleteEntity(selectedAppointment);
+        getAppointments().remove(selectedAppointment);
     }
 
-    public boolean appointmentOverlaps(Appointment appointment) {
+    public boolean appointmentOverlaps(Appointment appointment) throws SQLException, ClassNotFoundException {
         //If this appointment is not overlapping any other appointments, return false
         return getAppointmentDAO().selectOverlappedAppointments(appointment) != 0;
     }
@@ -191,7 +140,7 @@ public class Database {
         return hour < GMT_OPEN_HOUR || hour > GMT_CLOSE_HOUR;
     }
 
-    public LinkedList<Appointment> getCloseAppointments() { //todo this does not follow the same error checking conventions as above
+    public LinkedList<Appointment> getCloseAppointments() throws SQLException, ClassNotFoundException {
         return getAppointmentDAO().getCloseAppointments();
     }
 }

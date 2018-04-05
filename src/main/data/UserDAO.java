@@ -23,9 +23,9 @@ public class UserDAO extends DAO {
         setDbConnection(dbConnection);
     }
 
-    int login(String username, String password) {
+    boolean login(String username, String password) throws SQLException, ClassNotFoundException {
 
-        String[][] queries = emptyEntity(USER_TABLES.length);
+        String[][] queries = emptyEntity(USER_TABLES.length); //todo PasswordAuthentication?
 
         queries[0] = new String[]{
                 QUERY_SELECT_USER,
@@ -35,22 +35,15 @@ public class UserDAO extends DAO {
 
         ResultSet[] resultSets = getResultSets(queries);
 
-        try {
+        ResultSet userRs = resultSets[0];
 
-            ResultSet userRs = resultSets[0];
+        while (userRs.next()) { //For each result
+            String dbUsername = userRs.getString(COLUMN_USER_USERNAME);
+            String dbPassword = userRs.getString(COLUMN_USER_PASSWORD);
 
-            while (userRs.next()) { //For each result
-                String dbUsername = userRs.getString(COLUMN_USER_USERNAME);
-                String dbPassword = userRs.getString(COLUMN_USER_PASSWORD);
-
-                return (dbUsername.equals(username) && dbPassword.equals(password)) ? CODE_SUCCESS : CODE_ERROR;
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-
+            return dbUsername.equals(username) && dbPassword.equals(password);
         }
 
-        return CODE_ERROR;
+        return false;
     }
 }

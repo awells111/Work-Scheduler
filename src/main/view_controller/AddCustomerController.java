@@ -4,9 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import main.Main;
 import main.data.Database;
 import main.model.Customer;
 
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import static main.data.Database.CODE_NEW_ENTITY;
@@ -29,6 +31,8 @@ public class AddCustomerController {
     private Stage dialogStage;
     private Database database;
     private Customer customer;
+
+    private Main mainApp;
 
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
@@ -64,9 +68,21 @@ public class AddCustomerController {
         Customer newCustomer = new Customer(id, name, address, phone);
 
         if (isNewCustomer()) {
-            database.addCustomer(newCustomer); //todo We are not checking for database errors
+            try {
+                database.addCustomer(newCustomer);
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+                mainApp.showDatabaseErrorAlert("Error_Saving_Customer");
+                return;
+            }
         } else {
-            database.updateCustomer(customer, newCustomer);
+            try {
+                database.updateCustomer(customer, newCustomer);
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+                mainApp.showDatabaseErrorAlert("Error_Saving_Customer");
+                return;
+            }
         }
 
         dialogStage.close();
@@ -145,5 +161,9 @@ public class AddCustomerController {
         alert.setHeaderText(null);
 
         return alert;
+    }
+
+    public void setMainApp(Main mainApp) {
+        this.mainApp = mainApp;
     }
 }
