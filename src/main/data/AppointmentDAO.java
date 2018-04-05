@@ -24,15 +24,8 @@ public class AppointmentDAO extends DAO {
      */
     private static final String[] APPOINTMENT_TABLES = {TABLE_APPOINTMENT};
 
-    private Database database;
-
-    AppointmentDAO(Database database) {
-        this.database = database;
-        setDbConnection(database.getDbConnection());
-    }
-
-    public Database getDatabase() {
-        return database;
+    AppointmentDAO(DbConnection dbConnection) {
+        setDbConnection(dbConnection);
     }
 
     private static final String STATEMENT_INSERT_APPOINTMENT = "INSERT INTO " + TABLE_APPOINTMENT + "(" +

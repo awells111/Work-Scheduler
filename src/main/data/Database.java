@@ -6,8 +6,6 @@ import main.model.Appointment;
 import main.model.Customer;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -25,8 +23,6 @@ public class Database {
 
     public static final int CODE_NEW_ENTITY = -1;
 
-    private DateTimeFormatter dateTimeFormatter;
-
     private DbConnection dbConnection;
 
     private ObservableList<Customer> customers;
@@ -40,9 +36,7 @@ public class Database {
         dbConnection = new DbConnection();
         userDAO = new UserDAO(dbConnection);
         customerDAO = new CustomerDAO(dbConnection);
-        appointmentDAO = new AppointmentDAO(this); //todo fix this
-
-        dateTimeFormatter = DateTimeFormatter.ofPattern(FORMAT_DATETIME).withLocale(Locale.getDefault());
+        appointmentDAO = new AppointmentDAO(dbConnection); //todo fix this
     }
 
     public DbConnection getDbConnection() {
@@ -200,26 +194,6 @@ public class Database {
     public boolean appointmentOverlaps(Appointment appointment) {
         //If this appointment is not overlapping any other appointments, return false
         return getAppointmentDAO().selectOverlappedAppointments(appointment) != 0;
-    }
-
-    public String localDateTimeToString(LocalDateTime localDateTime) {
-        return dateTimeFormatter.format(localDateTime);
-    }
-
-    public LocalDateTime localDateTimeFromString(String localDateTime) {
-        return LocalDateTime.parse(localDateTime, dateTimeFormatter);
-    }
-
-    public String localDateTimeToDatabase(LocalDateTime localDateTime) {
-        ZonedDateTime ldtZoned = localDateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of(ZONE_ID_DB));
-        return dateTimeFormatter.format(ldtZoned.toLocalDateTime()); //todo Is this redundant?
-    }
-
-
-    public LocalDateTime databaseDateTimeToLocal(String databaseTimeString) {
-        LocalDateTime localDateTime = localDateTimeFromString(databaseTimeString);
-        ZonedDateTime localTime = localDateTime.atZone(ZoneId.of(ZONE_ID_DB)).withZoneSameInstant(ZoneId.systemDefault());
-        return localTime.toLocalDateTime(); //todo check this
     }
 
     public boolean isOutsideBusinessHours(int hour) {
