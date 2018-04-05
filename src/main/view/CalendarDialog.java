@@ -18,19 +18,24 @@ import java.time.LocalDateTime;
 import java.time.MonthDay;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ResourceBundle;
+
+import static main.Main.PATH_RB;
 
 public class CalendarDialog extends DatePickerSkin {
 
     private HashMap<MonthDay, ArrayList<Integer>> appointmentHashMap;
 
-    public CalendarDialog(Database database, DatePicker datePicker) {
-        super(datePicker);
+    public CalendarDialog(ObservableList<Appointment> appointments) {
+        this(appointments, new DatePicker());
+    }
 
-        ObservableList<Appointment> appointments = database.getAppointments();
+    private CalendarDialog(ObservableList<Appointment> appointments, DatePicker datePicker) {
+        super(datePicker);
 
         datePicker.setShowWeekNumbers(true); //Our calendar will always show week numbers
 
-        addText(database.getAppointments(), datePicker);
+        addText(appointments, datePicker);
 
         appointmentHashMap = new HashMap<>();
 
@@ -71,13 +76,15 @@ public class CalendarDialog extends DatePickerSkin {
     }
 
     public void showDialog(Stage window) {
+        ResourceBundle rb = ResourceBundle.getBundle(PATH_RB);
+
         BorderPane root = new BorderPane();
         Node popupContent = this.getPopupContent();
         root.setCenter(popupContent);
 
         // Create the dialog Stage.
         Stage dialogStage = new Stage();
-        dialogStage.setTitle("Calendar"); //todo ResourceBundle
+        dialogStage.setTitle(rb.getString("calendar_title"));
         dialogStage.initModality(Modality.WINDOW_MODAL);
         dialogStage.initOwner(window);
         Scene scene = new Scene(root, root.getPrefWidth(), root.getPrefHeight());

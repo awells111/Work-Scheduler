@@ -15,6 +15,7 @@ import main.model.Customer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -237,7 +238,7 @@ public class OverviewController {
     }
 
     private void showCloseAppointments() {
-        ArrayList<Appointment> closeAppointments = mainApp.getDatabase().getCloseAppointments();
+        LinkedList<Appointment> closeAppointments = mainApp.getDatabase().getCloseAppointments();
 
         if (closeAppointments.size() > 0) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

@@ -90,7 +90,7 @@ public class Main extends Application {
 
     /*Show a calendar in a new window*/
     public void showCalendar() {
-        CalendarDialog calendarDialog = new CalendarDialog(database, new DatePicker());
+        CalendarDialog calendarDialog = new CalendarDialog(database.getAppointments());
 
         calendarDialog.showDialog(getWindow());
     }

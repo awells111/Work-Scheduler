@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class AppointmentDAO extends DAO {
 
@@ -209,8 +210,39 @@ public class AppointmentDAO extends DAO {
             COLUMN_APPOINTMENT_START +
             " < (now() + INTERVAL 15 MINUTE))";
 
-    ArrayList<Appointment> getCloseAppointments() {
-        ArrayList<Appointment> appointments = new ArrayList<>(); //todo LinkedList
+//    ArrayList<Appointment> getCloseAppointments() {
+//        ArrayList<Appointment> appointments = new ArrayList<>(); //todo LinkedList
+//
+//        String[][] queries = emptyEntity(APPOINTMENT_TABLES.length);
+//
+//        queries[0] = new String[]{
+//                QUERY_SELECT_CLOSE_APPOINTMENTS
+//        };
+//
+//        ResultSet[] resultSets = getResultSets(queries);
+//
+//        try {
+//            ResultSet apptRS = resultSets[0];
+//
+//            while (apptRS.next()) { //For each result
+//                int apptId = apptRS.getInt(COLUMN_APPOINTMENT_ID);
+//                int custId = apptRS.getInt(COLUMN_CUSTOMER_ID);
+//                String apptType = apptRS.getString(COLUMN_APPOINTMENT_TYPE);
+//                LocalDateTime apptStart = apptRS.getTimestamp(COLUMN_APPOINTMENT_START).toLocalDateTime();
+//                LocalDateTime apptEnd = apptRS.getTimestamp(COLUMN_APPOINTMENT_END).toLocalDateTime();
+//
+//                appointments.add(new Appointment(apptId, custId, apptType, apptStart, apptEnd));
+//            }
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return appointments;
+//    }
+
+    LinkedList<Appointment> getCloseAppointments() {
+        LinkedList<Appointment> appointments = new LinkedList<>();
 
         String[][] queries = emptyEntity(APPOINTMENT_TABLES.length);
 

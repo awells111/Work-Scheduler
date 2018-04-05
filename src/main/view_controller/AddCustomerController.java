@@ -64,7 +64,7 @@ public class AddCustomerController {
         Customer newCustomer = new Customer(id, name, address, phone);
 
         if (isNewCustomer()) {
-            database.addCustomer(newCustomer);
+            database.addCustomer(newCustomer); //todo We are not checking for database errors
         } else {
             database.updateCustomer(customer, newCustomer);
         }

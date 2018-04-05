@@ -2,15 +2,11 @@ package main.data;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.util.Callback;
 import main.model.Appointment;
 import main.model.Customer;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import static main.data.DAO.CODE_SUCCESS;
 
@@ -195,7 +191,7 @@ public class Database {
         return hour < GMT_OPEN_HOUR || hour > GMT_CLOSE_HOUR;
     }
 
-    public ArrayList<Appointment> getCloseAppointments() {
+    public LinkedList<Appointment> getCloseAppointments() { //todo this does not follow the same error checking conventions as above
         return getAppointmentDAO().getCloseAppointments();
     }
 }
