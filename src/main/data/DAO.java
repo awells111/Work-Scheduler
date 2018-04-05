@@ -10,6 +10,8 @@ public abstract class DAO {
     public static final int CODE_ERROR = -1;
     public static final int CODE_SUCCESS = 1;
 
+    protected static final String VALUE_FROM_UNIXTIME = "FROM_UNIXTIME(?)";
+
     private DbConnection dbConnection;
 
     protected DbConnection getDbConnection() {

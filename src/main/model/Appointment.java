@@ -3,6 +3,7 @@ package main.model;
 import javafx.beans.property.*;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class Appointment {
 
@@ -64,7 +65,7 @@ public class Appointment {
     public String toString() {
         return "Appointment{" +
                 "id=" + getId() +
-                "customerId=" + getCustomerId() +
+                ", customerId=" + getCustomerId() +
                 ", type=" + getType() +
                 ", start=" + getStart() +
                 ", end=" + getEnd() +
@@ -77,5 +78,21 @@ public class Appointment {
                 ", Type: " + getType() +
                 ", Start: " + getStart() +
                 ", End : " + getEnd();
+    }
+
+    public String startEpochString() {
+        return epochSecondString(getStart());
+    }
+
+    public String endEpochString() {
+        return epochSecondString(getEnd());
+    }
+
+    private String epochSecondString(LocalDateTime localDateTime) {
+        return Long.toString(getEpochSecond(localDateTime));
+    }
+
+    private long getEpochSecond(LocalDateTime localDateTime) {
+        return localDateTime.atZone(ZoneId.systemDefault()).toInstant().getEpochSecond();
     }
 }

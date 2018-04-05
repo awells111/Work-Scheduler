@@ -13,6 +13,8 @@ import static main.data.Database.ZONE_ID_DB;
 
 public class DateTimePicker extends DatePicker {
 
+    //todo Default times are still being set with milliseconds. It only appears in the OverviewController tableviews.
+
     private DateTimeFormatter formatter;
     private ObjectProperty<LocalDateTime> dateTimeValue = new SimpleObjectProperty<>(LocalDateTime.now());
     private ObjectProperty<String> format = new SimpleObjectProperty<String>() {

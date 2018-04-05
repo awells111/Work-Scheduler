@@ -40,7 +40,7 @@ public class Database {
         dbConnection = new DbConnection();
         userDAO = new UserDAO(dbConnection);
         customerDAO = new CustomerDAO(dbConnection);
-        appointmentDAO = new AppointmentDAO(this);
+        appointmentDAO = new AppointmentDAO(this); //todo fix this
 
         dateTimeFormatter = DateTimeFormatter.ofPattern(FORMAT_DATETIME).withLocale(Locale.getDefault());
     }
@@ -85,7 +85,7 @@ public class Database {
     }
 
     /*boolean represents an error -- (error = false) if a customer is added, else (error = true)*/
-    public boolean addCustomer(Customer newCustomer) {
+    public boolean addCustomer(Customer newCustomer) { //todo Fix error checking in all methods
         boolean error = true;
         int successCode = getCustomerDAO().insertEntity(newCustomer);
 

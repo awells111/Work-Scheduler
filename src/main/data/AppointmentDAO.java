@@ -7,9 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import static main.data.Database.MYSQL_DATETIME_FORMAT;
-
-public class AppointmentDAO extends DAO{
+public class AppointmentDAO extends DAO {
 
     /*
     Appointment Table
@@ -42,7 +40,8 @@ public class AppointmentDAO extends DAO{
             COLUMN_CUSTOMER_ID + ", " +
             COLUMN_APPOINTMENT_TYPE + ", " +
             COLUMN_APPOINTMENT_START + ", " +
-            COLUMN_APPOINTMENT_END + ") VALUES (?, ?, ?, ?, ?)";
+            COLUMN_APPOINTMENT_END + ") VALUES (?, ?, ?, " + VALUE_FROM_UNIXTIME + ", " + VALUE_FROM_UNIXTIME + ")";
+
     /**
      * Insert an {@link Appointment} into the database
      *
@@ -59,8 +58,8 @@ public class AppointmentDAO extends DAO{
                 Integer.toString(newAppointment.getId()),
                 Integer.toString(newAppointment.getCustomerId()),
                 newAppointment.getType(),
-                getDatabase().localDateTimeToDatabase(newAppointment.getStart()),
-                getDatabase().localDateTimeToDatabase(newAppointment.getEnd())
+                newAppointment.startEpochString(),
+                newAppointment.endEpochString()
         };
 
         /*Execute the required statements*/
@@ -69,9 +68,10 @@ public class AppointmentDAO extends DAO{
 
     private static final String STATEMENT_UPDATE_APPOINTMENT = "UPDATE " + TABLE_APPOINTMENT +
             " SET " + COLUMN_APPOINTMENT_TYPE + " = ?, " +
-            COLUMN_APPOINTMENT_START + " = ?, " +
-            COLUMN_APPOINTMENT_END + " = ? WHERE " +
-            COLUMN_APPOINTMENT_ID + " = ?";
+            COLUMN_APPOINTMENT_START + " = " + VALUE_FROM_UNIXTIME + ", " +
+            COLUMN_APPOINTMENT_END + " = " + VALUE_FROM_UNIXTIME +
+            " WHERE " + COLUMN_APPOINTMENT_ID + " = ?";
+
     /**
      * Update an existing {@link Appointment} in the database
      *
@@ -86,8 +86,8 @@ public class AppointmentDAO extends DAO{
         statements[0] = new String[]{
                 STATEMENT_UPDATE_APPOINTMENT,
                 updatedAppointment.getType(),
-                getDatabase().localDateTimeToDatabase(updatedAppointment.getStart()),
-                getDatabase().localDateTimeToDatabase(updatedAppointment.getEnd()),
+                updatedAppointment.startEpochString(),
+                updatedAppointment.endEpochString(),
                 Integer.toString(updatedAppointment.getId())
         };
 
@@ -97,6 +97,7 @@ public class AppointmentDAO extends DAO{
 
     private static final String STATEMENT_DELETE_APPOINTMENT = "DELETE FROM " + TABLE_APPOINTMENT + " WHERE " +
             COLUMN_APPOINTMENT_ID + " = ?";
+
     /**
      * Delete an existing {@link Appointment} in the database
      *
@@ -117,21 +118,7 @@ public class AppointmentDAO extends DAO{
         return update(statements);
     }
 
-
-    private static final String QUERY_SELECT_APPOINTMENTS = "SELECT " +
-            COLUMN_APPOINTMENT_ID +
-            ", " +
-            COLUMN_CUSTOMER_ID +
-            ", " +
-            COLUMN_APPOINTMENT_TYPE +
-            ", " +
-            "DATE_FORMAT(" + COLUMN_APPOINTMENT_START + ", " + MYSQL_DATETIME_FORMAT +
-            ") AS " + COLUMN_APPOINTMENT_START +
-            ", " +
-            "DATE_FORMAT(" + COLUMN_APPOINTMENT_END + ", " + MYSQL_DATETIME_FORMAT +
-            ") AS " + COLUMN_APPOINTMENT_END +
-            " FROM " +
-            TABLE_APPOINTMENT;
+    private static final String QUERY_SELECT_APPOINTMENTS = "SELECT * FROM " + TABLE_APPOINTMENT;
 
     ArrayList getEntities() {
         ArrayList<Appointment> appointments = new ArrayList<>();
@@ -151,13 +138,8 @@ public class AppointmentDAO extends DAO{
                 int apptId = apptRS.getInt(COLUMN_APPOINTMENT_ID);
                 int custId = apptRS.getInt(COLUMN_CUSTOMER_ID);
                 String apptType = apptRS.getString(COLUMN_APPOINTMENT_TYPE);
-
-                //todo check and see if this can be simplified
-                String apptStartString = apptRS.getString(COLUMN_APPOINTMENT_START);
-                String apptEndString = apptRS.getString(COLUMN_APPOINTMENT_END);
-
-                LocalDateTime apptStart = getDatabase().databaseDateTimeToLocal(apptStartString);
-                LocalDateTime apptEnd = getDatabase().databaseDateTimeToLocal(apptEndString);
+                LocalDateTime apptStart = apptRS.getTimestamp(COLUMN_APPOINTMENT_START).toLocalDateTime();
+                LocalDateTime apptEnd = apptRS.getTimestamp(COLUMN_APPOINTMENT_END).toLocalDateTime();
 
                 appointments.add(new Appointment(apptId, custId, apptType, apptStart, apptEnd));
             }
@@ -170,32 +152,38 @@ public class AppointmentDAO extends DAO{
     }
 
     /*Check if an appointment overlaps other appointments*/
-    private static final String QUERY_SELECT_OVERLAPPED_APPOINTMENTS = "SELECT count(*) FROM " +
-            TABLE_APPOINTMENT +
-            " WHERE " + COLUMN_CUSTOMER_ID + " = ? AND ((? > " + //WHERE customerId is the same
-            COLUMN_APPOINTMENT_START +
-            " AND ? < " +//AND (one of three things)
-            COLUMN_APPOINTMENT_END + //appt start time is between the start date and end date
-            ") OR (? > " + // OR appt end time is between the start date and end date
-            COLUMN_APPOINTMENT_START +
-            " AND ? < " +
-            COLUMN_APPOINTMENT_END +
-            ") OR (? <= " + //OR the appt start time is before/equal to the start date, and the appt end time is equal to/after the end date
-            COLUMN_APPOINTMENT_START +
-            " AND ? >= " +
-            COLUMN_APPOINTMENT_END + "))";
+    private static final String QUERY_SELECT_OVERLAPPED_APPOINTMENTS = "SELECT count(*) FROM " + TABLE_APPOINTMENT + //SELECT all appointments
+            " WHERE " + COLUMN_CUSTOMER_ID + " = ? " + //WHERE customerId is the same
+            "AND " + COLUMN_APPOINTMENT_ID + " != ? " + //AND only look at other appointments
+
+            "AND ((" +//AND (one of three things)
+
+            /*appt start time is between the start date and end date*/
+            VALUE_FROM_UNIXTIME + " > " + COLUMN_APPOINTMENT_START + " AND " +
+            VALUE_FROM_UNIXTIME + " < " + COLUMN_APPOINTMENT_END +
+
+            /*OR appt end time is between the start date and end date*/
+            ") OR (" +
+            VALUE_FROM_UNIXTIME + " > " + COLUMN_APPOINTMENT_START + " AND "
+            + VALUE_FROM_UNIXTIME + " < " + COLUMN_APPOINTMENT_END +
+
+            /*OR the appt start time is before/equal to the start date, and the appt end time is equal to/after the end date*/
+            ") OR (" +
+            VALUE_FROM_UNIXTIME + " <= " + COLUMN_APPOINTMENT_START + " AND "
+            + VALUE_FROM_UNIXTIME + " >= " + COLUMN_APPOINTMENT_END + "))";
 
     int selectOverlappedAppointments(Appointment appointment) {
         int count = 0;
 
         String[][] queries = emptyEntity(APPOINTMENT_TABLES.length);
 
-        String apptStart = getDatabase().localDateTimeToDatabase(appointment.getStart());
-        String apptEnd = getDatabase().localDateTimeToDatabase(appointment.getEnd());
+        String apptStart = appointment.startEpochString();
+        String apptEnd = appointment.endEpochString();
 
         queries[0] = new String[]{
                 QUERY_SELECT_OVERLAPPED_APPOINTMENTS,
                 Integer.toString(appointment.getCustomerId()),
+                Integer.toString(appointment.getId()),
                 apptStart,
                 apptStart,
                 apptEnd,
@@ -207,7 +195,7 @@ public class AppointmentDAO extends DAO{
         ResultSet[] resultSets = getResultSets(queries);
 
         try {
-            ResultSet rs = resultSets[0]; //todo Can we just put resultSets[0] in the while loop
+            ResultSet rs = resultSets[0];
 
             while (rs.next()) { //For each result
                 count = rs.getInt(1);
@@ -221,26 +209,15 @@ public class AppointmentDAO extends DAO{
     }
 
     /*Select appointments within 15 minutes of now*/
-    private static final String QUERY_SELECT_CLOSE_APPOINTMENTS = "SELECT " +
-            COLUMN_APPOINTMENT_ID +
-            ", " +
-            COLUMN_CUSTOMER_ID +
-            ", " +
-            COLUMN_APPOINTMENT_TYPE +
-            ", " +
-            "DATE_FORMAT(" + COLUMN_APPOINTMENT_START + ", " + MYSQL_DATETIME_FORMAT +
-            ") AS " + COLUMN_APPOINTMENT_START +
-            ", " +
-            "DATE_FORMAT(" + COLUMN_APPOINTMENT_END + ", " + MYSQL_DATETIME_FORMAT +
-            ") AS " + COLUMN_APPOINTMENT_END +
-            " FROM appointment WHERE (now() < " +
+    private static final String QUERY_SELECT_CLOSE_APPOINTMENTS = "SELECT * FROM " + TABLE_APPOINTMENT +
+            " WHERE (now() < " +
             COLUMN_APPOINTMENT_START +
             ") AND (" +
             COLUMN_APPOINTMENT_START +
             " < (now() + INTERVAL 15 MINUTE))";
 
     ArrayList<Appointment> getCloseAppointments() {
-        ArrayList<Appointment> appointments = new ArrayList<>();
+        ArrayList<Appointment> appointments = new ArrayList<>(); //todo LinkedList
 
         String[][] queries = emptyEntity(APPOINTMENT_TABLES.length);
 
@@ -257,13 +234,8 @@ public class AppointmentDAO extends DAO{
                 int apptId = apptRS.getInt(COLUMN_APPOINTMENT_ID);
                 int custId = apptRS.getInt(COLUMN_CUSTOMER_ID);
                 String apptType = apptRS.getString(COLUMN_APPOINTMENT_TYPE);
-
-                //todo check and see if this can be simplified
-                String apptStartString = apptRS.getString(COLUMN_APPOINTMENT_START);
-                String apptEndString = apptRS.getString(COLUMN_APPOINTMENT_END);
-
-                LocalDateTime apptStart = getDatabase().databaseDateTimeToLocal(apptStartString);
-                LocalDateTime apptEnd = getDatabase().databaseDateTimeToLocal(apptEndString);
+                LocalDateTime apptStart = apptRS.getTimestamp(COLUMN_APPOINTMENT_START).toLocalDateTime();
+                LocalDateTime apptEnd = apptRS.getTimestamp(COLUMN_APPOINTMENT_END).toLocalDateTime();
 
                 appointments.add(new Appointment(apptId, custId, apptType, apptStart, apptEnd));
             }
