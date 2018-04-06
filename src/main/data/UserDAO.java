@@ -25,7 +25,7 @@ public class UserDAO extends DAO {
 
     boolean login(String username, String password) throws SQLException, ClassNotFoundException {
 
-        String[][] queries = emptyEntity(USER_TABLES.length); //todo PasswordAuthentication?
+        String[][] queries = emptyEntity(USER_TABLES.length);
 
         queries[0] = new String[]{
                 QUERY_SELECT_USER,

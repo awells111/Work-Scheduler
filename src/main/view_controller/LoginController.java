@@ -2,9 +2,9 @@ package main.view_controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import main.Main;
-import main.data.UserDAO;
 import main.log.UserLog;
 
 import java.sql.SQLException;
@@ -16,7 +16,7 @@ public class LoginController {
     @FXML
     private TextField textFieldLoginName;
     @FXML
-    private TextField textFieldLoginPassword;
+    private PasswordField textFieldLoginPassword;
     @FXML
     private ResourceBundle resources;
 
