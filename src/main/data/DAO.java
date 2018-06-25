@@ -68,39 +68,33 @@ public abstract class DAO<E> implements DbObjectBuilder<E>, QueryBuilder<E> {
     /**
      * A method used for insert, update, and delete statements
      *
-     * @param conn       A pre-existing instance of {@link java.sql.Connection} set by {@link DbConnection}
      * @param statements A String[][] representing the entity to be inserted, updated, or deleted
      */
-    private void update(Connection conn, String[][] statements) throws SQLException {
-        conn.setAutoCommit(false); //By setting AutoCommit to false, the we can cancel the first statement if the second one fails
-
-        /*Build the prepared statements required to update the database*/
-        PreparedStatement[] preparedStatements = buildPreparedStatements(conn, statements);
-
-        try {
-            /*Execute all of the PreparedStatements that were just built*/
-            for (PreparedStatement p : preparedStatements) {
-                p.executeUpdate();
-            }
-
-            /*If no exceptions were thrown, commit the update*/
-            conn.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     protected void update(String[][] statements) throws SQLException, ClassNotFoundException {
         try (Connection conn = getDbConnection().getConnection()) {
-            update(conn, statements);
+            conn.setAutoCommit(false); //By setting AutoCommit to false, the we can cancel the first statement if the second one fails
+
+            /*Build the prepared statements required to update the database*/
+            PreparedStatement[] preparedStatements = buildPreparedStatements(conn, statements);
+
+            try {
+                /*Execute all of the PreparedStatements that were just built*/
+                for (PreparedStatement p : preparedStatements) {
+                    p.executeUpdate();
+                }
+
+                /*If no exceptions were thrown, commit the update*/
+                conn.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private ResultSet[] getResultSets(Connection conn, String[][] statements) throws SQLException {
-
+    protected ResultSet[] getResultSets(String[][] statements) throws SQLException, ClassNotFoundException {
         ResultSet[] resultSets = new ResultSet[statements.length];
 
-        PreparedStatement[] preparedStatements = buildPreparedStatements(conn, statements);
+        PreparedStatement[] preparedStatements = buildPreparedStatements(getDbConnection().getConnection(), statements);
 
         for (int i = 0; i < resultSets.length; i++) {
             resultSets[i] = preparedStatements[i].executeQuery();
@@ -109,8 +103,13 @@ public abstract class DAO<E> implements DbObjectBuilder<E>, QueryBuilder<E> {
         return resultSets;
     }
 
-    protected ResultSet[] getResultSets(String[][] statements) throws SQLException, ClassNotFoundException {
-        return getResultSets(getDbConnection().getConnection(), statements);
+    ResultSet[] getResultSets(String[] statement) throws SQLException, ClassNotFoundException {
+        String[][] statements = new String[1][];
+        statements[0] = statement;
+        return getResultSets(statements);
     }
 
+    ResultSet getResultSet(String[] statement) throws SQLException, ClassNotFoundException {
+        return getResultSets(statement)[0];
+    }
 }

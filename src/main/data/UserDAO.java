@@ -25,18 +25,11 @@ public class UserDAO extends DAO {
     }
 
     boolean login(String username, String password) throws SQLException, ClassNotFoundException {
-
-        String[][] queries = emptyEntity(USER_TABLES.length);
-
-        queries[0] = new String[]{
+        ResultSet userRs = getResultSet(new String[]{
                 QUERY_SELECT_USER,
                 username,
                 password
-        };
-
-        ResultSet[] resultSets = getResultSets(queries);
-
-        ResultSet userRs = resultSets[0];
+        });
 
         while (userRs.next()) { //For each result
             String dbUsername = userRs.getString(COLUMN_USER_USERNAME);

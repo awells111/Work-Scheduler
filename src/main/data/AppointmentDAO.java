@@ -118,15 +118,9 @@ public class AppointmentDAO extends DAO<Appointment> {
     public List<Appointment> getEntities() throws SQLException, ClassNotFoundException {
         List<Appointment> appointments = new ArrayList<>();
 
-        String[][] queries = emptyEntity(APPOINTMENT_TABLES.length);
-
-        queries[0] = new String[]{
+        ResultSet apptRS = getResultSet(new String[]{
                 QUERY_SELECT_APPOINTMENTS
-        };
-
-        ResultSet[] resultSets = getResultSets(queries);
-
-        ResultSet apptRS = resultSets[0];
+        });
 
         while (apptRS.next()) {
             appointments.add(buildObject(apptRS));
@@ -158,12 +152,10 @@ public class AppointmentDAO extends DAO<Appointment> {
     int selectOverlappedAppointments(Appointment appointment) throws SQLException, ClassNotFoundException {
         int count = 0;
 
-        String[][] queries = emptyEntity(APPOINTMENT_TABLES.length);
-
         String apptStart = appointment.startEpochString();
         String apptEnd = appointment.endEpochString();
 
-        queries[0] = new String[]{
+        ResultSet rs = getResultSet(new String[]{
                 QUERY_SELECT_OVERLAPPED_APPOINTMENTS,
                 Integer.toString(appointment.getCustomerId()),
                 Integer.toString(appointment.getId()),
@@ -173,11 +165,7 @@ public class AppointmentDAO extends DAO<Appointment> {
                 apptEnd,
                 apptStart,
                 apptEnd
-        };
-
-        ResultSet[] resultSets = getResultSets(queries);
-
-        ResultSet rs = resultSets[0];
+        });
 
         while (rs.next()) { //For each result
             count = rs.getInt(1);
@@ -196,15 +184,9 @@ public class AppointmentDAO extends DAO<Appointment> {
     LinkedList<Appointment> getCloseAppointments() throws SQLException, ClassNotFoundException {
         LinkedList<Appointment> appointments = new LinkedList<>();
 
-        String[][] queries = emptyEntity(APPOINTMENT_TABLES.length);
-
-        queries[0] = new String[]{
+        ResultSet apptRS = getResultSet(new String[]{
                 QUERY_SELECT_CLOSE_APPOINTMENTS
-        };
-
-        ResultSet[] resultSets = getResultSets(queries);
-
-        ResultSet apptRS = resultSets[0];
+        });
 
         while (apptRS.next()) {
             appointments.add(buildObject(apptRS));

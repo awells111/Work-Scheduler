@@ -152,15 +152,9 @@ public class CustomerDAO extends DAO<Customer> {
     public List<Customer> getEntities() throws SQLException, ClassNotFoundException {
         List<Customer> customers = new ArrayList<>();
 
-        String[][] queries = emptyEntity(1); //We only need one query
-
-        queries[0] = new String[]{
+        ResultSet custRS = getResultSet(new String[]{
                 QUERY_SELECT_CUSTOMERS
-        };
-
-        ResultSet[] resultSets = getResultSets(queries);
-
-        ResultSet custRS = resultSets[0];
+        });
 
         while (custRS.next()) { //For each result
             customers.add(buildObject(custRS));
