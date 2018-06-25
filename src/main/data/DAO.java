@@ -5,17 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class DAO<E> implements DbObjectBuilder<E>, QueryBuilder<E> {
+abstract class DAO<E> implements DbObjectBuilder<E>, QueryBuilder<E> {
 
     static final String VALUE_FROM_UNIXTIME = "FROM_UNIXTIME(?)";
 
     private DbConnection dbConnection;
 
-    protected DbConnection getDbConnection() {
+    private DbConnection getDbConnection() {
         return dbConnection;
     }
 
-    protected void setDbConnection(DbConnection dbConnection) {
+    void setDbConnection(DbConnection dbConnection) {
         this.dbConnection = dbConnection;
     }
 
@@ -27,7 +27,21 @@ public abstract class DAO<E> implements DbObjectBuilder<E>, QueryBuilder<E> {
         return new String[statementsCount][];
     }
 
-    PreparedStatement[] buildPreparedStatements(Connection conn, String[][] statements) throws SQLException {
+    /*Used to for queries that require one PreparedStatement.*/
+    private PreparedStatement buildPreparedStatement(Connection conn, String[] statement) throws SQLException {
+        String statementString = statement[0];
+
+        PreparedStatement currentPS = conn.prepareStatement(statementString);
+
+        for (int j = 1; j < statement.length; j++) {
+            currentPS.setString(j, statement[j]);
+        }
+
+        return currentPS;
+    }
+
+    /*Used to for queries that require more than one PreparedStatement.*/
+    private PreparedStatement[] buildPreparedStatements(Connection conn, String[][] statements) throws SQLException {
 
         /*Number of prepared statements to execute*/
         int preparedStatementsCount = statements.length;
@@ -37,29 +51,7 @@ public abstract class DAO<E> implements DbObjectBuilder<E>, QueryBuilder<E> {
 
 
         for (int i = 0; i < preparedStatementsCount; i++) {
-
-            /*The statement String itself*/
-            String statementString = statements[i][0];
-
-            /*Create the PreparedStatement from the statement String*/
-            PreparedStatement currentPS = conn.prepareStatement(statementString);
-
-            /*Build our current PreparedStatement*/
-            for (int j = 1; j < statements[i].length; j++) {
-
-                /*
-                 * CurrentPS is our current PreparedStatement
-                 *
-                 * j is the parameterIndex for currentPS. The parameterIndex starts at 1 for PreparedStatements.
-                 *
-                 * statements[i][0] is statement in String form
-                 *
-                 * statements[i][1] through statements[i][statements[i].length - 1] are the params
-                 * */
-                currentPS.setString(j, statements[i][j]);
-            }
-
-            preparedStatements[i] = currentPS; //Put the current PreparedStatement in the array
+            preparedStatements[i] = buildPreparedStatement(conn, statements[i]); //Put the current PreparedStatement in the array
         }
 
         return preparedStatements;
@@ -70,7 +62,7 @@ public abstract class DAO<E> implements DbObjectBuilder<E>, QueryBuilder<E> {
      *
      * @param statements A String[][] representing the entity to be inserted, updated, or deleted
      */
-    protected void update(String[][] statements) throws SQLException, ClassNotFoundException {
+    void update(String[][] statements) throws SQLException, ClassNotFoundException {
         try (Connection conn = getDbConnection().getConnection()) {
             conn.setAutoCommit(false); //By setting AutoCommit to false, the we can cancel the first statement if the second one fails
 
@@ -91,25 +83,9 @@ public abstract class DAO<E> implements DbObjectBuilder<E>, QueryBuilder<E> {
         }
     }
 
-    protected ResultSet[] getResultSets(String[][] statements) throws SQLException, ClassNotFoundException {
-        ResultSet[] resultSets = new ResultSet[statements.length];
-
-        PreparedStatement[] preparedStatements = buildPreparedStatements(getDbConnection().getConnection(), statements);
-
-        for (int i = 0; i < resultSets.length; i++) {
-            resultSets[i] = preparedStatements[i].executeQuery();
-        }
-
-        return resultSets;
-    }
-
-    ResultSet[] getResultSets(String[] statement) throws SQLException, ClassNotFoundException {
-        String[][] statements = new String[1][];
-        statements[0] = statement;
-        return getResultSets(statements);
-    }
-
     ResultSet getResultSet(String[] statement) throws SQLException, ClassNotFoundException {
-        return getResultSets(statement)[0];
+        PreparedStatement preparedStatement = buildPreparedStatement(getDbConnection().getConnection(), statement);
+
+        return preparedStatement.executeQuery();
     }
 }
