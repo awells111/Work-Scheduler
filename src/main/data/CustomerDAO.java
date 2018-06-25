@@ -40,6 +40,8 @@ public class CustomerDAO extends DAO {
             COLUMN_ADDRESS_ID + "`, `" +
             COLUMN_ADDRESS_NAME + "`, `" +
             COLUMN_ADDRESS_PHONE + "`) VALUES (?, ?, ?)";
+
+    /*todo A join should be used here*/
     /**
      * Insert a {@link Customer} into the database
      *

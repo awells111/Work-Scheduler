@@ -2,19 +2,18 @@ package main.data;
 
 import java.sql.*;
 
-import static main.data.ConnectionInfo.*;
-
-public class DbConnection {
+class DbConnection {
 
     //todo use connection pool
     private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
 
-//    private static final String DB_NAME = "";
-//    private static final String DB_URL = "";
-//    private static final String DB_USER = "";
-//    private static final String DB_PASS = "";
+    /*Change these for your database*/
+    private static final String DB_NAME = "u04ts4";
+    private static final String DB_URL = "jdbc:mysql://127.0.0.1/" + DB_NAME + "?&useSSL=false";
+    private static final String DB_USER = "root";
+    private static final String DB_PASS = "";
 
-    public Connection getConnection() throws SQLException, ClassNotFoundException {
+    Connection getConnection() throws SQLException, ClassNotFoundException {
         Connection conn;
 
         Class.forName(DB_DRIVER);
