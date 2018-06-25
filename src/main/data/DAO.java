@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class DAO<T> implements DbObjectBuilder<T> {
+public abstract class DAO<E> implements DbObjectBuilder<E>, QueryBuilder<E> {
 
     static final String VALUE_FROM_UNIXTIME = "FROM_UNIXTIME(?)";
 

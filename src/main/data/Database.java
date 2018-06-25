@@ -6,8 +6,8 @@ import main.model.Appointment;
 import main.model.Customer;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Database {
 
@@ -65,7 +65,7 @@ public class Database {
 
     public void setCustomersFromDatabase() throws SQLException, ClassNotFoundException {
         /*Select all customers from the database*/
-        ArrayList<Customer> customers = getCustomerDAO().getEntities();
+        List<Customer> customers = getCustomerDAO().getEntities();
         setCustomers(FXCollections.observableList(customers));
     }
 
@@ -109,7 +109,7 @@ public class Database {
 
     public void setAppointmentsFromDatabase() throws SQLException, ClassNotFoundException {
         /*Select all appointments from the database*/
-        ArrayList<Appointment> appointments = getAppointmentDAO().getEntities();
+        List<Appointment> appointments = getAppointmentDAO().getEntities();
         setAppointments(FXCollections.observableList(appointments));
     }
 

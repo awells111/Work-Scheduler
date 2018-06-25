@@ -18,13 +18,14 @@ import java.time.LocalDateTime;
 import java.time.MonthDay;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import static main.Main.PATH_RB;
 
 public class CalendarDialog extends DatePickerSkin {
 
-    private HashMap<MonthDay, ArrayList<Integer>> appointmentHashMap;
+    private HashMap<MonthDay, List<Integer>> appointmentHashMap;
 
     public CalendarDialog(ObservableList<Appointment> appointments) {
         this(appointments, new DatePicker());
@@ -57,7 +58,7 @@ public class CalendarDialog extends DatePickerSkin {
 
                 if (appointmentHashMap.containsKey(MonthDay.from(date))) {
                     StringBuilder sb = new StringBuilder();
-                    ArrayList<Integer> list = appointmentHashMap.get(MonthDay.from(date));
+                    List<Integer> list = appointmentHashMap.get(MonthDay.from(date));
 
                     for (int i = 0; i < list.size(); ) {
                         Integer index = list.get(i);

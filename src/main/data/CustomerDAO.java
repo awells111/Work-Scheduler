@@ -5,6 +5,7 @@ import main.model.Customer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerDAO extends DAO<Customer> {
 
@@ -46,7 +47,8 @@ public class CustomerDAO extends DAO<Customer> {
      *
      * @param newCustomer The {@link Customer} that will be inserted into the database
      */
-    void insertEntity(Customer newCustomer) throws SQLException, ClassNotFoundException {
+    @Override
+    public void insertEntity(Customer newCustomer) throws SQLException, ClassNotFoundException {
         String id = Integer.toString(newCustomer.getId()); //The same ID is used for both Address and Customer
 
         /*Build the statements required to insert a customer*/
@@ -84,7 +86,8 @@ public class CustomerDAO extends DAO<Customer> {
      *
      * @param updatedCustomer The {@link Customer} that will be updated in the database
      */
-    void updateEntity(Customer updatedCustomer) throws SQLException, ClassNotFoundException {
+    @Override
+    public void updateEntity(Customer updatedCustomer) throws SQLException, ClassNotFoundException {
         String id = Integer.toString(updatedCustomer.getId()); //The same ID is used for both Address and Customer
 
         /*Build the statements required to delete a customer*/
@@ -118,7 +121,8 @@ public class CustomerDAO extends DAO<Customer> {
      *
      * @param selectedCustomer The {@link Customer} that will be deleted in the database
      */
-    void deleteEntity(Customer selectedCustomer) throws SQLException, ClassNotFoundException {
+    @Override
+    public void deleteEntity(Customer selectedCustomer) throws SQLException, ClassNotFoundException {
         String id = Integer.toString(selectedCustomer.getId()); //The same ID is used for both Address and Customer
 
         /*Build the statements required to delete a customer*/
@@ -144,8 +148,9 @@ public class CustomerDAO extends DAO<Customer> {
             TABLE_CUSTOMER + "." + COLUMN_CUSTOMER_ID + " = " +
             TABLE_ADDRESS + "." + COLUMN_ADDRESS_ID;
 
-    ArrayList<Customer> getEntities() throws SQLException, ClassNotFoundException {
-        ArrayList<Customer> customers = new ArrayList<>();
+    @Override
+    public List<Customer> getEntities() throws SQLException, ClassNotFoundException {
+        List<Customer> customers = new ArrayList<>();
 
         String[][] queries = emptyEntity(1); //We only need one query
 

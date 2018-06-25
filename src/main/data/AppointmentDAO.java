@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class AppointmentDAO extends DAO<Appointment> {
 
@@ -41,7 +42,8 @@ public class AppointmentDAO extends DAO<Appointment> {
      *
      * @param newAppointment The {@link Appointment} that will be inserted into the database
      */
-    void insertEntity(Appointment newAppointment) throws SQLException, ClassNotFoundException {
+    @Override
+    public void insertEntity(Appointment newAppointment) throws SQLException, ClassNotFoundException {
         /*Build the statements required to insert a appointment*/
         String[][] statements = emptyEntity(APPOINTMENT_TABLES.length);
 
@@ -70,7 +72,8 @@ public class AppointmentDAO extends DAO<Appointment> {
      *
      * @param updatedAppointment The {@link Appointment} that will be updated in the database
      */
-    void updateEntity(Appointment updatedAppointment) throws SQLException, ClassNotFoundException {
+    @Override
+    public void updateEntity(Appointment updatedAppointment) throws SQLException, ClassNotFoundException {
         /*Build the statements required to delete a appointment*/
         String[][] statements = emptyEntity(APPOINTMENT_TABLES.length);
 
@@ -95,7 +98,8 @@ public class AppointmentDAO extends DAO<Appointment> {
      *
      * @param selectedAppointment The {@link Appointment} that will be deleted in the database
      */
-    void deleteEntity(Appointment selectedAppointment) throws SQLException, ClassNotFoundException {
+    @Override
+    public void deleteEntity(Appointment selectedAppointment) throws SQLException, ClassNotFoundException {
         /*Build the statements required to delete a appointment*/
         String[][] statements = emptyEntity(APPOINTMENT_TABLES.length);
 
@@ -110,8 +114,9 @@ public class AppointmentDAO extends DAO<Appointment> {
     }
 
     private static final String QUERY_SELECT_APPOINTMENTS = "SELECT * FROM " + TABLE_APPOINTMENT;
-    ArrayList<Appointment> getEntities() throws SQLException, ClassNotFoundException {
-        ArrayList<Appointment> appointments = new ArrayList<>();
+    @Override
+    public List<Appointment> getEntities() throws SQLException, ClassNotFoundException {
+        List<Appointment> appointments = new ArrayList<>();
 
         String[][] queries = emptyEntity(APPOINTMENT_TABLES.length);
 
