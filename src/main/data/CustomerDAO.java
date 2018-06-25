@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CustomerDAO extends DAO {
+public class CustomerDAO extends DAO<Customer> {
 
     /*
     Customer Table
@@ -41,7 +41,6 @@ public class CustomerDAO extends DAO {
             COLUMN_ADDRESS_NAME + "`, `" +
             COLUMN_ADDRESS_PHONE + "`) VALUES (?, ?, ?)";
 
-    /*todo A join should be used here*/
     /**
      * Insert a {@link Customer} into the database
      *
@@ -159,14 +158,19 @@ public class CustomerDAO extends DAO {
         ResultSet custRS = resultSets[0];
 
         while (custRS.next()) { //For each result
-            int rsCustId = custRS.getInt(CustomerDAO.COLUMN_CUSTOMER_ID);
-            String rsCustName = custRS.getString(CustomerDAO.COLUMN_CUSTOMER_NAME);
-            String rsAddrName = custRS.getString(CustomerDAO.COLUMN_ADDRESS_NAME);
-            String rsAddrPhone = custRS.getString(CustomerDAO.COLUMN_ADDRESS_PHONE);
-
-            customers.add(new Customer(rsCustId, rsCustName, rsAddrName, rsAddrPhone));
+            customers.add(buildObject(custRS));
         }
 
         return customers;
+    }
+
+    @Override
+    public Customer buildObject(ResultSet custRS) throws SQLException {
+        int rsCustId = custRS.getInt(CustomerDAO.COLUMN_CUSTOMER_ID);
+        String rsCustName = custRS.getString(CustomerDAO.COLUMN_CUSTOMER_NAME);
+        String rsAddrName = custRS.getString(CustomerDAO.COLUMN_ADDRESS_NAME);
+        String rsAddrPhone = custRS.getString(CustomerDAO.COLUMN_ADDRESS_PHONE);
+
+        return new Customer(rsCustId, rsCustName, rsAddrName, rsAddrPhone);
     }
 }

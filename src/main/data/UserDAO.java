@@ -46,4 +46,10 @@ public class UserDAO extends DAO {
 
         return false;
     }
+
+
+    @Override
+    public Object buildObject(ResultSet rs) {
+        throw new RuntimeException("We are not implementing buildObject for userDAO.");
+    }
 }

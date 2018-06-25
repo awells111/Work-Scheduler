@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class AppointmentDAO extends DAO {
+public class AppointmentDAO extends DAO<Appointment> {
 
     /*
     Appointment Table
@@ -123,14 +123,8 @@ public class AppointmentDAO extends DAO {
 
         ResultSet apptRS = resultSets[0];
 
-        while (apptRS.next()) { //For each result
-            int apptId = apptRS.getInt(COLUMN_APPOINTMENT_ID);
-            int custId = apptRS.getInt(COLUMN_CUSTOMER_ID);
-            String apptType = apptRS.getString(COLUMN_APPOINTMENT_TYPE);
-            LocalDateTime apptStart = apptRS.getTimestamp(COLUMN_APPOINTMENT_START).toLocalDateTime();
-            LocalDateTime apptEnd = apptRS.getTimestamp(COLUMN_APPOINTMENT_END).toLocalDateTime();
-
-            appointments.add(new Appointment(apptId, custId, apptType, apptStart, apptEnd));
+        while (apptRS.next()) {
+            appointments.add(buildObject(apptRS));
         }
 
         return appointments;
@@ -207,16 +201,21 @@ public class AppointmentDAO extends DAO {
 
         ResultSet apptRS = resultSets[0];
 
-        while (apptRS.next()) { //For each result
-            int apptId = apptRS.getInt(COLUMN_APPOINTMENT_ID);
-            int custId = apptRS.getInt(COLUMN_CUSTOMER_ID);
-            String apptType = apptRS.getString(COLUMN_APPOINTMENT_TYPE);
-            LocalDateTime apptStart = apptRS.getTimestamp(COLUMN_APPOINTMENT_START).toLocalDateTime();
-            LocalDateTime apptEnd = apptRS.getTimestamp(COLUMN_APPOINTMENT_END).toLocalDateTime();
-
-            appointments.add(new Appointment(apptId, custId, apptType, apptStart, apptEnd));
+        while (apptRS.next()) {
+            appointments.add(buildObject(apptRS));
         }
 
         return appointments;
+    }
+
+    @Override
+    public Appointment buildObject(ResultSet apptRS) throws SQLException {
+        int apptId = apptRS.getInt(COLUMN_APPOINTMENT_ID);
+        int custId = apptRS.getInt(COLUMN_CUSTOMER_ID);
+        String apptType = apptRS.getString(COLUMN_APPOINTMENT_TYPE);
+        LocalDateTime apptStart = apptRS.getTimestamp(COLUMN_APPOINTMENT_START).toLocalDateTime();
+        LocalDateTime apptEnd = apptRS.getTimestamp(COLUMN_APPOINTMENT_END).toLocalDateTime();
+
+        return new Appointment(apptId, custId, apptType, apptStart, apptEnd);
     }
 }
