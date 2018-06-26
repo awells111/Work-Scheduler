@@ -10,37 +10,27 @@ import java.util.List;
 public class CustomerDAO extends DAO<Customer> {
 
     /*
+    View combining the relevant fields from the Customer and Address tables
+    */
+    private static final String VIEW_CUSTOMERS = "vw_customer";
+
+    /*
     Customer Table
     */
-    private static final String TABLE_CUSTOMER = "customer";
     private static final String COLUMN_CUSTOMER_ID = "customerId";
     private static final String COLUMN_CUSTOMER_NAME = "customerName";
 
     /*
     Address Table
     */
-    private static final String TABLE_ADDRESS = "address";
-    private static final String COLUMN_ADDRESS_ID = "customerId";
     private static final String COLUMN_ADDRESS_NAME = "address";
     private static final String COLUMN_ADDRESS_PHONE = "phone";
-
-    /**
-     * The tables required to modify a customer entity
-     */
-    private static final String[] CUSTOMER_TABLES = {TABLE_CUSTOMER, TABLE_ADDRESS};
 
     CustomerDAO(DbConnection dbConnection) {
         setDbConnection(dbConnection);
     }
 
-    private static final String STATEMENT_INSERT_CUSTOMER = "INSERT INTO `" + TABLE_CUSTOMER + "`(`" +
-            COLUMN_CUSTOMER_ID + "`, `" +
-            COLUMN_CUSTOMER_NAME +
-            "`) VALUES (?, ?)";
-    private static final String STATEMENT_INSERT_ADDRESS = "INSERT INTO `" + TABLE_ADDRESS + "`(`" +
-            COLUMN_ADDRESS_ID + "`, `" +
-            COLUMN_ADDRESS_NAME + "`, `" +
-            COLUMN_ADDRESS_PHONE + "`) VALUES (?, ?, ?)";
+    private static final String STATEMENT_INSERT_CUSTOMER = "CALL sp_customer_Insert(?, ?, ?, ?)";
 
     /**
      * Insert a {@link Customer} into the database
@@ -49,22 +39,16 @@ public class CustomerDAO extends DAO<Customer> {
      */
     @Override
     public void insertEntity(Customer newCustomer) throws SQLException, ClassNotFoundException {
-        String id = Integer.toString(newCustomer.getId()); //The same ID is used for both Address and Customer
-
         /*Build the statements required to insert a customer*/
-        String[][] statements = emptyEntity(CUSTOMER_TABLES.length);
+        String[][] statements = emptyEntity(1);
+
+        String id = Integer.toString(newCustomer.getId()); //The same ID is used for both Address and Customer
 
         /*Insert Customer Statement*/
         statements[0] = new String[]{
                 STATEMENT_INSERT_CUSTOMER,
                 id, //customerId
                 newCustomer.getName(), //customerName
-        };
-
-        /*Insert Address Statement*/
-        statements[1] = new String[]{
-                STATEMENT_INSERT_ADDRESS,
-                id, //customerId
                 newCustomer.getAddress(), //address
                 newCustomer.getPhone() //phone
         };
@@ -73,13 +57,7 @@ public class CustomerDAO extends DAO<Customer> {
         update(statements);
     }
 
-    private static final String STATEMENT_UPDATE_CUSTOMER = "UPDATE " + TABLE_CUSTOMER + " SET " +
-            COLUMN_CUSTOMER_NAME + " = ? WHERE " +
-            COLUMN_CUSTOMER_ID + " = ?";
-    private static final String STATEMENT_UPDATE_ADDRESS = "UPDATE " + TABLE_ADDRESS + " SET " +
-            COLUMN_ADDRESS_NAME + " = ?, " +
-            COLUMN_ADDRESS_PHONE + " = ? WHERE " +
-            COLUMN_ADDRESS_ID + " = ?";
+    private static final String STATEMENT_UPDATE_CUSTOMER = "CALL sp_customer_Update(?, ?, ?, ?)";
 
     /**
      * Update an existing {@link Customer} in the database
@@ -88,24 +66,16 @@ public class CustomerDAO extends DAO<Customer> {
      */
     @Override
     public void updateEntity(Customer updatedCustomer) throws SQLException, ClassNotFoundException {
-        String id = Integer.toString(updatedCustomer.getId()); //The same ID is used for both Address and Customer
-
         /*Build the statements required to delete a customer*/
-        String[][] statements = emptyEntity(CUSTOMER_TABLES.length);
+        String[][] statements = emptyEntity(1);
 
         /*Update Customer Statement*/
         statements[0] = new String[]{
                 STATEMENT_UPDATE_CUSTOMER,
+                Integer.toString(updatedCustomer.getId()), //customerId
                 updatedCustomer.getName(), //customerName
-                Integer.toString(updatedCustomer.getId()) //customerId
-        };
-
-        /*Update Address Statement*/
-        statements[1] = new String[]{
-                STATEMENT_UPDATE_ADDRESS,
                 updatedCustomer.getAddress(), //address
-                updatedCustomer.getPhone(), //phone
-                id //customerId
+                updatedCustomer.getPhone() //phone
         };
 
         /*Execute the required statements*/
@@ -113,8 +83,7 @@ public class CustomerDAO extends DAO<Customer> {
     }
 
 
-    private static final String STATEMENT_DELETE_CUSTOMER = "DELETE FROM " + TABLE_CUSTOMER +
-            " WHERE " + COLUMN_CUSTOMER_ID + " = ?";
+    private static final String STATEMENT_DELETE_CUSTOMER = "CALL sp_customer_DeleteById(?)";
 
     /**
      * Delete an existing {@link Customer} in the database
@@ -123,10 +92,10 @@ public class CustomerDAO extends DAO<Customer> {
      */
     @Override
     public void deleteEntity(Customer selectedCustomer) throws SQLException, ClassNotFoundException {
-        String id = Integer.toString(selectedCustomer.getId()); //The same ID is used for both Address and Customer
-
         /*Build the statements required to delete a customer*/
         String[][] statements = emptyEntity(1); //Only deleting the customer because the address will cascade delete.
+
+        String id = Integer.toString(selectedCustomer.getId()); //The same ID is used for both Address and Customer
 
         /*Delete Customer Statement*/
         statements[0] = new String[]{
@@ -138,16 +107,7 @@ public class CustomerDAO extends DAO<Customer> {
         update(statements);
     }
 
-    private static final String QUERY_SELECT_CUSTOMERS = "SELECT " +
-            TABLE_CUSTOMER + "." + COLUMN_CUSTOMER_ID + ", " +
-            COLUMN_CUSTOMER_NAME + ", " +
-            COLUMN_ADDRESS_NAME + ", " +
-            COLUMN_ADDRESS_PHONE + " FROM " +
-            TABLE_CUSTOMER + ", " +
-            TABLE_ADDRESS + " WHERE " +
-            TABLE_CUSTOMER + "." + COLUMN_CUSTOMER_ID + " = " +
-            TABLE_ADDRESS + "." + COLUMN_ADDRESS_ID;
-
+    private static final String QUERY_SELECT_CUSTOMERS = "SELECT * FROM " + VIEW_CUSTOMERS;
     @Override
     public List<Customer> getEntities() throws SQLException, ClassNotFoundException {
         List<Customer> customers = new ArrayList<>();

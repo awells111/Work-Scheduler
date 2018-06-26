@@ -9,16 +9,10 @@ public class UserDAO extends DAO {
     /*
     User Table
     */
-    private static final String TABLE_USER = "user";
     private static final String COLUMN_USER_USERNAME = "userName";
     private static final String COLUMN_USER_PASSWORD = "password";
-    /*User Table Statements*/
-    private static final String QUERY_SELECT_USER = "SELECT * FROM user WHERE userName=? AND password=?";
 
-    /**
-     * The tables required to modify a user entity
-     */
-    private static final String[] USER_TABLES = {TABLE_USER};
+    private static final String QUERY_SELECT_USER = "CALL sp_user_SelectByLogin(?, ?)";
 
     UserDAO(DbConnection dbConnection) {
         setDbConnection(dbConnection);

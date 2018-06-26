@@ -77,74 +77,44 @@
       <file leaf-file-name="DAO.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/data/DAO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1279">
-              <caret line="114" column="1" lean-forward="true" selection-start-line="114" selection-start-column="1" selection-end-line="114" selection-end-column="1" />
+            <state relative-caret-position="17">
+              <caret line="26" column="47" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="47" />
               <folding>
                 <element signature="docComment;method#emptyEntity#0;class#DAO#0" />
+                <element signature="e#757#758#0" expanded="true" />
+                <element signature="e#809#810#0" expanded="true" />
+                <element signature="class#DbObjectBuilder#0" />
+                <element signature="class#QueryBuilder#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Database.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/data/Database.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1360">
-              <caret line="101" column="36" selection-start-line="101" selection-start-column="36" selection-end-line="101" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DbConnection.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/data/DbConnection.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OverviewController.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/view_controller/OverviewController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="241" column="39" lean-forward="true" selection-start-line="241" selection-start-column="39" selection-end-line="241" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-866">
-              <caret line="191" column="48" selection-start-line="191" selection-start-column="48" selection-end-line="191" selection-end-column="48" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#10006#10007#0" expanded="true" />
-                <element signature="e#10092#10093#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="rb.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/rb.properties">
-          <provider selected="true" editor-type-id="ResourceBundle" />
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="1020">
-              <caret line="60" column="30" selection-start-line="60" selection-start-column="30" selection-end-line="60" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AppointmentDAO.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AppointmentDAO.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/data/AppointmentDAO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-864">
-              <caret line="100" column="13" lean-forward="true" selection-start-line="100" selection-start-column="13" selection-end-line="100" selection-end-column="13" />
+            <state relative-caret-position="1275">
+              <caret line="82" column="99" lean-forward="true" selection-start-line="82" selection-start-column="99" selection-end-line="82" selection-end-column="99" />
               <folding>
-                <element signature="docComment;method#deleteEntity#0;class#AppointmentDAO#0" />
-                <element signature="method#deleteEntity#0;class#AppointmentDAO#0" />
+                <element signature="e#1071#1072#0" expanded="true" />
+                <element signature="e#1116#1117#0" expanded="true" />
+                <element signature="method#getEntities#0;class#AppointmentDAO#0" />
+                <element signature="method#selectOverlappedAppointments#0;class#AppointmentDAO#0" />
+                <element signature="method#getCloseAppointments#0;class#AppointmentDAO#0" />
+                <element signature="method#buildObject#0;class#AppointmentDAO#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CustomerDAO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/data/CustomerDAO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-493">
+              <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
+              <folding>
+                <element signature="e#1083#1084#0" expanded="true" />
+                <element signature="e#1128#1129#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -157,16 +127,13 @@
       <list>
         <option value="JavaFXApplication" />
         <option value="FxmlFile" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>%add</find>
-      <find>rb</find>
-      <find>inputerror</find>
       <find>appointmentov</find>
       <find>programa</find>
       <find>isoutside</find>
@@ -194,6 +161,9 @@
       <find>.next</find>
       <find>soon</find>
       <find>todo</find>
+      <find>sp_</find>
+      <find>sp</find>
+      <find>vw</find>
     </findStrings>
     <replaceStrings>
       <replace>appointment</replace>
@@ -214,7 +184,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/model/ConnectedUser.java" />
         <option value="$PROJECT_DIR$/src/main/data/Queries.java" />
         <option value="$PROJECT_DIR$/src/main/model/Customers.java" />
         <option value="$PROJECT_DIR$/src/main/data/Customers.java" />
@@ -256,15 +225,16 @@
         <option value="$PROJECT_DIR$/src/main/model/DbObjectBuilder.java" />
         <option value="$PROJECT_DIR$/src/main/view/CalendarDialog.java" />
         <option value="$PROJECT_DIR$/src/main/data/QueryBuilder.java" />
-        <option value="$PROJECT_DIR$/src/main/data/UserDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/data/CustomerDAO.java" />
-        <option value="$PROJECT_DIR$/src/main/data/AppointmentDAO.java" />
         <option value="$PROJECT_DIR$/src/main/data/DbObjectBuilder.java" />
-        <option value="$PROJECT_DIR$/src/main/data/DAO.java" />
         <option value="$PROJECT_DIR$/src/main/Main.java" />
         <option value="$PROJECT_DIR$/src/main/data/Database.java" />
-        <option value="$PROJECT_DIR$/src/main/data/DbConnection.java" />
         <option value="$PROJECT_DIR$/src/main/view_controller/OverviewController.java" />
+        <option value="$PROJECT_DIR$/src/main/data/DbConnection.java" />
+        <option value="$PROJECT_DIR$/src/main/data/DAO.java" />
+        <option value="$PROJECT_DIR$/src/main/data/DAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/data/AppointmentDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/data/UserDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/data/CustomerDAO.java" />
       </list>
     </option>
   </component>
@@ -279,9 +249,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="953" />
-    <option name="width" value="974" />
-    <option name="height" value="1047" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -476,7 +447,7 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.language" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.smartKeys" />
   </component>
   <component name="RecentsManager">
     <key name="MoveMembersDialog.RECENTS_KEY">
@@ -492,6 +463,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Gerald\Documents\GitHub\Work-Scheduler\src\main" />
       <recent name="C:\Users\Gerald\Documents\GitHub\Work-Scheduler\src\main\view_controller" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="main.data" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Gerald\Documents\GitHub\Work-Scheduler\src\main\view_controller" />
@@ -603,12 +577,12 @@
       <workItem from="1359379250712" duration="1302000" />
       <workItem from="1529947874767" duration="1290000" />
       <workItem from="1529953740090" duration="10917000" />
-      <workItem from="1530023478562" duration="2244000" />
+      <workItem from="1530023478562" duration="15945000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15753000" />
+    <option name="totallyTimeSpent" value="29454000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -636,7 +610,7 @@
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="4" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3988764" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39869282" />
       <window_info anchor="right" id="JetGradle" order="3" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -653,8 +627,9 @@
       <window_info anchor="bottom" id="Application Servers" order="7" />
       <window_info id="Designer" order="2" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.332244" />
       <window_info anchor="right" id="JetGradle" order="4" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.332244" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="3" />
       <window_info anchor="bottom" id="Profiler" order="8" />
@@ -665,24 +640,23 @@
       <window_info anchor="bottom" id="Inspection Results" order="15" weight="0.3293348" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.3292517" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.3278867" />
-      <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Problems" order="12" />
+      <window_info id="Image Layers" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="16" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="13" />
       <window_info anchor="right" id="Maven Projects" order="5" />
       <window_info anchor="bottom" id="Terminal" order="14" weight="0.32897604" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.14285715" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.1444563" />
       <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info id="Image Layers" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info anchor="right" id="Theme Preview" order="9" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.3278867" />
+      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.3278867" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3988764" />
     </layout-to-restore>
   </component>
@@ -698,7 +672,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="10" />
+      <option name="time" value="16" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -706,7 +680,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/style_sheet" />
     <entry file="file://$PROJECT_DIR$/src/main/data/DbUtil.java" />
     <entry file="jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/6.0.6/mysql-connector-java-6.0.6.jar!/com/mysql/cj/jdbc/exceptions/SQLError.class" />
     <entry file="file://$PROJECT_DIR$/src/main/data/TestConnection.java" />
@@ -873,34 +846,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/data/CustomerDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2482">
-          <caret line="153" selection-start-line="153" selection-end-line="153" />
-          <folding>
-            <element signature="method#buildObject#0;class#CustomerDAO#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/data/UserDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-179">
-          <caret line="30" column="24" lean-forward="true" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/data/AppointmentDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-864">
-          <caret line="100" column="13" lean-forward="true" selection-start-line="100" selection-start-column="13" selection-end-line="100" selection-end-column="13" />
-          <folding>
-            <element signature="docComment;method#deleteEntity#0;class#AppointmentDAO#0" />
-            <element signature="method#deleteEntity#0;class#AppointmentDAO#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/data/DbObjectBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -918,40 +863,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/data/DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1279">
-          <caret line="114" column="1" lean-forward="true" selection-start-line="114" selection-start-column="1" selection-end-line="114" selection-end-column="1" />
-          <folding>
-            <element signature="docComment;method#emptyEntity#0;class#DAO#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/rb.properties">
       <provider selected="true" editor-type-id="ResourceBundle" />
       <provider editor-type-id="text-editor">
         <state relative-caret-position="1020">
           <caret line="60" column="30" selection-start-line="60" selection-start-column="30" selection-end-line="60" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-866">
-          <caret line="191" column="48" selection-start-line="191" selection-start-column="48" selection-end-line="191" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#10006#10007#0" expanded="true" />
-            <element signature="e#10092#10093#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/data/Database.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1360">
-          <caret line="101" column="36" selection-start-line="101" selection-start-column="36" selection-end-line="101" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -964,8 +880,77 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/view_controller/OverviewController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
+        <state relative-caret-position="1173">
           <caret line="241" column="39" lean-forward="true" selection-start-line="241" selection-start-column="39" selection-end-line="241" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="477">
+          <caret line="228" column="21" lean-forward="true" selection-start-line="228" selection-start-column="21" selection-end-line="228" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#10006#10007#0" expanded="true" />
+            <element signature="e#10092#10093#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/data/DAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/data/Database.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="615">
+          <caret line="135" column="35" selection-start-line="135" selection-start-column="35" selection-end-line="135" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/data/DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="26" column="47" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="47" />
+          <folding>
+            <element signature="docComment;method#emptyEntity#0;class#DAO#0" />
+            <element signature="e#757#758#0" expanded="true" />
+            <element signature="e#809#810#0" expanded="true" />
+            <element signature="class#DbObjectBuilder#0" />
+            <element signature="class#QueryBuilder#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/data/UserDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/data/CustomerDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-493">
+          <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
+          <folding>
+            <element signature="e#1083#1084#0" expanded="true" />
+            <element signature="e#1128#1129#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/data/AppointmentDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1275">
+          <caret line="82" column="99" lean-forward="true" selection-start-line="82" selection-start-column="99" selection-end-line="82" selection-end-column="99" />
+          <folding>
+            <element signature="e#1071#1072#0" expanded="true" />
+            <element signature="e#1116#1117#0" expanded="true" />
+            <element signature="method#getEntities#0;class#AppointmentDAO#0" />
+            <element signature="method#selectOverlappedAppointments#0;class#AppointmentDAO#0" />
+            <element signature="method#getCloseAppointments#0;class#AppointmentDAO#0" />
+            <element signature="method#buildObject#0;class#AppointmentDAO#0" />
+          </folding>
         </state>
       </provider>
     </entry>

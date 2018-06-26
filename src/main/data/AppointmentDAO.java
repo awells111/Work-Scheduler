@@ -12,30 +12,24 @@ import java.util.List;
 public class AppointmentDAO extends DAO<Appointment> {
 
     /*
+    View containing the relevant fields from the Appointment table
+    */
+    private static final String VIEW_APPOINTMENTS = "vw_appointment";
+
+    /*
     Appointment Table
     */
-    private static final String TABLE_APPOINTMENT = "appointment";
     private static final String COLUMN_APPOINTMENT_ID = "appointmentId";
     private static final String COLUMN_CUSTOMER_ID = "customerId";
     private static final String COLUMN_APPOINTMENT_TYPE = "title";
     private static final String COLUMN_APPOINTMENT_START = "start";
     private static final String COLUMN_APPOINTMENT_END = "end";
 
-    /**
-     * The tables required to modify an appointment entity
-     */
-    private static final String[] APPOINTMENT_TABLES = {TABLE_APPOINTMENT};
-
     AppointmentDAO(DbConnection dbConnection) {
         setDbConnection(dbConnection);
     }
 
-    private static final String STATEMENT_INSERT_APPOINTMENT = "INSERT INTO " + TABLE_APPOINTMENT + "(" +
-            COLUMN_APPOINTMENT_ID + ", " +
-            COLUMN_CUSTOMER_ID + ", " +
-            COLUMN_APPOINTMENT_TYPE + ", " +
-            COLUMN_APPOINTMENT_START + ", " +
-            COLUMN_APPOINTMENT_END + ") VALUES (?, ?, ?, " + VALUE_FROM_UNIXTIME + ", " + VALUE_FROM_UNIXTIME + ")";
+    private static final String STATEMENT_INSERT_APPOINTMENT = "CALL sp_appointment_Insert(?, ?, ?, ?, ?)";
 
     /**
      * Insert an {@link Appointment} into the database
@@ -45,7 +39,7 @@ public class AppointmentDAO extends DAO<Appointment> {
     @Override
     public void insertEntity(Appointment newAppointment) throws SQLException, ClassNotFoundException {
         /*Build the statements required to insert a appointment*/
-        String[][] statements = emptyEntity(APPOINTMENT_TABLES.length);
+        String[][] statements = emptyEntity(1);
 
         /*Insert Appointment Statement*/
         statements[0] = new String[]{
@@ -61,11 +55,7 @@ public class AppointmentDAO extends DAO<Appointment> {
         update(statements);
     }
 
-    private static final String STATEMENT_UPDATE_APPOINTMENT = "UPDATE " + TABLE_APPOINTMENT +
-            " SET " + COLUMN_APPOINTMENT_TYPE + " = ?, " +
-            COLUMN_APPOINTMENT_START + " = " + VALUE_FROM_UNIXTIME + ", " +
-            COLUMN_APPOINTMENT_END + " = " + VALUE_FROM_UNIXTIME +
-            " WHERE " + COLUMN_APPOINTMENT_ID + " = ?";
+    private static final String STATEMENT_UPDATE_APPOINTMENT = "CALL sp_appointment_UpdateById(?, ?, ?, ?)";
 
     /**
      * Update an existing {@link Appointment} in the database
@@ -75,7 +65,7 @@ public class AppointmentDAO extends DAO<Appointment> {
     @Override
     public void updateEntity(Appointment updatedAppointment) throws SQLException, ClassNotFoundException {
         /*Build the statements required to delete a appointment*/
-        String[][] statements = emptyEntity(APPOINTMENT_TABLES.length);
+        String[][] statements = emptyEntity(1);
 
         /*Update Appointment Statement*/
         statements[0] = new String[]{
@@ -90,8 +80,7 @@ public class AppointmentDAO extends DAO<Appointment> {
         update(statements);
     }
 
-    private static final String STATEMENT_DELETE_APPOINTMENT = "DELETE FROM " + TABLE_APPOINTMENT + " WHERE " +
-            COLUMN_APPOINTMENT_ID + " = ?";
+    private static final String STATEMENT_DELETE_APPOINTMENT = "CALL sp_appointment_DeleteById(?)";
 
     /**
      * Delete an existing {@link Appointment} in the database
@@ -101,7 +90,7 @@ public class AppointmentDAO extends DAO<Appointment> {
     @Override
     public void deleteEntity(Appointment selectedAppointment) throws SQLException, ClassNotFoundException {
         /*Build the statements required to delete a appointment*/
-        String[][] statements = emptyEntity(APPOINTMENT_TABLES.length);
+        String[][] statements = emptyEntity(1);
 
         /*Delete Appointment Statement*/
         statements[0] = new String[]{
@@ -113,7 +102,8 @@ public class AppointmentDAO extends DAO<Appointment> {
         update(statements);
     }
 
-    private static final String QUERY_SELECT_APPOINTMENTS = "SELECT * FROM " + TABLE_APPOINTMENT;
+    private static final String QUERY_SELECT_APPOINTMENTS = "SELECT * FROM " + VIEW_APPOINTMENTS;
+
     @Override
     public List<Appointment> getEntities() throws SQLException, ClassNotFoundException {
         List<Appointment> appointments = new ArrayList<>();
@@ -130,25 +120,8 @@ public class AppointmentDAO extends DAO<Appointment> {
     }
 
     /*Check if an appointment overlaps any other appointments*/
-    private static final String QUERY_SELECT_OVERLAPPED_APPOINTMENTS = "SELECT count(*) FROM " + TABLE_APPOINTMENT + //SELECT all appointments
-            " WHERE " + COLUMN_CUSTOMER_ID + " = ? " + //WHERE customerId is the same
-            "AND " + COLUMN_APPOINTMENT_ID + " != ? " + //AND only look at other appointments
+    private static final String QUERY_SELECT_OVERLAPPED_APPOINTMENTS = "CALL sp_appointment_SelectOverlapped(?, ?, ?, ?)";
 
-            "AND ((" +//AND (one of three things)
-
-            /*appt start time is between the start date and end date*/
-            VALUE_FROM_UNIXTIME + " > " + COLUMN_APPOINTMENT_START + " AND " +
-            VALUE_FROM_UNIXTIME + " < " + COLUMN_APPOINTMENT_END +
-
-            /*OR appt end time is between the start date and end date*/
-            ") OR (" +
-            VALUE_FROM_UNIXTIME + " > " + COLUMN_APPOINTMENT_START + " AND "
-            + VALUE_FROM_UNIXTIME + " < " + COLUMN_APPOINTMENT_END +
-
-            /*OR the appt start time is before/equal to the start date, and the appt end time is equal to/after the end date*/
-            ") OR (" +
-            VALUE_FROM_UNIXTIME + " <= " + COLUMN_APPOINTMENT_START + " AND "
-            + VALUE_FROM_UNIXTIME + " >= " + COLUMN_APPOINTMENT_END + "))";
     int selectOverlappedAppointments(Appointment appointment) throws SQLException, ClassNotFoundException {
         int count = 0;
 
@@ -159,10 +132,6 @@ public class AppointmentDAO extends DAO<Appointment> {
                 QUERY_SELECT_OVERLAPPED_APPOINTMENTS,
                 Integer.toString(appointment.getCustomerId()),
                 Integer.toString(appointment.getId()),
-                apptStart,
-                apptStart,
-                apptEnd,
-                apptEnd,
                 apptStart,
                 apptEnd
         });
@@ -175,12 +144,8 @@ public class AppointmentDAO extends DAO<Appointment> {
     }
 
     /*Select appointments within 15 minutes of now*/
-    private static final String QUERY_SELECT_CLOSE_APPOINTMENTS = "SELECT * FROM " + TABLE_APPOINTMENT +
-            " WHERE (now() < " +
-            COLUMN_APPOINTMENT_START +
-            ") AND (" +
-            COLUMN_APPOINTMENT_START +
-            " < (now() + INTERVAL 15 MINUTE))";
+    private static final String QUERY_SELECT_CLOSE_APPOINTMENTS = "CALL sp_appointment_SelectClose";
+
     LinkedList<Appointment> getCloseAppointments() throws SQLException, ClassNotFoundException {
         LinkedList<Appointment> appointments = new LinkedList<>();
 
