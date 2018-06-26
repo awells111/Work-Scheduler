@@ -38,11 +38,7 @@ public class AppointmentDAO extends DAO<Appointment> {
      */
     @Override
     public void insertEntity(Appointment newAppointment) throws SQLException, ClassNotFoundException {
-        /*Build the statements required to insert a appointment*/
-        String[][] statements = emptyEntity(1);
-
-        /*Insert Appointment Statement*/
-        statements[0] = new String[]{
+        String[] statement = new String[]{
                 STATEMENT_INSERT_APPOINTMENT,
                 Integer.toString(newAppointment.getId()),
                 Integer.toString(newAppointment.getCustomerId()),
@@ -51,8 +47,7 @@ public class AppointmentDAO extends DAO<Appointment> {
                 newAppointment.endEpochString()
         };
 
-        /*Execute the required statements*/
-        update(statements);
+        update(statement);
     }
 
     private static final String STATEMENT_UPDATE_APPOINTMENT = "CALL sp_appointment_UpdateById(?, ?, ?, ?)";
@@ -64,11 +59,7 @@ public class AppointmentDAO extends DAO<Appointment> {
      */
     @Override
     public void updateEntity(Appointment updatedAppointment) throws SQLException, ClassNotFoundException {
-        /*Build the statements required to delete a appointment*/
-        String[][] statements = emptyEntity(1);
-
-        /*Update Appointment Statement*/
-        statements[0] = new String[]{
+        String[] statement = new String[]{
                 STATEMENT_UPDATE_APPOINTMENT,
                 updatedAppointment.getType(),
                 updatedAppointment.startEpochString(),
@@ -76,8 +67,7 @@ public class AppointmentDAO extends DAO<Appointment> {
                 Integer.toString(updatedAppointment.getId())
         };
 
-        /*Execute the required statements*/
-        update(statements);
+        update(statement);
     }
 
     private static final String STATEMENT_DELETE_APPOINTMENT = "CALL sp_appointment_DeleteById(?)";
@@ -89,17 +79,12 @@ public class AppointmentDAO extends DAO<Appointment> {
      */
     @Override
     public void deleteEntity(Appointment selectedAppointment) throws SQLException, ClassNotFoundException {
-        /*Build the statements required to delete a appointment*/
-        String[][] statements = emptyEntity(1);
-
-        /*Delete Appointment Statement*/
-        statements[0] = new String[]{
+        String[] statement = new String[]{
                 STATEMENT_DELETE_APPOINTMENT,
                 String.valueOf(selectedAppointment.getId())
         };
 
-        /*Execute the required statements*/
-        update(statements);
+        update(statement);
     }
 
     private static final String QUERY_SELECT_APPOINTMENTS = "SELECT * FROM " + VIEW_APPOINTMENTS;

@@ -8,8 +8,6 @@ import java.util.List;
 
 abstract class DAO<E> implements DbObjectBuilder<E>, QueryBuilder<E> {
 
-    static final String VALUE_FROM_UNIXTIME = "FROM_UNIXTIME(?)";
-
     private DbConnection dbConnection;
 
     private DbConnection getDbConnection() {
@@ -20,15 +18,8 @@ abstract class DAO<E> implements DbObjectBuilder<E>, QueryBuilder<E> {
         this.dbConnection = dbConnection;
     }
 
-    /**
-     * @param statementsCount The number of statements required to execute an update
-     * @return An empty String[][] that subclasses will fill to create an entity
-     */
-    String[][] emptyEntity(int statementsCount) {
-        return new String[statementsCount][];
-    }
-
-    /*Used to for queries that require one PreparedStatement.*/
+    /*Build a prepared statement from a String[]. The first String of the array is the database query. The other Strings
+     * of the array are parameters for the query.*/
     private PreparedStatement buildPreparedStatement(Connection conn, String[] statement) throws SQLException {
         String statementString = statement[0];
 
@@ -41,46 +32,15 @@ abstract class DAO<E> implements DbObjectBuilder<E>, QueryBuilder<E> {
         return currentPS;
     }
 
-    /*Used to for queries that require more than one PreparedStatement.*/
-    private PreparedStatement[] buildPreparedStatements(Connection conn, String[][] statements) throws SQLException {
-
-        /*Number of prepared statements to execute*/
-        int preparedStatementsCount = statements.length;
-
-        /*Will hold all of our statements*/
-        PreparedStatement[] preparedStatements = new PreparedStatement[preparedStatementsCount];
-
-
-        for (int i = 0; i < preparedStatementsCount; i++) {
-            preparedStatements[i] = buildPreparedStatement(conn, statements[i]); //Put the current PreparedStatement in the array
-        }
-
-        return preparedStatements;
-    }
-
-    /**
-     * A method used for insert, update, and delete statements
-     *
-     * @param statements A String[][] representing the entity to be inserted, updated, or deleted
-     */
-    void update(String[][] statements) throws SQLException, ClassNotFoundException {
+    void update(String[] statement) throws SQLException, ClassNotFoundException {
         try (Connection conn = getDbConnection().getConnection()) {
-            conn.setAutoCommit(false); //By setting AutoCommit to false, the we can cancel the first statement if the second one fails
+            conn.setAutoCommit(false); //By setting AutoCommit to false, we can cancel the first statement if the second one fails
 
-            /*Build the prepared statements required to update the database*/
-            PreparedStatement[] preparedStatements = buildPreparedStatements(conn, statements);
+            PreparedStatement preparedStatement = buildPreparedStatement(conn, statement);
 
-            try {
-                /*Execute all of the PreparedStatements that were just built*/
-                for (PreparedStatement p : preparedStatements) {
-                    p.executeUpdate();
-                }
+            preparedStatement.executeUpdate(); //Throws a SQL exception if the update is unsuccessful
 
-                /*If no exceptions were thrown, commit the update*/
-                conn.commit();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            conn.commit();
         }
     }
 
@@ -97,7 +57,6 @@ interface DbObjectBuilder<E> {
     E buildObject(ResultSet rs) throws SQLException;
 
 }
-
 
 interface QueryBuilder<E> {
 

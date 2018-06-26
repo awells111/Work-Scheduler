@@ -39,22 +39,15 @@ public class CustomerDAO extends DAO<Customer> {
      */
     @Override
     public void insertEntity(Customer newCustomer) throws SQLException, ClassNotFoundException {
-        /*Build the statements required to insert a customer*/
-        String[][] statements = emptyEntity(1);
-
-        String id = Integer.toString(newCustomer.getId()); //The same ID is used for both Address and Customer
-
-        /*Insert Customer Statement*/
-        statements[0] = new String[]{
+        String[] statement = new String[]{
                 STATEMENT_INSERT_CUSTOMER,
-                id, //customerId
+                Integer.toString(newCustomer.getId()), //customerId
                 newCustomer.getName(), //customerName
                 newCustomer.getAddress(), //address
                 newCustomer.getPhone() //phone
         };
 
-        /*Execute the required statements*/
-        update(statements);
+        update(statement);
     }
 
     private static final String STATEMENT_UPDATE_CUSTOMER = "CALL sp_customer_Update(?, ?, ?, ?)";
@@ -66,11 +59,7 @@ public class CustomerDAO extends DAO<Customer> {
      */
     @Override
     public void updateEntity(Customer updatedCustomer) throws SQLException, ClassNotFoundException {
-        /*Build the statements required to delete a customer*/
-        String[][] statements = emptyEntity(1);
-
-        /*Update Customer Statement*/
-        statements[0] = new String[]{
+        String[] statement = new String[]{
                 STATEMENT_UPDATE_CUSTOMER,
                 Integer.toString(updatedCustomer.getId()), //customerId
                 updatedCustomer.getName(), //customerName
@@ -78,8 +67,7 @@ public class CustomerDAO extends DAO<Customer> {
                 updatedCustomer.getPhone() //phone
         };
 
-        /*Execute the required statements*/
-        update(statements);
+        update(statement);
     }
 
 
@@ -92,19 +80,12 @@ public class CustomerDAO extends DAO<Customer> {
      */
     @Override
     public void deleteEntity(Customer selectedCustomer) throws SQLException, ClassNotFoundException {
-        /*Build the statements required to delete a customer*/
-        String[][] statements = emptyEntity(1); //Only deleting the customer because the address will cascade delete.
-
-        String id = Integer.toString(selectedCustomer.getId()); //The same ID is used for both Address and Customer
-
-        /*Delete Customer Statement*/
-        statements[0] = new String[]{
+        String[] statement = new String[]{
                 STATEMENT_DELETE_CUSTOMER,
-                id //customerId
-        };
+                Integer.toString(selectedCustomer.getId()) //customerId
+        }; //Only deleting the customer because the address will cascade delete.
 
-        /*Execute the required statements*/
-        update(statements);
+        update(statement);
     }
 
     private static final String QUERY_SELECT_CUSTOMERS = "SELECT * FROM " + VIEW_CUSTOMERS;
