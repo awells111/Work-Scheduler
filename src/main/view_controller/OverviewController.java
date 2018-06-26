@@ -180,7 +180,7 @@ public class OverviewController {
 
     @FXML
     void handleAddAppointment() {
-        LocalDateTime now = LocalDateTime.now().withNano(0); //We do not use milliseconds so we are setting it to 0
+        LocalDateTime now = LocalDateTime.now().withSecond(0); //We do not use seconds so we are setting them to 0
         Appointment newAppointment = new Appointment(Database.CODE_NEW_ENTITY, tableViewCustomer.getSelectionModel().getSelectedItem().getId(), "", now, now);
 
         mainApp.showAddAppointment(tableViewCustomer.getSelectionModel().getSelectedItem().getName(), newAppointment);
