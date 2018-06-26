@@ -235,7 +235,6 @@ public class OverviewController {
             });
         });
 
-        /*todo By selecting and unselecting a row, the filter will appropriately filter the appointments. I would like to find a better solution for this if possible.*/
         tableViewCustomer.getSelectionModel().select(0);
         tableViewCustomer.getSelectionModel().clearSelection();
 

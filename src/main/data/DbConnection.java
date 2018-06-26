@@ -4,7 +4,6 @@ import java.sql.*;
 
 class DbConnection {
 
-    //todo use connection pool
     private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
 
     /*Change these for your database*/

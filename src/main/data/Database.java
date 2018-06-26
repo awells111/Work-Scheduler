@@ -99,7 +99,7 @@ public class Database {
     }
 
     /*Since the database does not use autoincrement, we will take the last appointment and increment the id*/
-    public int nextAppointmentId() { //todo Use primary key autoincrement and remove all nextId() methods
+    public int nextAppointmentId() {
         if (getAppointments().size() == 0) { //If no appointments exist
             return 1;
         }

@@ -155,7 +155,6 @@ public class Main extends Application {
         }
     }
 
-    //todo Reports will cause an error if no appointments are in the database
     public void showReports() {
         List<String> choices = new ArrayList<>();
         choices.add(getRb().getString("Appointments_by_Type"));
@@ -190,7 +189,7 @@ public class Main extends Application {
 
             alert.getDialogPane().setContent(expContent);
 
-            if (result.equals(choices.get(0))) { //todo Reports are not internationalized
+            if (result.equals(choices.get(0))) {
                 HashMap<String, Integer> hashMap = new HashMap<>();
 
                 for (Appointment a : getDatabase().getAppointments()) { //Count each type in the database
