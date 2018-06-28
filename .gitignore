@@ -48,3 +48,6 @@ Temporary Items
 
 # The file containing user login information
 log.txt
+
+out/
+.idea/workspace.xml
