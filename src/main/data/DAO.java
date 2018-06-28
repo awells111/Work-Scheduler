@@ -32,19 +32,13 @@ abstract class DAO<E> implements DbObjectBuilder<E>, QueryBuilder<E> {
         return currentPS;
     }
 
-    void update(String[] statement) throws SQLException, ClassNotFoundException {
-        try (Connection conn = getDbConnection().getConnection()) {
-            conn.setAutoCommit(false); //By setting AutoCommit to false, we can cancel the first statement if the second one fails
+    void executeUpdate(String[] statement) throws SQLException, ClassNotFoundException {
+        PreparedStatement preparedStatement = buildPreparedStatement(getDbConnection().getConnection(), statement);
 
-            PreparedStatement preparedStatement = buildPreparedStatement(conn, statement);
-
-            preparedStatement.executeUpdate(); //Throws a SQL exception if the update is unsuccessful
-
-            conn.commit();
-        }
+        preparedStatement.executeUpdate(); //Throws a SQL exception if the update is unsuccessful
     }
 
-    ResultSet getResultSet(String[] statement) throws SQLException, ClassNotFoundException {
+    ResultSet executeQuery(String[] statement) throws SQLException, ClassNotFoundException {
         PreparedStatement preparedStatement = buildPreparedStatement(getDbConnection().getConnection(), statement);
 
         return preparedStatement.executeQuery();
@@ -61,14 +55,14 @@ interface DbObjectBuilder<E> {
 interface QueryBuilder<E> {
 
     /*Insert an entity into the database.*/
-    void insertEntity(E e) throws SQLException, ClassNotFoundException;
+    int insert(E e) throws SQLException, ClassNotFoundException;
 
     /*Update an entity in the database.*/
-    void updateEntity(E e) throws SQLException, ClassNotFoundException;
+    void update(E e) throws SQLException, ClassNotFoundException;
 
     /*Delete an entity in the database.*/
-    void deleteEntity(E e) throws SQLException, ClassNotFoundException;
+    void delete(E e) throws SQLException, ClassNotFoundException;
 
     /*Returns a list of all entities from the database.*/
-    List<E> getEntities() throws SQLException, ClassNotFoundException;
+    List<E> getAll() throws SQLException, ClassNotFoundException;
 }

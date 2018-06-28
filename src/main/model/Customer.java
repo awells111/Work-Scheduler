@@ -12,6 +12,12 @@ public class Customer {
     private StringProperty address;
     private StringProperty phone;
 
+    /*Used for new Customers*/
+    public Customer(String name, String address, String phone) {
+        this(Integer.MIN_VALUE, name, address, phone);
+    }
+
+    /*Used for existing Customers*/
     public Customer(int id, String name, String address, String phone) {
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);

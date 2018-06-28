@@ -97,7 +97,7 @@ DROP TABLE IF EXISTS `appointment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `appointment` (
-  `appointmentId` int(10) NOT NULL,
+  `appointmentId` int(10) NOT NULL AUTO_INCREMENT,
   `customerId` int(10) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text,
@@ -112,8 +112,8 @@ CREATE TABLE `appointment` (
   `lastUpdateBy` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`appointmentId`),
   KEY `cascade_appointment_customerId` (`customerId`),
-  CONSTRAINT `cascade_appointment_customerId` FOREIGN KEY (`customerId`) REFERENCES `customer` (`customerid`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `cascade_appointment_customerId` FOREIGN KEY (`customerId`) REFERENCES `customer` (`customerId`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -173,7 +173,7 @@ DROP TABLE IF EXISTS `customer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `customer` (
-  `customerId` int(10) NOT NULL,
+  `customerId` int(10) NOT NULL AUTO_INCREMENT,
   `customerName` varchar(45) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `createDate` datetime DEFAULT CURRENT_TIMESTAMP,
@@ -181,7 +181,7 @@ CREATE TABLE `customer` (
   `lastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `lastUpdateBy` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`customerId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -241,7 +241,7 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `userId` int(11) NOT NULL,
+  `userId` int(10) NOT NULL AUTO_INCREMENT,
   `userName` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `active` tinyint(4) NOT NULL DEFAULT '1',
@@ -251,7 +251,7 @@ CREATE TABLE `user` (
   `lastUpdateBy` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`userId`),
   UNIQUE KEY `userName_UNIQUE` (`userName`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -387,16 +387,41 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_appointment_Insert`(
-	var_appointmentId int(10),
     var_customerId int(10),
     var_title varchar(255),
-    var_start int(10), /*Unix time has 10 digits*/
+    var_start int(10),
     var_end int(10)
 	)
 BEGIN
 	/*Insert an appointment into the database*/
-	INSERT INTO appointment(appointmentId, customerId, title, start, end) 
-    VALUES (var_appointmentId, var_customerId, var_title, FROM_UNIXTIME(var_start), FROM_UNIXTIME(var_end));
+	INSERT INTO appointment(customerId, title, start, end) 
+    VALUES (var_customerId, var_title, FROM_UNIXTIME(var_start), FROM_UNIXTIME(var_end));
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_appointment_Insert_pk` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_appointment_Insert_pk`(
+    var_customerId int(10),
+    var_title varchar(255),
+    var_start int(10),
+    var_end int(10)
+	)
+BEGIN
+	CALL `u04ts4`.`sp_appointment_Insert`(var_customerId, var_title, var_start, var_end);
+
+	SELECT LAST_INSERT_ID();
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -511,17 +536,42 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_customer_Insert`(
-	var_customerId int(10),
     var_customerName varchar(45),
     var_address varchar(50),
     var_phone varchar(20)
     )
 BEGIN
 	/*Insert customer*/
-    INSERT INTO customer(customerId, customerName) VALUES (var_customerId, var_customerName);
+    INSERT INTO customer(customerName) VALUES (var_customerName);
     
     /*Insert address*/
-    INSERT INTO address(customerId, address, phone) VALUES (var_customerId, var_address, var_phone);
+    INSERT INTO address(customerId, address, phone) VALUES (LAST_INSERT_ID(), var_address, var_phone);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_customer_Insert_pk` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_customer_Insert_pk`(
+    var_customerName varchar(45),
+    var_address varchar(50),
+    var_phone varchar(20)
+    )
+BEGIN
+
+	CALL `u04ts4`.`sp_customer_Insert`(var_customerName, var_address, var_phone);
+
+    SELECT LAST_INSERT_ID();
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -567,13 +617,12 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_Insert`(
-	var_userId int(11),
     var_userName varchar(50),
     var_password varchar(50)
     )
 BEGIN
 	/*Insert user*/
-    INSERT INTO `u04ts4`.`user`(userId, userName, password) VALUES (var_userId, var_userName, var_password);
+    INSERT INTO `u04ts4`.`user`(userName, password) VALUES (var_userName, var_password);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -613,7 +662,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_Update`(
-	var_userId int(11),
+	var_userId int(10),
     var_userName varchar(50),
     var_password varchar(50)
     )
@@ -693,4 +742,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-27 20:08:47
+-- Dump completed on 2018-06-27 23:00:16

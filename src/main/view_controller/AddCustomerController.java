@@ -11,8 +11,6 @@ import main.model.Customer;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import static main.data.Database.CODE_NEW_ENTITY;
-
 public class AddCustomerController {
     public static final String FXML_ADD_CUSTOMER = "view_controller/add_customer.fxml";
 
@@ -60,29 +58,24 @@ public class AddCustomerController {
           return;
         }
 
-        int id = (isNewCustomer()) ? database.nextCustomerId() : customer.getId();
+        int id = customer.getId();
         String name = textFieldCustomerName.getText();
         String address = textFieldCustomerAddress.getText();
         String phone = textFieldCustomerPhone.getText();
 
         Customer newCustomer = new Customer(id, name, address, phone);
 
-        if (isNewCustomer()) {
-            try {
+        try {
+            /*If Customer does not exist in the database, else*/
+            if (customer.getId() == Integer.MIN_VALUE) {
                 database.addCustomer(newCustomer);
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
-                mainApp.showDatabaseErrorAlert("Error_Saving_Customer");
-                return;
-            }
-        } else {
-            try {
+            } else {
                 database.updateCustomer(customer, newCustomer);
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
-                mainApp.showDatabaseErrorAlert("Error_Saving_Customer");
-                return;
             }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            mainApp.showDatabaseErrorAlert(resources.getString("Error_Saving_Customer"));
+            return;
         }
 
         dialogStage.close();
@@ -91,11 +84,6 @@ public class AddCustomerController {
     @FXML
     void handleCustomerCancel() {
         dialogStage.close();
-    }
-
-    /*Returns true if customer does not exist in the database*/
-    private boolean isNewCustomer() {
-        return customer.getId() == CODE_NEW_ENTITY;
     }
 
     /*Returns false if there are no errors in saving the customer*/

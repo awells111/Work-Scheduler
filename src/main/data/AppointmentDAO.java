@@ -29,7 +29,7 @@ public class AppointmentDAO extends DAO<Appointment> {
         setDbConnection(dbConnection);
     }
 
-    private static final String STATEMENT_INSERT_APPOINTMENT = "CALL sp_appointment_Insert(?, ?, ?, ?, ?)";
+    private static final String STATEMENT_INSERT_APPOINTMENT = "CALL sp_appointment_Insert_pk(?, ?, ?, ?)";
 
     /**
      * Insert an {@link Appointment} into the database
@@ -37,17 +37,21 @@ public class AppointmentDAO extends DAO<Appointment> {
      * @param newAppointment The {@link Appointment} that will be inserted into the database
      */
     @Override
-    public void insertEntity(Appointment newAppointment) throws SQLException, ClassNotFoundException {
+    public int insert(Appointment newAppointment) throws SQLException, ClassNotFoundException {
         String[] statement = new String[]{
                 STATEMENT_INSERT_APPOINTMENT,
-                Integer.toString(newAppointment.getId()),
                 Integer.toString(newAppointment.getCustomerId()),
                 newAppointment.getType(),
                 newAppointment.startEpochString(),
                 newAppointment.endEpochString()
         };
 
-        update(statement);
+        ResultSet apptRS = executeQuery(statement);
+
+        apptRS.next();
+
+        /*Return the id of the new Appointment*/
+        return apptRS.getInt(1);
     }
 
     private static final String STATEMENT_UPDATE_APPOINTMENT = "CALL sp_appointment_UpdateById(?, ?, ?, ?)";
@@ -58,7 +62,7 @@ public class AppointmentDAO extends DAO<Appointment> {
      * @param updatedAppointment The {@link Appointment} that will be updated in the database
      */
     @Override
-    public void updateEntity(Appointment updatedAppointment) throws SQLException, ClassNotFoundException {
+    public void update(Appointment updatedAppointment) throws SQLException, ClassNotFoundException {
         String[] statement = new String[]{
                 STATEMENT_UPDATE_APPOINTMENT,
                 updatedAppointment.getType(),
@@ -67,7 +71,7 @@ public class AppointmentDAO extends DAO<Appointment> {
                 Integer.toString(updatedAppointment.getId())
         };
 
-        update(statement);
+        executeUpdate(statement);
     }
 
     private static final String STATEMENT_DELETE_APPOINTMENT = "CALL sp_appointment_DeleteById(?)";
@@ -78,22 +82,22 @@ public class AppointmentDAO extends DAO<Appointment> {
      * @param selectedAppointment The {@link Appointment} that will be deleted in the database
      */
     @Override
-    public void deleteEntity(Appointment selectedAppointment) throws SQLException, ClassNotFoundException {
+    public void delete(Appointment selectedAppointment) throws SQLException, ClassNotFoundException {
         String[] statement = new String[]{
                 STATEMENT_DELETE_APPOINTMENT,
                 String.valueOf(selectedAppointment.getId())
         };
 
-        update(statement);
+        executeUpdate(statement);
     }
 
     private static final String QUERY_SELECT_APPOINTMENTS = "SELECT * FROM " + VIEW_APPOINTMENTS;
 
     @Override
-    public List<Appointment> getEntities() throws SQLException, ClassNotFoundException {
+    public List<Appointment> getAll() throws SQLException, ClassNotFoundException {
         List<Appointment> appointments = new ArrayList<>();
 
-        ResultSet apptRS = getResultSet(new String[]{
+        ResultSet apptRS = executeQuery(new String[]{
                 QUERY_SELECT_APPOINTMENTS
         });
 
@@ -113,7 +117,7 @@ public class AppointmentDAO extends DAO<Appointment> {
         String apptStart = appointment.startEpochString();
         String apptEnd = appointment.endEpochString();
 
-        ResultSet rs = getResultSet(new String[]{
+        ResultSet rs = executeQuery(new String[]{
                 QUERY_SELECT_OVERLAPPED_APPOINTMENTS,
                 Integer.toString(appointment.getCustomerId()),
                 Integer.toString(appointment.getId()),
@@ -134,7 +138,7 @@ public class AppointmentDAO extends DAO<Appointment> {
     LinkedList<Appointment> getCloseAppointments() throws SQLException, ClassNotFoundException {
         LinkedList<Appointment> appointments = new LinkedList<>();
 
-        ResultSet apptRS = getResultSet(new String[]{
+        ResultSet apptRS = executeQuery(new String[]{
                 QUERY_SELECT_CLOSE_APPOINTMENTS
         });
 

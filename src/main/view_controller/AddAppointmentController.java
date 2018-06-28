@@ -14,8 +14,6 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-import static main.data.Database.CODE_NEW_ENTITY;
-
 public class AddAppointmentController {
     public static final String FXML_ADD_APPOINTMENT = "view_controller/add_appointment.fxml";
 
@@ -67,7 +65,7 @@ public class AddAppointmentController {
             return;
         }
 
-        int id = (isNewAppointment()) ? database.nextAppointmentId() : appointment.getId();
+        int id = appointment.getId();
         int custId = appointment.getCustomerId();
         String type = textFieldAppointmentType.getText();
         LocalDateTime start = appointmentDateTimePickerStart.getDateTimeValue();
@@ -79,22 +77,17 @@ public class AddAppointmentController {
             return;
         }
 
-        if (isNewAppointment()) {
-            try {
+        try {
+            /*If Appointment does not exist in the database, else*/
+            if (appointment.getId() == Integer.MIN_VALUE) {
                 database.addAppointment(newAppointment);
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
-                mainApp.showDatabaseErrorAlert(resources.getString("Error_Saving_Appointment"));
-                return;
-            }
-        } else {
-            try {
+            } else {
                 database.updateAppointment(appointment, newAppointment);
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
-                mainApp.showDatabaseErrorAlert(resources.getString("Error_Saving_Appointment"));
-                return;
             }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            mainApp.showDatabaseErrorAlert(resources.getString("Error_Saving_Appointment"));
+            return;
         }
 
         dialogStage.close();
@@ -103,11 +96,6 @@ public class AddAppointmentController {
     @FXML
     void handleAppointmentCancel() {
         dialogStage.close();
-    }
-
-    /*Returns true if appointment does not exist in the database*/
-    private boolean isNewAppointment() {
-        return appointment.getId() == CODE_NEW_ENTITY;
     }
 
     /*Returns false if there are no errors in saving the appointment*/

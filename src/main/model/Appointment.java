@@ -13,6 +13,12 @@ public class Appointment {
     private ObjectProperty<LocalDateTime> start;
     private ObjectProperty<LocalDateTime> end;
 
+    /*Used for new Appointments*/
+    public Appointment(int customerId, String type, LocalDateTime start, LocalDateTime end) {
+        this(Integer.MIN_VALUE, customerId, type, start, end);
+    }
+
+    /*Used for existing Appointments*/
     public Appointment(int id, int customerId, String type, LocalDateTime start, LocalDateTime end) {
         this.id = new SimpleIntegerProperty(id);
         this.customerId = new SimpleIntegerProperty(customerId);

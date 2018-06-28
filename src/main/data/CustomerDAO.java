@@ -30,7 +30,7 @@ public class CustomerDAO extends DAO<Customer> {
         setDbConnection(dbConnection);
     }
 
-    private static final String STATEMENT_INSERT_CUSTOMER = "CALL sp_customer_Insert(?, ?, ?, ?)";
+    private static final String STATEMENT_INSERT_CUSTOMER = "CALL sp_customer_Insert_pk(?, ?, ?)";
 
     /**
      * Insert a {@link Customer} into the database
@@ -38,16 +38,20 @@ public class CustomerDAO extends DAO<Customer> {
      * @param newCustomer The {@link Customer} that will be inserted into the database
      */
     @Override
-    public void insertEntity(Customer newCustomer) throws SQLException, ClassNotFoundException {
+    public int insert(Customer newCustomer) throws SQLException, ClassNotFoundException {
         String[] statement = new String[]{
                 STATEMENT_INSERT_CUSTOMER,
-                Integer.toString(newCustomer.getId()), //customerId
                 newCustomer.getName(), //customerName
                 newCustomer.getAddress(), //address
                 newCustomer.getPhone() //phone
         };
 
-        update(statement);
+        ResultSet custRS = executeQuery(statement);
+
+        custRS.next();
+
+        /*Return the id of the new Customer*/
+        return custRS.getInt(1);
     }
 
     private static final String STATEMENT_UPDATE_CUSTOMER = "CALL sp_customer_Update(?, ?, ?, ?)";
@@ -58,7 +62,7 @@ public class CustomerDAO extends DAO<Customer> {
      * @param updatedCustomer The {@link Customer} that will be updated in the database
      */
     @Override
-    public void updateEntity(Customer updatedCustomer) throws SQLException, ClassNotFoundException {
+    public void update(Customer updatedCustomer) throws SQLException, ClassNotFoundException {
         String[] statement = new String[]{
                 STATEMENT_UPDATE_CUSTOMER,
                 Integer.toString(updatedCustomer.getId()), //customerId
@@ -67,7 +71,7 @@ public class CustomerDAO extends DAO<Customer> {
                 updatedCustomer.getPhone() //phone
         };
 
-        update(statement);
+        executeUpdate(statement);
     }
 
 
@@ -79,21 +83,21 @@ public class CustomerDAO extends DAO<Customer> {
      * @param selectedCustomer The {@link Customer} that will be deleted in the database
      */
     @Override
-    public void deleteEntity(Customer selectedCustomer) throws SQLException, ClassNotFoundException {
+    public void delete(Customer selectedCustomer) throws SQLException, ClassNotFoundException {
         String[] statement = new String[]{
                 STATEMENT_DELETE_CUSTOMER,
                 Integer.toString(selectedCustomer.getId()) //customerId
         }; //Only deleting the customer because the address will cascade delete.
 
-        update(statement);
+        executeUpdate(statement);
     }
 
     private static final String QUERY_SELECT_CUSTOMERS = "SELECT * FROM " + VIEW_CUSTOMERS;
     @Override
-    public List<Customer> getEntities() throws SQLException, ClassNotFoundException {
+    public List<Customer> getAll() throws SQLException, ClassNotFoundException {
         List<Customer> customers = new ArrayList<>();
 
-        ResultSet custRS = getResultSet(new String[]{
+        ResultSet custRS = executeQuery(new String[]{
                 QUERY_SELECT_CUSTOMERS
         });
 

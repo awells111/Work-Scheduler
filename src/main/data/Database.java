@@ -17,8 +17,6 @@ public class Database {
     private static final int GMT_OPEN_HOUR = 8; //The business opens at 8:00 GMT
     private static final int GMT_CLOSE_HOUR = 22; //The business closes at 22:00 GMT
 
-    public static final int CODE_NEW_ENTITY = -1;
-
     private ObservableList<Customer> customers;
     private ObservableList<Appointment> appointments;
 
@@ -54,35 +52,26 @@ public class Database {
         return customers;
     }
 
-    /*Since the database does not use autoincrement, we will take the last customer and increment the id*/
-    public int nextCustomerId() {
-        if (getCustomers().size() == 0) { //If no customers exist
-            return 1;
-        }
-
-        return getCustomers().get(getCustomers().size() - 1).getId() + 1; //return 1 + the last customerId in the list
-    }
-
     public void setCustomersFromDatabase() throws SQLException, ClassNotFoundException {
         /*Select all customers from the database*/
-        List<Customer> customers = getCustomerDAO().getEntities();
+        List<Customer> customers = getCustomerDAO().getAll();
         setCustomers(FXCollections.observableList(customers));
     }
 
     public void addCustomer(Customer newCustomer) throws SQLException, ClassNotFoundException {
-        getCustomerDAO().insertEntity(newCustomer);
+        newCustomer.setId(getCustomerDAO().insert(newCustomer));
         getCustomers().add(newCustomer);
     }
 
     public void updateCustomer(Customer oldCustomer, Customer updatedCustomer) throws SQLException, ClassNotFoundException {
-        getCustomerDAO().updateEntity(updatedCustomer);
+        getCustomerDAO().update(updatedCustomer);
 
         int oldCustomerIndex = getCustomers().indexOf(oldCustomer);
         getCustomers().set(oldCustomerIndex, updatedCustomer);
     }
 
     public void deleteCustomer(Customer selectedCustomer) throws SQLException, ClassNotFoundException {
-        getCustomerDAO().deleteEntity(selectedCustomer);
+        getCustomerDAO().delete(selectedCustomer);
         getCustomers().remove(selectedCustomer);
     }
 
@@ -98,36 +87,26 @@ public class Database {
         return appointments;
     }
 
-    /*Since the database does not use autoincrement, we will take the last appointment and increment the id*/
-    public int nextAppointmentId() {
-        if (getAppointments().size() == 0) { //If no appointments exist
-            return 1;
-        }
-
-        return getAppointments().get(getAppointments().size() - 1).getId() + 1; //return 1 + the last appointmentId in the list
-    }
-
     public void setAppointmentsFromDatabase() throws SQLException, ClassNotFoundException {
         /*Select all appointments from the database*/
-        List<Appointment> appointments = getAppointmentDAO().getEntities();
+        List<Appointment> appointments = getAppointmentDAO().getAll();
         setAppointments(FXCollections.observableList(appointments));
     }
 
-    /*boolean represents an error -- (error = false) if a appointment is added, else (error = true)*/
     public void addAppointment(Appointment newAppointment) throws SQLException, ClassNotFoundException {
-        getAppointmentDAO().insertEntity(newAppointment);
+        newAppointment.setId(getAppointmentDAO().insert(newAppointment));
         getAppointments().add(newAppointment);
     }
 
     public void updateAppointment(Appointment oldAppointment, Appointment updatedAppointment) throws SQLException, ClassNotFoundException {
-        getAppointmentDAO().updateEntity(updatedAppointment);
+        getAppointmentDAO().update(updatedAppointment);
 
         int oldAppointmentIndex = getAppointments().indexOf(oldAppointment);
         getAppointments().set(oldAppointmentIndex, updatedAppointment);
     }
 
     public void deleteAppointment(Appointment selectedAppointment) throws SQLException, ClassNotFoundException {
-        getAppointmentDAO().deleteEntity(selectedAppointment);
+        getAppointmentDAO().delete(selectedAppointment);
         getAppointments().remove(selectedAppointment);
     }
 

@@ -157,9 +157,7 @@ public class OverviewController {
 
     @FXML
     void handleAddCustomer() {
-        Customer newCustomer = new Customer(Database.CODE_NEW_ENTITY, "", "", "");
-
-        mainApp.showAddCustomer(newCustomer);
+        mainApp.showAddCustomer(new Customer("", "", ""));
     }
 
     @FXML
@@ -181,7 +179,7 @@ public class OverviewController {
     @FXML
     void handleAddAppointment() {
         LocalDateTime now = LocalDateTime.now().withSecond(0); //We do not use seconds so we are setting them to 0
-        Appointment newAppointment = new Appointment(Database.CODE_NEW_ENTITY, tableViewCustomer.getSelectionModel().getSelectedItem().getId(), "", now, now);
+        Appointment newAppointment = new Appointment(tableViewCustomer.getSelectionModel().getSelectedItem().getId(), "", now, now);
 
         mainApp.showAddAppointment(tableViewCustomer.getSelectionModel().getSelectedItem().getName(), newAppointment);
     }

@@ -19,7 +19,7 @@ public class UserDAO extends DAO {
     }
 
     boolean login(String username, String password) throws SQLException, ClassNotFoundException {
-        ResultSet userRs = getResultSet(new String[]{
+        ResultSet userRs = executeQuery(new String[]{
                 QUERY_SELECT_USER,
                 username,
                 password
@@ -42,22 +42,22 @@ public class UserDAO extends DAO {
     }
 
     @Override
-    public void insertEntity(Object o) throws SQLException, ClassNotFoundException {
-        throw new RuntimeException("We are not implementing insertEntity for userDAO.");
+    public int insert(Object o) throws SQLException, ClassNotFoundException {
+        throw new RuntimeException("We are not implementing insert for userDAO.");
     }
 
     @Override
-    public void updateEntity(Object o) throws SQLException, ClassNotFoundException {
-        throw new RuntimeException("We are not implementing updateEntity for userDAO.");
+    public void update(Object o) throws SQLException, ClassNotFoundException {
+        throw new RuntimeException("We are not implementing update for userDAO.");
     }
 
     @Override
-    public void deleteEntity(Object o) throws SQLException, ClassNotFoundException {
-        throw new RuntimeException("We are not implementing deleteEntity for userDAO.");
+    public void delete(Object o) throws SQLException, ClassNotFoundException {
+        throw new RuntimeException("We are not implementing delete for userDAO.");
     }
 
     @Override
-    public List getEntities() throws SQLException, ClassNotFoundException {
-        throw new RuntimeException("We are not implementing getEntities for userDAO.");
+    public List getAll() throws SQLException, ClassNotFoundException {
+        throw new RuntimeException("We are not implementing getAll for userDAO.");
     }
 }
