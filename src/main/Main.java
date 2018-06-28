@@ -39,7 +39,6 @@ public class Main extends Application {
     private ResourceBundle rb;
 
     public Main() {
-        Locale.setDefault(new Locale("es", "ES"));
         rb = ResourceBundle.getBundle(PATH_RB);
     }
 
@@ -248,7 +247,7 @@ public class Main extends Application {
                 }
 
                 for (Customer c : getDatabase().getCustomers()) {
-                    sb.append(c.getName()).append(" has ");
+                    sb.append(c.getName()).append(getRb().getString("_has_"));
 
                     if (hashMap.get(c.getId()) == null) {
                         sb.append("0");
@@ -256,7 +255,7 @@ public class Main extends Application {
                         sb.append(Integer.toString(hashMap.get(c.getId())));
                     }
 
-                    sb.append(" appointments.");
+                    sb.append(getRb().getString("_appointments"));
                     sb.append(System.lineSeparator());
                 }
             }
