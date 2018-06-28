@@ -212,20 +212,24 @@ public class Main extends Application {
 
                 for (Appointment a : getDatabase().getAppointments()) { //Build a String containing each appointment
                     appointmentMap.putIfAbsent(a.getCustomerId(), new StringBuilder());
-                    appointmentMap.get(a.getCustomerId()).append(a.getStart())
+
+                    StringBuilder currentAppointment = appointmentMap.get(a.getCustomerId());
+
+                    currentAppointment.append(a.getStart())
                             .append(" - ")
                             .append(a.getEnd())
                             .append(System.lineSeparator());
+
+                    appointmentMap.put(a.getCustomerId(), currentAppointment);
                 }
 
                 for (Customer c : getDatabase().getCustomers()) {
-                    StringBuilder s = appointmentMap.get(c.getId());
                     sb.append("Schedule of: ").append(c.getName()).append(System.lineSeparator());
 
-                    if (s.toString().equals("")) {
-                        sb.append("This customer has no appointments.");
+                    if (!appointmentMap.containsKey(c.getId())) {
+                        sb.append("This customer has no appointments.").append(System.lineSeparator());
                     } else {
-                        sb.append(s);
+                        sb.append(appointmentMap.get(c.getId()).toString());
                     }
 
                     sb.append(System.lineSeparator());
