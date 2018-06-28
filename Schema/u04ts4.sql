@@ -31,14 +31,63 @@ CREATE TABLE `address` (
   `cityId` int(10) DEFAULT NULL,
   `postalCode` varchar(10) DEFAULT NULL,
   `phone` varchar(20) NOT NULL,
-  `createDate` datetime DEFAULT NULL,
-  `createdBy` varchar(40) DEFAULT NULL,
+  `createDate` datetime DEFAULT CURRENT_TIMESTAMP,
+  `createdBy` varchar(50) DEFAULT NULL,
   `lastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `lastUpdateBy` varchar(40) DEFAULT NULL,
+  `lastUpdateBy` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`customerId`),
   CONSTRAINT `cascade_address_customerId` FOREIGN KEY (`customerId`) REFERENCES `customer` (`customerid`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `address_BEFORE_INSERT` BEFORE INSERT ON `address` FOR EACH ROW BEGIN
+   DECLARE currentUser varchar(50);
+
+   -- Find userName of person performing INSERT into table
+   SELECT USER() INTO currentUser;
+
+   -- Update createdBy field to the username of the person performing the INSERT
+   SET NEW.createdBy = currentUser;
+   
+   -- Update lastUpdateBy field to the username of the person performing the INSERT
+   SET NEW.lastUpdateBy = currentUser;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `address_BEFORE_UPDATE` BEFORE UPDATE ON `address` FOR EACH ROW BEGIN
+   DECLARE currentUser varchar(50);
+
+   -- Find userName of person performing UPDATE
+   SELECT USER() INTO currentUser;
+
+   -- Update lastUpdateBy field to the username of the person performing the UPDATE
+   SET NEW.lastUpdateBy = currentUser;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `appointment`
@@ -57,15 +106,64 @@ CREATE TABLE `appointment` (
   `url` varchar(255) DEFAULT NULL,
   `start` datetime NOT NULL,
   `end` datetime NOT NULL,
-  `createDate` datetime DEFAULT NULL,
-  `createdBy` varchar(40) DEFAULT NULL,
+  `createDate` datetime DEFAULT CURRENT_TIMESTAMP,
+  `createdBy` varchar(50) DEFAULT NULL,
   `lastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `lastUpdateBy` varchar(40) DEFAULT NULL,
+  `lastUpdateBy` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`appointmentId`),
   KEY `cascade_appointment_customerId` (`customerId`),
   CONSTRAINT `cascade_appointment_customerId` FOREIGN KEY (`customerId`) REFERENCES `customer` (`customerid`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `appointment_BEFORE_INSERT` BEFORE INSERT ON `appointment` FOR EACH ROW BEGIN
+   DECLARE currentUser varchar(50);
+
+   -- Find userName of person performing INSERT into table
+   SELECT USER() INTO currentUser;
+
+   -- Update createdBy field to the username of the person performing the INSERT
+   SET NEW.createdBy = currentUser;
+   
+   -- Update lastUpdateBy field to the username of the person performing the INSERT
+   SET NEW.lastUpdateBy = currentUser;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `appointment_BEFORE_UPDATE` BEFORE UPDATE ON `appointment` FOR EACH ROW BEGIN
+   DECLARE currentUser varchar(50);
+
+   -- Find userName of person performing UPDATE
+   SELECT USER() INTO currentUser;
+
+   -- Update lastUpdateBy field to the username of the person performing the UPDATE
+   SET NEW.lastUpdateBy = currentUser;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `customer`
@@ -78,13 +176,62 @@ CREATE TABLE `customer` (
   `customerId` int(10) NOT NULL,
   `customerName` varchar(45) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  `createDate` datetime DEFAULT NULL,
-  `createdBy` varchar(40) DEFAULT NULL,
+  `createDate` datetime DEFAULT CURRENT_TIMESTAMP,
+  `createdBy` varchar(50) DEFAULT NULL,
   `lastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `lastUpdateBy` varchar(40) DEFAULT NULL,
+  `lastUpdateBy` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`customerId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `customer_BEFORE_INSERT` BEFORE INSERT ON `customer` FOR EACH ROW BEGIN
+   DECLARE currentUser varchar(50);
+
+   -- Find userName of person performing INSERT into table
+   SELECT USER() INTO currentUser;
+
+   -- Update createdBy field to the username of the person performing the INSERT
+   SET NEW.createdBy = currentUser;
+   
+   -- Update lastUpdateBy field to the username of the person performing the INSERT
+   SET NEW.lastUpdateBy = currentUser;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `customer_BEFORE_UPDATE` BEFORE UPDATE ON `customer` FOR EACH ROW BEGIN
+   DECLARE currentUser varchar(50);
+
+   -- Find userName of person performing UPDATE
+   SELECT USER() INTO currentUser;
+
+   -- Update lastUpdateBy field to the username of the person performing the UPDATE
+   SET NEW.lastUpdateBy = currentUser;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `user`
@@ -98,13 +245,63 @@ CREATE TABLE `user` (
   `userName` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `active` tinyint(4) NOT NULL DEFAULT '1',
-  `createBy` varchar(40) NOT NULL DEFAULT 'CURRENT_USER()',
+  `createdBy` varchar(50) DEFAULT NULL,
   `createDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `lastUpdatedBy` varchar(50) NOT NULL DEFAULT 'CURRENT_USER() ON UPDATE CURRENT_USER()',
-  PRIMARY KEY (`userId`)
+  `lastUpdateBy` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`userId`),
+  UNIQUE KEY `userName_UNIQUE` (`userName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `user_BEFORE_INSERT` BEFORE INSERT ON `user` FOR EACH ROW BEGIN
+   DECLARE currentUser varchar(50);
+
+   -- Find userName of person performing INSERT into table
+   SELECT USER() INTO currentUser;
+
+   -- Update createdBy field to the username of the person performing the INSERT
+   SET NEW.createdBy = currentUser;
+   
+   -- Update lastUpdateBy field to the username of the person performing the INSERT
+   SET NEW.lastUpdateBy = currentUser;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `user_BEFORE_UPDATE` BEFORE UPDATE ON `user` FOR EACH ROW BEGIN
+   DECLARE currentUser varchar(50);
+
+   -- Find userName of person performing UPDATE
+   SELECT USER() INTO currentUser;
+
+   -- Update lastUpdateBy field to the username of the person performing the UPDATE
+   SET NEW.lastUpdateBy = currentUser;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Temporary view structure for view `vw_appointment`
@@ -270,7 +467,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_appointment_UpdateById`(
     var_title varchar(255),
-	var_start int(10), /*Unix time has 10 digits*/
+	var_start int(10),
 	var_end int(10),
 	var_appointmentId int(10)
 	)
@@ -359,6 +556,30 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_user_Insert` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_Insert`(
+	var_userId int(11),
+    var_userName varchar(50),
+    var_password varchar(50)
+    )
+BEGIN
+	/*Insert user*/
+    INSERT INTO `u04ts4`.`user`(userId, userName, password) VALUES (var_userId, var_userName, var_password);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_user_SelectByLogin` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -375,6 +596,33 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_SelectByLogin`(
     )
 BEGIN
 	SELECT * FROM user WHERE userName = var_userName AND password = var_password;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_user_Update` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_user_Update`(
+	var_userId int(11),
+    var_userName varchar(50),
+    var_password varchar(50)
+    )
+BEGIN
+	/*Update user*/
+    UPDATE user 
+    SET userName = var_userName, 
+		password = var_password 
+	WHERE userId = var_userId;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -445,4 +693,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-26 15:50:53
+-- Dump completed on 2018-06-27 20:08:47

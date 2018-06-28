@@ -1,8 +1,0 @@
-HBox {
-    -fx-spacing: 8;
-}
-
-GridPane {
-    -fx-vgap: 8;
-    -fx-hgap: 8;
-}
