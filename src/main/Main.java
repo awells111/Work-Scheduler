@@ -39,6 +39,7 @@ public class Main extends Application {
     private ResourceBundle rb;
 
     public Main() {
+        Locale.setDefault(new Locale("es", "ES"));
         rb = ResourceBundle.getBundle(PATH_RB);
     }
 
@@ -224,10 +225,10 @@ public class Main extends Application {
                 }
 
                 for (Customer c : getDatabase().getCustomers()) {
-                    sb.append("Schedule of: ").append(c.getName()).append(System.lineSeparator());
+                    sb.append(getRb().getString("Schedule_of")).append(c.getName()).append(System.lineSeparator());
 
                     if (!appointmentMap.containsKey(c.getId())) {
-                        sb.append("This customer has no appointments.").append(System.lineSeparator());
+                        sb.append(getRb().getString("This_customer_has_no_appointments")).append(System.lineSeparator());
                     } else {
                         sb.append(appointmentMap.get(c.getId()).toString());
                     }
