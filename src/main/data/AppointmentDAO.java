@@ -93,7 +93,7 @@ public class AppointmentDAO extends DAO<Appointment> {
         }
     }
 
-    private static final String QUERY_SELECT_APPOINTMENTS = "SELECT * FROM " + VIEW_APPOINTMENTS;
+    private static final String QUERY_SELECT_APPOINTMENTS = "SELECT * FROM vw_appointment";
 
     @Override
     public List<Appointment> getAll() throws SQLException, ClassNotFoundException {

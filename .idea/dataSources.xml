@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="Database Driver - LocalHost" uuid="1877c3d9-2073-4fca-994a-16008064d5e3">
+      <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
+      <remarks>LocalHost Server</remarks>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1/u04ts4?&amp;useSSL=false&amp;serverTimezone=UTC</jdbc-url>
+      <explain-plan-config>
+        <provider>com.intellij.database.plan.ExplainPlanProvider.NullExplainPlanProvider</provider>
+      </explain-plan-config>
+    </data-source>
+  </component>
+</project>
