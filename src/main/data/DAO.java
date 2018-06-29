@@ -10,7 +10,7 @@ abstract class DAO<E> implements DbObjectBuilder<E>, QueryBuilder<E> {
 
     private DbConnection dbConnection;
 
-    private DbConnection getDbConnection() {
+    DbConnection getDbConnection() {
         return dbConnection;
     }
 

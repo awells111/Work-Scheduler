@@ -113,7 +113,7 @@ CREATE TABLE `appointment` (
   PRIMARY KEY (`appointmentId`),
   KEY `cascade_appointment_customerId` (`customerId`),
   CONSTRAINT `cascade_appointment_customerId` FOREIGN KEY (`customerId`) REFERENCES `customer` (`customerId`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -181,7 +181,7 @@ CREATE TABLE `customer` (
   `lastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `lastUpdateBy` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`customerId`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -251,7 +251,7 @@ CREATE TABLE `user` (
   `lastUpdateBy` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`userId`),
   UNIQUE KEY `userName_UNIQUE` (`userName`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -389,13 +389,13 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_appointment_Insert`(
     var_customerId int(10),
     var_title varchar(255),
-    var_start int(10),
-    var_end int(10)
+    var_start datetime,
+    var_end datetime
 	)
 BEGIN
 	/*Insert an appointment into the database*/
 	INSERT INTO appointment(customerId, title, start, end) 
-    VALUES (var_customerId, var_title, FROM_UNIXTIME(var_start), FROM_UNIXTIME(var_end));
+    VALUES (var_customerId, var_title, var_start, var_end);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -415,8 +415,8 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_appointment_Insert_pk`(
     var_customerId int(10),
     var_title varchar(255),
-    var_start int(10),
-    var_end int(10)
+    var_start datetime,
+    var_end datetime
 	)
 BEGIN
 	CALL `u04ts4`.`sp_appointment_Insert`(var_customerId, var_title, var_start, var_end);
@@ -463,17 +463,19 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_appointment_SelectOverlapped`(
     var_customerId int(10),
     var_appointmentId int(10),
-    var_start int(10), /*Unix time has 10 digits*/
-    var_end int(10)
+    var_start datetime, /*Unix time has 10 digits*/
+    var_end datetime
     )
 BEGIN
 	SELECT count(*) 
 	FROM appointment 
 	WHERE customerId = var_customerId 
 		AND appointmentId != var_appointmentId 
-		AND ((FROM_UNIXTIME(var_start) > start AND FROM_UNIXTIME(var_start) < end) 
-			OR (FROM_UNIXTIME(var_end) > start AND FROM_UNIXTIME(var_end) < end) 
-			OR (FROM_UNIXTIME(var_start) <= start AND FROM_UNIXTIME(var_end) >= end));
+		AND (
+			(var_start > start AND var_start < end) 
+			OR (var_end > start AND var_end < end) 
+			OR (var_start <= start AND var_end >= end)
+            );
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -492,12 +494,12 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_appointment_UpdateById`(
     var_title varchar(255),
-	var_start int(10),
-	var_end int(10),
+	var_start datetime,
+	var_end datetime,
 	var_appointmentId int(10)
 	)
 BEGIN
-UPDATE appointment SET title = var_title, start = FROM_UNIXTIME(var_start), end = FROM_UNIXTIME(var_end) WHERE appointmentId = var_appointmentId;
+UPDATE appointment SET title = var_title, start = var_start, end = var_end WHERE appointmentId = var_appointmentId;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -742,4 +744,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-27 23:00:16
+-- Dump completed on 2018-06-29 11:48:37

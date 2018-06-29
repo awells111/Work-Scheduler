@@ -6,6 +6,9 @@ import main.model.Appointment;
 import main.model.Customer;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,8 +17,8 @@ public class Database {
     public static final String ZONE_ID_DB = "UTC";
     public static final String FORMAT_DATETIME = "yyyy-MM-dd HH:mm";
 
-    private static final int GMT_OPEN_HOUR = 8; //The business opens at 8:00 GMT
-    private static final int GMT_CLOSE_HOUR = 22; //The business closes at 22:00 GMT
+    private static final int UTC_OPEN_HOUR = 8; //The business opens at 8:00 UTC
+    private static final int UTC_CLOSE_HOUR = 22; //The business closes at 22:00 UTC
 
     private ObservableList<Customer> customers;
     private ObservableList<Appointment> appointments;
@@ -115,8 +118,13 @@ public class Database {
         return getAppointmentDAO().selectOverlappedAppointments(appointment) != 0;
     }
 
-    public boolean isOutsideBusinessHours(int hour) {
-        return hour < GMT_OPEN_HOUR || hour > GMT_CLOSE_HOUR;
+    public boolean isOutsideBusinessHours(LocalDateTime ldt) {
+        ZonedDateTime zdt = ldt.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of(ZONE_ID_DB));
+
+        int hour = zdt.getHour();
+        int minutes = zdt.getMinute();
+
+        return (hour < UTC_OPEN_HOUR || hour > UTC_CLOSE_HOUR) || (hour == UTC_CLOSE_HOUR && minutes > 0);
     }
 
     public LinkedList<Appointment> getCloseAppointments() throws SQLException, ClassNotFoundException {

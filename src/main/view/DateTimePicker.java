@@ -5,11 +5,12 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.DatePicker;
 import javafx.util.StringConverter;
 
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import static main.data.Database.FORMAT_DATETIME;
-import static main.data.Database.ZONE_ID_DB;
 
 public class DateTimePicker extends DatePicker {
 
@@ -48,10 +49,6 @@ public class DateTimePicker extends DatePicker {
 
     public LocalDateTime getDateTimeValue() {
         return dateTimeValue.get();
-    }
-
-    public ZonedDateTime getDateTimeValueGMT() {
-        return getDateTimeValue().atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of(ZONE_ID_DB));
     }
 
     public void setDateTimeValue(LocalDateTime dateTimeValue) {

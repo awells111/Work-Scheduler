@@ -85,20 +85,4 @@ public class Appointment {
                 ", Start: " + getStart() +
                 ", End : " + getEnd();
     }
-
-    public String startEpochString() {
-        return epochSecondString(getStart());
-    }
-
-    public String endEpochString() {
-        return epochSecondString(getEnd());
-    }
-
-    private String epochSecondString(LocalDateTime localDateTime) {
-        return Long.toString(getEpochSecond(localDateTime));
-    }
-
-    private long getEpochSecond(LocalDateTime localDateTime) {
-        return localDateTime.atZone(ZoneId.systemDefault()).toInstant().getEpochSecond();
-    }
 }

@@ -2,7 +2,9 @@ package main;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Modality;
@@ -19,7 +21,10 @@ import main.view_controller.OverviewController;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ResourceBundle;
 
 import static main.view_controller.AddAppointmentController.FXML_ADD_APPOINTMENT;
 import static main.view_controller.AddCustomerController.FXML_ADD_CUSTOMER;

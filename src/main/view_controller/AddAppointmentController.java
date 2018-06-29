@@ -109,8 +109,8 @@ public class AddAppointmentController {
             return true;
         }
 
-        if (database.isOutsideBusinessHours(appointmentDateTimePickerStart.getDateTimeValueGMT().getHour()) ||
-                database.isOutsideBusinessHours(appointmentDateTimePickerEnd.getDateTimeValueGMT().getHour())) {
+        if (database.isOutsideBusinessHours(appointmentDateTimePickerStart.getDateTimeValue()) ||
+                database.isOutsideBusinessHours(appointmentDateTimePickerEnd.getDateTimeValue())) {
             alert.setContentText(resources.getString("not_between_business_hours"));
             alert.show();
             return true;
