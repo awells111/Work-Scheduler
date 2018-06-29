@@ -1,5 +1,6 @@
 package main.data;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -19,20 +20,20 @@ public class UserDAO extends DAO {
     }
 
     boolean login(String username, String password) throws SQLException, ClassNotFoundException {
-        ResultSet userRs = executeQuery(new String[]{
-                QUERY_SELECT_USER,
-                username,
-                password
-        });
+        PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(QUERY_SELECT_USER);
 
-        while (userRs.next()) { //For each result
-            String dbUsername = userRs.getString(COLUMN_USER_USERNAME);
-            String dbPassword = userRs.getString(COLUMN_USER_PASSWORD);
+        int stmtIndex = 0;
+        stmt.setString(++stmtIndex, username);
+        stmt.setString(++stmtIndex, password);
 
-            return dbUsername.equals(username) && dbPassword.equals(password);
-        }
+        ResultSet userRS = stmt.executeQuery();
 
-        return false;
+        userRS.next();
+
+        String dbUsername = userRS.getString(COLUMN_USER_USERNAME);
+        String dbPassword = userRS.getString(COLUMN_USER_PASSWORD);
+
+        return dbUsername.equals(username) && dbPassword.equals(password);
     }
 
 

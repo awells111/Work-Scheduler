@@ -2,6 +2,7 @@ package main.data;
 
 import main.model.Customer;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -39,18 +40,18 @@ public class CustomerDAO extends DAO<Customer> {
      */
     @Override
     public int insert(Customer newCustomer) throws SQLException, ClassNotFoundException {
-        String[] statement = new String[]{
-                STATEMENT_INSERT_CUSTOMER,
-                newCustomer.getName(), //customerName
-                newCustomer.getAddress(), //address
-                newCustomer.getPhone() //phone
-        };
+        PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_INSERT_CUSTOMER);
 
-        ResultSet custRS = executeQuery(statement);
+        int stmtIndex = 0;
+        stmt.setString(++stmtIndex, newCustomer.getName());
+        stmt.setString(++stmtIndex, newCustomer.getAddress());
+        stmt.setString(++stmtIndex, newCustomer.getPhone());
+
+        ResultSet custRS = stmt.executeQuery();
 
         custRS.next();
 
-        /*Return the id of the new Customer*/
+        /*Return the id of the new Appointment*/
         return custRS.getInt(1);
     }
 
@@ -63,15 +64,15 @@ public class CustomerDAO extends DAO<Customer> {
      */
     @Override
     public void update(Customer updatedCustomer) throws SQLException, ClassNotFoundException {
-        String[] statement = new String[]{
-                STATEMENT_UPDATE_CUSTOMER,
-                Integer.toString(updatedCustomer.getId()), //customerId
-                updatedCustomer.getName(), //customerName
-                updatedCustomer.getAddress(), //address
-                updatedCustomer.getPhone() //phone
-        };
+        PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_UPDATE_CUSTOMER);
 
-        executeUpdate(statement);
+        int stmtIndex = 0;
+        stmt.setInt(++stmtIndex, updatedCustomer.getId());
+        stmt.setString(++stmtIndex, updatedCustomer.getName());
+        stmt.setString(++stmtIndex, updatedCustomer.getAddress());
+        stmt.setString(++stmtIndex, updatedCustomer.getPhone());
+
+        stmt.executeUpdate();
     }
 
 
@@ -84,22 +85,23 @@ public class CustomerDAO extends DAO<Customer> {
      */
     @Override
     public void delete(Customer selectedCustomer) throws SQLException, ClassNotFoundException {
-        String[] statement = new String[]{
-                STATEMENT_DELETE_CUSTOMER,
-                Integer.toString(selectedCustomer.getId()) //customerId
-        }; //Only deleting the customer because the address will cascade delete.
+        PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_DELETE_CUSTOMER);
 
-        executeUpdate(statement);
+        int stmtIndex = 0;
+        stmt.setInt(++stmtIndex, selectedCustomer.getId());
+
+        stmt.executeUpdate();
     }
 
     private static final String QUERY_SELECT_CUSTOMERS = "SELECT * FROM " + VIEW_CUSTOMERS;
+
     @Override
     public List<Customer> getAll() throws SQLException, ClassNotFoundException {
-        List<Customer> customers = new ArrayList<>();
+        PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(QUERY_SELECT_CUSTOMERS);
 
-        ResultSet custRS = executeQuery(new String[]{
-                QUERY_SELECT_CUSTOMERS
-        });
+        ResultSet custRS = stmt.executeQuery();
+
+        List<Customer> customers = new ArrayList<>();
 
         while (custRS.next()) { //For each result
             customers.add(buildObject(custRS));

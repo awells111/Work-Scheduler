@@ -1,7 +1,5 @@
 package main.data;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -16,32 +14,6 @@ abstract class DAO<E> implements DbObjectBuilder<E>, QueryBuilder<E> {
 
     void setDbConnection(DbConnection dbConnection) {
         this.dbConnection = dbConnection;
-    }
-
-    /*Build a prepared statement from a String[]. The first String of the array is the database query. The other Strings
-     * of the array are parameters for the query.*/
-    private PreparedStatement buildPreparedStatement(Connection conn, String[] statement) throws SQLException {
-        String statementString = statement[0];
-
-        PreparedStatement currentPS = conn.prepareStatement(statementString);
-
-        for (int j = 1; j < statement.length; j++) {
-            currentPS.setString(j, statement[j]);
-        }
-
-        return currentPS;
-    }
-
-    void executeUpdate(String[] statement) throws SQLException, ClassNotFoundException {
-        PreparedStatement preparedStatement = buildPreparedStatement(getDbConnection().getConnection(), statement);
-
-        preparedStatement.executeUpdate(); //Throws a SQL exception if the update is unsuccessful
-    }
-
-    ResultSet executeQuery(String[] statement) throws SQLException, ClassNotFoundException {
-        PreparedStatement preparedStatement = buildPreparedStatement(getDbConnection().getConnection(), statement);
-
-        return preparedStatement.executeQuery();
     }
 }
 
