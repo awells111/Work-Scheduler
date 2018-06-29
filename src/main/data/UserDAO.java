@@ -20,8 +20,8 @@ public class UserDAO extends DAO {
     }
 
     boolean login(String username, String password) throws SQLException, ClassNotFoundException {
-        PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(QUERY_SELECT_USER);
-
+        try (PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(QUERY_SELECT_USER))
+        {
         int stmtIndex = 0;
         stmt.setString(++stmtIndex, username);
         stmt.setString(++stmtIndex, password);
@@ -34,6 +34,7 @@ public class UserDAO extends DAO {
         String dbPassword = userRS.getString(COLUMN_USER_PASSWORD);
 
         return dbUsername.equals(username) && dbPassword.equals(password);
+        }
     }
 
 

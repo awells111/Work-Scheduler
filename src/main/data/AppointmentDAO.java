@@ -40,20 +40,20 @@ public class AppointmentDAO extends DAO<Appointment> {
      */
     @Override
     public int insert(Appointment newAppointment) throws SQLException, ClassNotFoundException {
-        PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_INSERT_APPOINTMENT);
+        try (PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_INSERT_APPOINTMENT);) {
+            int stmtIndex = 0;
+            stmt.setInt(++stmtIndex, newAppointment.getCustomerId());
+            stmt.setString(++stmtIndex, newAppointment.getType());
+            stmt.setTimestamp(++stmtIndex, Timestamp.valueOf(newAppointment.getStart()));
+            stmt.setTimestamp(++stmtIndex, Timestamp.valueOf(newAppointment.getEnd()));
 
-        int stmtIndex = 0;
-        stmt.setInt(++stmtIndex, newAppointment.getCustomerId());
-        stmt.setString(++stmtIndex, newAppointment.getType());
-        stmt.setTimestamp(++stmtIndex, Timestamp.valueOf(newAppointment.getStart()));
-        stmt.setTimestamp(++stmtIndex, Timestamp.valueOf(newAppointment.getEnd()));
+            ResultSet apptRS = stmt.executeQuery();
 
-        ResultSet apptRS = stmt.executeQuery();
+            apptRS.next();
 
-        apptRS.next();
-
-        /*Return the id of the new Appointment*/
-        return apptRS.getInt(1);
+            /*Return the id of the new Appointment*/
+            return apptRS.getInt(1);
+        }
     }
 
     private static final String STATEMENT_UPDATE_APPOINTMENT = "CALL sp_appointment_UpdateById(?, ?, ?, ?)";
@@ -65,15 +65,15 @@ public class AppointmentDAO extends DAO<Appointment> {
      */
     @Override
     public void update(Appointment updatedAppointment) throws SQLException, ClassNotFoundException {
-        PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_UPDATE_APPOINTMENT);
+        try (PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_UPDATE_APPOINTMENT);) {
+            int stmtIndex = 0;
+            stmt.setString(++stmtIndex, updatedAppointment.getType());
+            stmt.setTimestamp(++stmtIndex, Timestamp.valueOf(updatedAppointment.getStart()));
+            stmt.setTimestamp(++stmtIndex, Timestamp.valueOf(updatedAppointment.getEnd()));
+            stmt.setInt(++stmtIndex, updatedAppointment.getId());
 
-        int stmtIndex = 0;
-        stmt.setString(++stmtIndex, updatedAppointment.getType());
-        stmt.setTimestamp(++stmtIndex, Timestamp.valueOf(updatedAppointment.getStart()));
-        stmt.setTimestamp(++stmtIndex, Timestamp.valueOf(updatedAppointment.getEnd()));
-        stmt.setInt(++stmtIndex, updatedAppointment.getId());
-
-        stmt.executeUpdate();
+            stmt.executeUpdate();
+        }
     }
 
     private static final String STATEMENT_DELETE_APPOINTMENT = "CALL sp_appointment_DeleteById(?)";
@@ -85,53 +85,53 @@ public class AppointmentDAO extends DAO<Appointment> {
      */
     @Override
     public void delete(Appointment selectedAppointment) throws SQLException, ClassNotFoundException {
-        PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_DELETE_APPOINTMENT);
+        try (PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_DELETE_APPOINTMENT)) {
+            int stmtIndex = 0;
+            stmt.setInt(++stmtIndex, selectedAppointment.getId());
 
-        int stmtIndex = 0;
-        stmt.setInt(++stmtIndex, selectedAppointment.getId());
-
-        stmt.executeUpdate();
+            stmt.executeUpdate();
+        }
     }
 
     private static final String QUERY_SELECT_APPOINTMENTS = "SELECT * FROM " + VIEW_APPOINTMENTS;
 
     @Override
     public List<Appointment> getAll() throws SQLException, ClassNotFoundException {
-        PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(QUERY_SELECT_APPOINTMENTS);
+        try (PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(QUERY_SELECT_APPOINTMENTS);) {
+            ResultSet apptRS = stmt.executeQuery();
 
-        ResultSet apptRS = stmt.executeQuery();
+            List<Appointment> appointments = new ArrayList<>();
 
-        List<Appointment> appointments = new ArrayList<>();
+            while (apptRS.next()) {
+                appointments.add(buildObject(apptRS));
+            }
 
-        while (apptRS.next()) {
-            appointments.add(buildObject(apptRS));
+            return appointments;
         }
-
-        return appointments;
     }
 
     /*Check if an appointment overlaps any other appointments*/
     private static final String QUERY_SELECT_OVERLAPPED_APPOINTMENTS = "CALL sp_appointment_SelectOverlapped(?, ?, ?, ?)";
 
     int selectOverlappedAppointments(Appointment appointment) throws SQLException, ClassNotFoundException {
-        PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(QUERY_SELECT_OVERLAPPED_APPOINTMENTS);
+        try (PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(QUERY_SELECT_OVERLAPPED_APPOINTMENTS)) {
+            int stmtIndex = 0;
+            stmt.setInt(++stmtIndex, appointment.getCustomerId());
+            stmt.setInt(++stmtIndex, appointment.getId());
+            stmt.setTimestamp(++stmtIndex, Timestamp.valueOf(appointment.getStart()));
+            stmt.setTimestamp(++stmtIndex, Timestamp.valueOf(appointment.getEnd()));
 
-        int stmtIndex = 0;
-        stmt.setInt(++stmtIndex, appointment.getCustomerId());
-        stmt.setInt(++stmtIndex, appointment.getId());
-        stmt.setTimestamp(++stmtIndex, Timestamp.valueOf(appointment.getStart()));
-        stmt.setTimestamp(++stmtIndex, Timestamp.valueOf(appointment.getEnd()));
-
-        ResultSet apptRS = stmt.executeQuery();
+            ResultSet apptRS = stmt.executeQuery();
 
 
-        int count = 0;
+            int count = 0;
 
-        while (apptRS.next()) { //For each result
-            count = apptRS.getInt(1);
+            while (apptRS.next()) { //For each result
+                count = apptRS.getInt(1);
+            }
+
+            return count;
         }
-
-        return count;
     }
 
     /*Select appointments within 15 minutes of now*/
@@ -140,15 +140,15 @@ public class AppointmentDAO extends DAO<Appointment> {
     LinkedList<Appointment> getCloseAppointments() throws SQLException, ClassNotFoundException {
         LinkedList<Appointment> appointments = new LinkedList<>();
 
-        PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(QUERY_SELECT_CLOSE_APPOINTMENTS);
+        try (PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(QUERY_SELECT_CLOSE_APPOINTMENTS)) {
+            ResultSet apptRS = stmt.executeQuery();
 
-        ResultSet apptRS = stmt.executeQuery();
+            while (apptRS.next()) {
+                appointments.add(buildObject(apptRS));
+            }
 
-        while (apptRS.next()) {
-            appointments.add(buildObject(apptRS));
+            return appointments;
         }
-
-        return appointments;
     }
 
     @Override

@@ -40,7 +40,7 @@ public class CustomerDAO extends DAO<Customer> {
      */
     @Override
     public int insert(Customer newCustomer) throws SQLException, ClassNotFoundException {
-        PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_INSERT_CUSTOMER);
+        try (PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_INSERT_CUSTOMER)){
 
         int stmtIndex = 0;
         stmt.setString(++stmtIndex, newCustomer.getName());
@@ -53,6 +53,7 @@ public class CustomerDAO extends DAO<Customer> {
 
         /*Return the id of the new Appointment*/
         return custRS.getInt(1);
+        }
     }
 
     private static final String STATEMENT_UPDATE_CUSTOMER = "CALL sp_customer_Update(?, ?, ?, ?)";
@@ -64,15 +65,15 @@ public class CustomerDAO extends DAO<Customer> {
      */
     @Override
     public void update(Customer updatedCustomer) throws SQLException, ClassNotFoundException {
-        PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_UPDATE_CUSTOMER);
+        try (PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_UPDATE_CUSTOMER)) {
+            int stmtIndex = 0;
+            stmt.setInt(++stmtIndex, updatedCustomer.getId());
+            stmt.setString(++stmtIndex, updatedCustomer.getName());
+            stmt.setString(++stmtIndex, updatedCustomer.getAddress());
+            stmt.setString(++stmtIndex, updatedCustomer.getPhone());
 
-        int stmtIndex = 0;
-        stmt.setInt(++stmtIndex, updatedCustomer.getId());
-        stmt.setString(++stmtIndex, updatedCustomer.getName());
-        stmt.setString(++stmtIndex, updatedCustomer.getAddress());
-        stmt.setString(++stmtIndex, updatedCustomer.getPhone());
-
-        stmt.executeUpdate();
+            stmt.executeUpdate();
+        }
     }
 
 
@@ -85,29 +86,29 @@ public class CustomerDAO extends DAO<Customer> {
      */
     @Override
     public void delete(Customer selectedCustomer) throws SQLException, ClassNotFoundException {
-        PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_DELETE_CUSTOMER);
+        try (PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_DELETE_CUSTOMER)) {
+            int stmtIndex = 0;
+            stmt.setInt(++stmtIndex, selectedCustomer.getId());
 
-        int stmtIndex = 0;
-        stmt.setInt(++stmtIndex, selectedCustomer.getId());
-
-        stmt.executeUpdate();
+            stmt.executeUpdate();
+        }
     }
 
     private static final String QUERY_SELECT_CUSTOMERS = "SELECT * FROM " + VIEW_CUSTOMERS;
 
     @Override
     public List<Customer> getAll() throws SQLException, ClassNotFoundException {
-        PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(QUERY_SELECT_CUSTOMERS);
+        try (PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(QUERY_SELECT_CUSTOMERS)) {
+            ResultSet custRS = stmt.executeQuery();
 
-        ResultSet custRS = stmt.executeQuery();
+            List<Customer> customers = new ArrayList<>();
 
-        List<Customer> customers = new ArrayList<>();
+            while (custRS.next()) { //For each result
+                customers.add(buildObject(custRS));
+            }
 
-        while (custRS.next()) { //For each result
-            customers.add(buildObject(custRS));
+            return customers;
         }
-
-        return customers;
     }
 
     @Override
