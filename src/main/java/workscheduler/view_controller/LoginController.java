@@ -7,11 +7,15 @@ import javafx.scene.control.TextField;
 import workscheduler.Main;
 import workscheduler.log.UserLog;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class LoginController {
     public static final String FXML_LOGIN = "/workscheduler/view_controller/login.fxml";
+
+    private static final String LOG_PATH = "log.txt";
 
     @FXML
     private TextField textFieldLoginName;
@@ -45,8 +49,12 @@ public class LoginController {
 
         if (loggedIn) { //If login was successful
             /*Add the username and login time to our log file*/
-            UserLog userLog = new UserLog(username);
-            userLog.logUser();
+            UserLog userLog = new UserLog(username, LOG_PATH, LocalDateTime.now());
+            try {
+                userLog.logUser();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             mainApp.showOverview(); //Show the overview scene
         } else { //If login failed

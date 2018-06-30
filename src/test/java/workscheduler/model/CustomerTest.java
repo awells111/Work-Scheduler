@@ -21,7 +21,7 @@ class CustomerTest {
     private static final StringProperty EXPECTED_NAME_PROPERTY = new SimpleStringProperty(EXPECTED_NAME);
     private static final StringProperty EXPECTED_ADDRESS_PROPERTY = new SimpleStringProperty(EXPECTED_ADDRESS);
     private static final StringProperty EXPECTED_PHONE_PROPERTY = new SimpleStringProperty(EXPECTED_PHONE);
-    
+
     @BeforeEach
     void setUp() {
         customer = new Customer(3, "Jake Peralta", "100 Charming Avenue", "6789998212");
