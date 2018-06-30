@@ -1,21 +1,21 @@
-package main.view_controller;
+package workscheduler.view_controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import main.Main;
-import main.data.Database;
-import main.model.Appointment;
-import main.view.DateTimePicker;
+import workscheduler.Main;
+import workscheduler.data.Database;
+import workscheduler.model.Appointment;
+import workscheduler.view.DateTimePicker;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class AddAppointmentController {
-    public static final String FXML_ADD_APPOINTMENT = "view_controller/add_appointment.fxml";
+    public static final String FXML_ADD_APPOINTMENT = "/workscheduler/view_controller/add_appointment.fxml";
 
     @FXML
     private Label labelCustomerName;

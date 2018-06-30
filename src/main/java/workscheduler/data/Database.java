@@ -1,9 +1,9 @@
-package main.data;
+package workscheduler.data;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import main.model.Appointment;
-import main.model.Customer;
+import workscheduler.model.Appointment;
+import workscheduler.model.Customer;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;

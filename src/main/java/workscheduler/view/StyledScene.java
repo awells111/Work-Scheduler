@@ -1,9 +1,9 @@
-package main.view;
+package workscheduler.view;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import main.Main;
+import workscheduler.Main;
 
 import java.io.IOException;
 import java.util.ResourceBundle;

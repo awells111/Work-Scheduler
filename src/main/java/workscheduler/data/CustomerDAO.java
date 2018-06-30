@@ -1,6 +1,6 @@
-package main.data;
+package workscheduler.data;
 
-import main.model.Customer;
+import workscheduler.model.Customer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

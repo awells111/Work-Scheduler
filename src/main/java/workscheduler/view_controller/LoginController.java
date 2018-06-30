@@ -1,17 +1,17 @@
-package main.view_controller;
+package workscheduler.view_controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import main.Main;
-import main.log.UserLog;
+import workscheduler.Main;
+import workscheduler.log.UserLog;
 
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class LoginController {
-    public static final String FXML_LOGIN = "view_controller/login.fxml";
+    public static final String FXML_LOGIN = "/workscheduler/view_controller/login.fxml";
 
     @FXML
     private TextField textFieldLoginName;

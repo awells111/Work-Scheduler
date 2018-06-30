@@ -1,15 +1,14 @@
-package main.model;
+package workscheduler.model;
 
 import javafx.beans.property.*;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 public class Appointment {
 
-    private IntegerProperty id; //appointmentId
-    private IntegerProperty customerId; //customerId
-    private StringProperty type; //type
+    private IntegerProperty id;
+    private IntegerProperty customerId;
+    private StringProperty type;
     private ObjectProperty<LocalDateTime> start;
     private ObjectProperty<LocalDateTime> end;
 
@@ -43,6 +42,10 @@ public class Appointment {
         return customerId.get();
     }
 
+    public IntegerProperty customerIdProperty() {
+        return customerId;
+    }
+
     public String getType() {
         return type.get();
     }
@@ -69,20 +72,34 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return "Appointment{" +
-                "id=" + getId() +
-                ", customerId=" + getCustomerId() +
-                ", type=" + getType() +
-                ", start=" + getStart() +
-                ", end=" + getEnd() +
-                '}';
-    }
-
-    public String toStringUserFriendly() {
         return "Appointment Id: " + getId() +
                 ", Customer Id: " + getCustomerId() +
                 ", Type: " + getType() +
                 ", Start: " + getStart() +
                 ", End : " + getEnd();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Appointment that = (Appointment) o;
+
+        if (getId() != that.getId()) return false;
+        if ((getCustomerId() != that.getCustomerId())) return false;
+        if (getType() != null ? !getType().equals(that.getType()) : that.getType() != null) return false;
+        if (getStart() != null ? !getStart().equals(that.getStart()) : that.getStart() != null) return false;
+        return getEnd() != null ? getEnd().equals(that.getEnd()) : that.getEnd() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getCustomerId();
+        result = 31 * result + (getType() != null ? getType().hashCode() : 0);
+        result = 31 * result + (getStart() != null ? getStart().hashCode() : 0);
+        result = 31 * result + (getEnd() != null ? getEnd().hashCode() : 0);
+        return result;
     }
 }

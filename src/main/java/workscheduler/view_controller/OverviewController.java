@@ -1,4 +1,4 @@
-package main.view_controller;
+package workscheduler.view_controller;
 
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -7,23 +7,21 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.util.Callback;
-import main.Main;
-import main.data.Database;
-import main.model.Appointment;
-import main.model.Customer;
+import workscheduler.Main;
+import workscheduler.model.Appointment;
+import workscheduler.model.Customer;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import static main.data.Database.FORMAT_DATETIME;
+import static workscheduler.data.Database.FORMAT_DATETIME;
 
 public class OverviewController {
-    public static final String FXML_OVERVIEW = "view_controller/overview.fxml";
+    public static final String FXML_OVERVIEW = "/workscheduler/view_controller/overview.fxml";
 
     @FXML
     private Button modifyCustomerButton;
@@ -262,7 +260,7 @@ public class OverviewController {
             StringBuilder sb = new StringBuilder();
 
             for (Appointment a : closeAppointments) {
-                sb.append(a.toStringUserFriendly());
+                sb.append(a.toString());
                 sb.append(System.lineSeparator());
             }
 

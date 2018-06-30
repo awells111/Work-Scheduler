@@ -1,4 +1,4 @@
-package main.view;
+package workscheduler.view;
 
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
 import javafx.collections.ObservableList;
@@ -10,8 +10,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import main.data.Database;
-import main.model.Appointment;
+import workscheduler.model.Appointment;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static main.Main.PATH_RB;
+import static workscheduler.Main.PATH_RB;
 
 public class CalendarDialog extends DatePickerSkin {
 
@@ -62,7 +61,7 @@ public class CalendarDialog extends DatePickerSkin {
 
                     for (int i = 0; i < list.size(); ) {
                         Integer index = list.get(i);
-                        sb.append(appointments.get(index).toStringUserFriendly());
+                        sb.append(appointments.get(index).toString());
 
                         if (i++ + 1 != list.size()) {
                             sb.append(System.lineSeparator());

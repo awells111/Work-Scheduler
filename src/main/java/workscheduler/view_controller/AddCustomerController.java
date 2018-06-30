@@ -1,18 +1,18 @@
-package main.view_controller;
+package workscheduler.view_controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import main.Main;
-import main.data.Database;
-import main.model.Customer;
+import workscheduler.Main;
+import workscheduler.data.Database;
+import workscheduler.model.Customer;
 
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AddCustomerController {
-    public static final String FXML_ADD_CUSTOMER = "view_controller/add_customer.fxml";
+    public static final String FXML_ADD_CUSTOMER = "/workscheduler/view_controller/add_customer.fxml";
 
     @FXML
     private TextField textFieldCustomerName;

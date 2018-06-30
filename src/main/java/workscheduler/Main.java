@@ -1,4 +1,4 @@
-package main;
+package workscheduler;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -9,15 +9,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import main.data.Database;
-import main.model.Appointment;
-import main.model.Customer;
-import main.view.CalendarDialog;
-import main.view.StyledScene;
-import main.view_controller.AddAppointmentController;
-import main.view_controller.AddCustomerController;
-import main.view_controller.LoginController;
-import main.view_controller.OverviewController;
+import workscheduler.data.Database;
+import workscheduler.model.Appointment;
+import workscheduler.model.Customer;
+import workscheduler.view.CalendarDialog;
+import workscheduler.view.StyledScene;
+import workscheduler.view_controller.AddAppointmentController;
+import workscheduler.view_controller.AddCustomerController;
+import workscheduler.view_controller.LoginController;
+import workscheduler.view_controller.OverviewController;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -26,15 +26,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static main.view_controller.AddAppointmentController.FXML_ADD_APPOINTMENT;
-import static main.view_controller.AddCustomerController.FXML_ADD_CUSTOMER;
-import static main.view_controller.LoginController.FXML_LOGIN;
-import static main.view_controller.OverviewController.FXML_OVERVIEW;
+import static workscheduler.view_controller.AddAppointmentController.FXML_ADD_APPOINTMENT;
+import static workscheduler.view_controller.AddCustomerController.FXML_ADD_CUSTOMER;
+import static workscheduler.view_controller.LoginController.FXML_LOGIN;
+import static workscheduler.view_controller.OverviewController.FXML_OVERVIEW;
 
 public class Main extends Application {
 
     /*Path of the resource bundle that will be used for this application*/
-    public static final String PATH_RB = "main.rb";
+    public static final String PATH_RB = "rb";
 
     /*The entire application window "The JavaFX Stage class is the top level JavaFX container."*/
     private Stage window;
@@ -50,7 +50,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.window = primaryStage;
-        getWindow().setTitle(getRb().getString("application_title")); //rb.getString("username_password_not_match")
+        getWindow().setTitle(getRb().getString("application_title"));
 
         database = new Database();
         showLogin(); //Show login screen on application start

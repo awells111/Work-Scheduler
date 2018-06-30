@@ -1,4 +1,4 @@
-package main.view;
+package workscheduler.view;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-import static main.data.Database.FORMAT_DATETIME;
+import static workscheduler.data.Database.FORMAT_DATETIME;
 
 public class DateTimePicker extends DatePicker {
 

@@ -1,4 +1,4 @@
-package main.log;
+package workscheduler.log;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
