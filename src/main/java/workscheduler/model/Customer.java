@@ -45,20 +45,12 @@ public class Customer {
         return name;
     }
 
-    public void setName(String name) {
-        this.name.set(name);
-    }
-
     public String getAddress() {
         return address.get();
     }
 
     public StringProperty addressProperty() {
         return address;
-    }
-
-    public void setAddress(String address) {
-        this.address.set(address);
     }
 
     public String getPhone() {
@@ -69,10 +61,6 @@ public class Customer {
         return phone;
     }
 
-    public void setPhone(String phone) {
-        this.phone.set(phone);
-    }
-
     @Override
     public String toString() {
         return "Customer{" +
@@ -81,5 +69,27 @@ public class Customer {
                 ", address=" + address +
                 ", phone=" + phone +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Customer customer = (Customer) o;
+
+        if (getId() != customer.getId()) return false;
+        if (getName() != null ? !getName().equals(customer.getName()) : customer.getName() != null) return false;
+        if (getAddress() != null ? !getAddress().equals(customer.getAddress()) : customer.getAddress() != null) return false;
+        return getPhone() != null ? getPhone().equals(customer.getPhone()) : customer.getPhone() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
+        result = 31 * result + (getPhone() != null ? getPhone().hashCode() : 0);
+        return result;
     }
 }

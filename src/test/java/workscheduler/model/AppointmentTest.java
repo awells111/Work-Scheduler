@@ -34,7 +34,7 @@ class AppointmentTest {
 
     @Test
     void testDefaultAppointmentId() {
-        /*Test the default value of appointment's that are not assigned an id*/
+        /*Test the default value of appointments that are not assigned an id*/
         Appointment appointment = new Appointment(EXPECTED_CUSTOMER_ID, EXPECTED_TYPE, EXPECTED_START, EXPECTED_END);
         assertEquals(Integer.MIN_VALUE, appointment.getId());
     }
