@@ -1,3 +1,20 @@
+create table user
+(
+  userId       int(10) auto_increment
+    primary key,
+  userName     varchar(50)                         not null,
+  password     varchar(50)                         not null,
+  active       tinyint default '1'                 not null,
+  createdBy    varchar(50)                         null,
+  createDate   datetime default CURRENT_TIMESTAMP  not null,
+  lastUpdate   timestamp default CURRENT_TIMESTAMP not null
+  on update CURRENT_TIMESTAMP,
+  lastUpdateBy varchar(50)                         null,
+  constraint userName_UNIQUE
+  unique (userName)
+)
+  charset = latin1;
+
 create table customer
 (
   customerId   int(10) auto_increment
@@ -8,7 +25,12 @@ create table customer
   createdBy    varchar(50)                         null,
   lastUpdate   timestamp default CURRENT_TIMESTAMP not null
   on update CURRENT_TIMESTAMP,
-  lastUpdateBy varchar(50)                         null
+  lastUpdateBy varchar(50)                         null,
+  userId       int(10)                             not null,
+  constraint customer_user_userId_fk
+  foreign key (userId) references user (userid)
+    on update cascade
+    on delete cascade
 )
   charset = latin1;
 
@@ -124,6 +146,9 @@ create trigger appointment_BEFORE_UPDATE
     SET NEW.lastUpdateBy = currentUser;
   END;
 
+create index customer_user_userId_fk
+  on customer (userId);
+
 create trigger customer_BEFORE_INSERT
   before INSERT
   on customer
@@ -156,23 +181,6 @@ create trigger customer_BEFORE_UPDATE
     -- Update lastUpdateBy field to the username of the person performing the UPDATE
     SET NEW.lastUpdateBy = currentUser;
   END;
-
-create table user
-(
-  userId       int(10) auto_increment
-    primary key,
-  userName     varchar(50)                         not null,
-  password     varchar(50)                         not null,
-  active       tinyint default '1'                 not null,
-  createdBy    varchar(50)                         null,
-  createDate   datetime default CURRENT_TIMESTAMP  not null,
-  lastUpdate   timestamp default CURRENT_TIMESTAMP not null
-  on update CURRENT_TIMESTAMP,
-  lastUpdateBy varchar(50)                         null,
-  constraint userName_UNIQUE
-  unique (userName)
-)
-  charset = latin1;
 
 create trigger user_BEFORE_INSERT
   before INSERT
@@ -209,16 +217,19 @@ create trigger user_BEFORE_UPDATE
 
 create view vw_appointment as
   select
+    `u04ts4`.`customer`.`userId`           AS `userId`,
     `u04ts4`.`appointment`.`appointmentId` AS `appointmentId`,
     `u04ts4`.`appointment`.`customerId`    AS `customerId`,
     `u04ts4`.`appointment`.`title`         AS `title`,
     `u04ts4`.`appointment`.`start`         AS `start`,
     `u04ts4`.`appointment`.`end`           AS `end`
-  from `u04ts4`.`appointment`;
+  from (`u04ts4`.`appointment`
+    left join `u04ts4`.`customer` on ((`u04ts4`.`appointment`.`customerId` = `u04ts4`.`customer`.`customerId`)));
 
 create view vw_customer as
   select
     `u04ts4`.`customer`.`customerId`   AS `customerId`,
+    `u04ts4`.`customer`.`userId`       AS `userId`,
     `u04ts4`.`customer`.`customerName` AS `customerName`,
     `u04ts4`.`address`.`address`       AS `address`,
     `u04ts4`.`address`.`phone`         AS `phone`
@@ -227,6 +238,7 @@ create view vw_customer as
 
 create view vw_user as
   select
+    `u04ts4`.`user`.`userId`   AS `userId`,
     `u04ts4`.`user`.`userName` AS `userName`,
     `u04ts4`.`user`.`password` AS `password`
   from `u04ts4`.`user`;
@@ -253,12 +265,20 @@ create procedure sp_appointment_Insert_pk(IN var_customerId int(10), IN var_titl
     SELECT LAST_INSERT_ID();
   END;
 
-create procedure sp_appointment_SelectClose()
+create procedure sp_appointment_SelectByCustomerId(IN var_customerId int(10))
+  BEGIN
+    SELECT *
+    FROM vw_appointment
+    WHERE customerId = var_customerId;
+  END;
+
+create procedure sp_appointment_SelectClose(IN var_customerId int(10))
   BEGIN
     /*Select appointments that start within 15 minutes of now*/
     SELECT *
-    FROM appointment
-    WHERE (now() < start)
+    FROM vw_appointment
+    WHERE customerId = var_customerId
+          AND (now() < start)
           AND (start < now() + INTERVAL 15 MINUTE);
   END;
 
@@ -266,7 +286,7 @@ create procedure sp_appointment_SelectOverlapped(IN var_customerId int(10), IN v
                                                  IN var_start      datetime, IN var_end datetime)
   BEGIN
     SELECT count(*)
-    FROM appointment
+    FROM vw_appointment
     WHERE customerId = var_customerId
           AND appointmentId != var_appointmentId
           AND (
@@ -290,11 +310,11 @@ create procedure sp_customer_DeleteById(IN var_customerId int(10))
     WHERE customerId = var_customerId;
   END;
 
-create procedure sp_customer_Insert(IN var_customerName varchar(45), IN var_address varchar(50),
-                                    IN var_phone        varchar(20))
+create procedure sp_customer_Insert(IN var_userId int(10), IN var_customerName varchar(45), IN var_address varchar(50),
+                                    IN var_phone  varchar(20))
   BEGIN
     /*Insert customer*/
-    INSERT INTO customer (customerName) VALUES (var_customerName);
+    INSERT INTO customer (userId, customerName) VALUES (var_userId, var_customerName);
 
     /*Insert address*/
     INSERT INTO address (customerId, address, phone) VALUES (LAST_INSERT_ID(), var_address, var_phone);
@@ -307,6 +327,13 @@ create procedure sp_customer_Insert_pk(IN var_customerName varchar(45), IN var_a
     CALL `u04ts4`.`sp_customer_Insert`(var_customerName, var_address, var_phone);
 
     SELECT LAST_INSERT_ID();
+  END;
+
+create procedure sp_customer_SelectByUserId(IN var_userId int(10))
+  BEGIN
+    SELECT *
+    FROM vw_customer
+    WHERE userId = var_userId;
   END;
 
 create procedure sp_customer_Update(IN var_customerId int(10), IN var_customerName varchar(45),
@@ -323,10 +350,24 @@ create procedure sp_customer_Update(IN var_customerId int(10), IN var_customerNa
     WHERE customerId = var_customerId;
   END;
 
+create procedure sp_user_DeleteById(IN var_userId int(10))
+  BEGIN
+    DELETE FROM user
+    WHERE userId = var_userId;
+  END;
+
 create procedure sp_user_Insert(IN var_userName varchar(50), IN var_password varchar(50))
   BEGIN
     /*Insert user*/
     INSERT INTO `u04ts4`.`user` (userName, password) VALUES (var_userName, var_password);
+  END;
+
+create procedure sp_user_Insert_pk(IN var_userName varchar(50), IN var_password varchar(50))
+  BEGIN
+
+    CALL `u04ts4`.`sp_user_Insert`(var_userName, var_password);
+
+    SELECT LAST_INSERT_ID();
   END;
 
 create procedure sp_user_SelectByLogin(IN var_userName varchar(50), IN var_password varchar(50))

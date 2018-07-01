@@ -38,16 +38,15 @@ public class LoginController {
         String username = textFieldLoginName.getText();
         String password = textFieldLoginPassword.getText();
 
-        boolean loggedIn;
         try {
-            loggedIn = mainApp.getDatabase().login(username, password);
+            mainApp.getDatabase().login(username, password);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             mainApp.showDatabaseErrorAlert(resources.getString("Error_Signing_In"));
             return;
         }
 
-        if (loggedIn) { //If login was successful
+        if (mainApp.getDatabase().getUserId() > 0) { //If login was successful
             /*Add the username and login time to our log file*/
             UserLog userLog = new UserLog(username, LOG_PATH, LocalDateTime.now());
             try {

@@ -1,40 +1,30 @@
 package workscheduler.data;
 
-import java.sql.ResultSet;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.List;
 
-abstract class DAO<E> implements DbObjectBuilder<E>, QueryBuilder<E> {
-
-    private DbConnection dbConnection;
-
-    DbConnection getDbConnection() {
-        return dbConnection;
-    }
-
-    void setDbConnection(DbConnection dbConnection) {
-        this.dbConnection = dbConnection;
-    }
-}
-
-interface DbObjectBuilder<E> {
-
-    /*Build the object from the ResultSet returned by the database.*/
-    E buildObject(ResultSet rs) throws SQLException;
+abstract class DAO implements ConnectionBuilder{
 
 }
 
-interface QueryBuilder<E> {
+interface ConnectionBuilder {
 
-    /*Insert an entity into the database.*/
-    int insert(E e) throws SQLException, ClassNotFoundException;
+    String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
 
-    /*Update an entity in the database.*/
-    void update(E e) throws SQLException, ClassNotFoundException;
+    /*Change these for your database*/
+    String DB_NAME = "u04ts4";
+    String DB_URL = "jdbc:mysql://127.0.0.1/u04ts4?&useSSL=false&serverTimezone=UTC";
+    String DB_USER = "root";
+    String DB_PASS = "";
 
-    /*Delete an entity in the database.*/
-    void delete(E e) throws SQLException, ClassNotFoundException;
+    default Connection createConnection() throws ClassNotFoundException, SQLException {
+        Connection conn;
 
-    /*Returns a list of all entities from the database.*/
-    List<E> getAll() throws SQLException, ClassNotFoundException;
+        Class.forName(DB_DRIVER);
+        conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+        System.out.println("Connected to database : " + DB_NAME);
+
+        return conn;
+    }
 }

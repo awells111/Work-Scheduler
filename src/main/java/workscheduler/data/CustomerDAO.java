@@ -2,18 +2,14 @@ package workscheduler.data;
 
 import workscheduler.model.Customer;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerDAO extends DAO<Customer> {
-
-    /*
-    View combining the relevant fields from the Customer and Address tables
-    */
-    private static final String VIEW_CUSTOMERS = "vw_customer";
+public class CustomerDAO extends DAO implements QueryBuilder<Customer> {
 
     /*
     Customer Table
@@ -27,10 +23,6 @@ public class CustomerDAO extends DAO<Customer> {
     private static final String COLUMN_ADDRESS_NAME = "address";
     private static final String COLUMN_ADDRESS_PHONE = "phone";
 
-    CustomerDAO(DbConnection dbConnection) {
-        setDbConnection(dbConnection);
-    }
-
     private static final String STATEMENT_INSERT_CUSTOMER = "CALL sp_customer_Insert_pk(?, ?, ?)";
 
     /**
@@ -40,19 +32,20 @@ public class CustomerDAO extends DAO<Customer> {
      */
     @Override
     public int insert(Customer newCustomer) throws SQLException, ClassNotFoundException {
-        try (PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_INSERT_CUSTOMER)){
+        try (Connection connection = createConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(STATEMENT_INSERT_CUSTOMER);
 
-        int stmtIndex = 0;
-        stmt.setString(++stmtIndex, newCustomer.getName());
-        stmt.setString(++stmtIndex, newCustomer.getAddress());
-        stmt.setString(++stmtIndex, newCustomer.getPhone());
+            int stmtIndex = 0;
+            stmt.setString(++stmtIndex, newCustomer.getName());
+            stmt.setString(++stmtIndex, newCustomer.getAddress());
+            stmt.setString(++stmtIndex, newCustomer.getPhone());
 
-        ResultSet custRS = stmt.executeQuery();
+            ResultSet custRS = stmt.executeQuery();
 
-        custRS.next();
+            custRS.next();
 
-        /*Return the id of the new Appointment*/
-        return custRS.getInt(1);
+            /*Return the id of the new Appointment*/
+            return custRS.getInt(1);
         }
     }
 
@@ -65,7 +58,9 @@ public class CustomerDAO extends DAO<Customer> {
      */
     @Override
     public void update(Customer updatedCustomer) throws SQLException, ClassNotFoundException {
-        try (PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_UPDATE_CUSTOMER)) {
+        try (Connection connection = createConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(STATEMENT_UPDATE_CUSTOMER);
+
             int stmtIndex = 0;
             stmt.setInt(++stmtIndex, updatedCustomer.getId());
             stmt.setString(++stmtIndex, updatedCustomer.getName());
@@ -86,7 +81,9 @@ public class CustomerDAO extends DAO<Customer> {
      */
     @Override
     public void delete(Customer selectedCustomer) throws SQLException, ClassNotFoundException {
-        try (PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(STATEMENT_DELETE_CUSTOMER)) {
+        try (Connection connection = createConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(STATEMENT_DELETE_CUSTOMER);
+
             int stmtIndex = 0;
             stmt.setInt(++stmtIndex, selectedCustomer.getId());
 
@@ -94,11 +91,15 @@ public class CustomerDAO extends DAO<Customer> {
         }
     }
 
-    private static final String QUERY_SELECT_CUSTOMERS = "SELECT * FROM " + VIEW_CUSTOMERS;
+    private static final String QUERY_SELECT_CUSTOMERS = "CALL sp_customer_SelectByUserId(?)";
 
     @Override
-    public List<Customer> getAll() throws SQLException, ClassNotFoundException {
-        try (PreparedStatement stmt = getDbConnection().getConnection().prepareStatement(QUERY_SELECT_CUSTOMERS)) {
+    public List<Customer> getAll(int userId) throws SQLException, ClassNotFoundException {
+        try (Connection connection = createConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(QUERY_SELECT_CUSTOMERS);
+
+            stmt.setInt(1, userId);
+
             ResultSet custRS = stmt.executeQuery();
 
             List<Customer> customers = new ArrayList<>();

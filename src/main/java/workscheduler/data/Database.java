@@ -23,24 +23,27 @@ public class Database {
     private ObservableList<Customer> customers;
     private ObservableList<Appointment> appointments;
 
+    private int userId = Integer.MIN_VALUE;
     private UserDAO userDAO;
     private CustomerDAO customerDAO;
     private AppointmentDAO appointmentDAO;
 
     public Database() {
-        DbConnection dbConnection = new DbConnection();
-        userDAO = new UserDAO(dbConnection);
-        customerDAO = new CustomerDAO(dbConnection);
-        appointmentDAO = new AppointmentDAO(dbConnection);
+        userDAO = new UserDAO();
+        customerDAO = new CustomerDAO();
+        appointmentDAO = new AppointmentDAO();
+    }
+
+    public int getUserId() {
+        return userId;
     }
 
     public UserDAO getUserDAO() {
         return userDAO;
     }
 
-    /*Returns true if logged in, else false*/
-    public boolean login(String username, String password) throws SQLException, ClassNotFoundException {
-        return getUserDAO().login(username, password);
+    public void login(String username, String password) throws SQLException, ClassNotFoundException {
+        userId = getUserDAO().login(username, password);
     }
 
     public CustomerDAO getCustomerDAO() {
@@ -57,7 +60,7 @@ public class Database {
 
     public void setCustomersFromDatabase() throws SQLException, ClassNotFoundException {
         /*Select all customers from the database*/
-        List<Customer> customers = getCustomerDAO().getAll();
+        List<Customer> customers = getCustomerDAO().getAll(userId);
         setCustomers(FXCollections.observableList(customers));
     }
 
@@ -92,7 +95,7 @@ public class Database {
 
     public void setAppointmentsFromDatabase() throws SQLException, ClassNotFoundException {
         /*Select all appointments from the database*/
-        List<Appointment> appointments = getAppointmentDAO().getAll();
+        List<Appointment> appointments = getAppointmentDAO().getAll(userId);
         setAppointments(FXCollections.observableList(appointments));
     }
 
@@ -128,6 +131,6 @@ public class Database {
     }
 
     public LinkedList<Appointment> getCloseAppointments() throws SQLException, ClassNotFoundException {
-        return getAppointmentDAO().getCloseAppointments();
+        return getAppointmentDAO().getCloseAppointments(userId);
     }
 }
