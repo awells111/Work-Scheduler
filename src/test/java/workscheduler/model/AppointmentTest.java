@@ -61,6 +61,12 @@ class AppointmentTest {
     }
 
     @Test
+    void setCustomerId() {
+        appointment.setCustomerId(-1);
+        assertEquals(appointment.getCustomerId(), -1);
+    }
+
+    @Test
     void customerIdProperty() {
         assertEquals(EXPECTED_CUSTOMER_ID_PROPERTY.get(), appointment.customerIdProperty().get());
     }

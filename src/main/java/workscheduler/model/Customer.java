@@ -7,6 +7,7 @@ import javafx.beans.property.StringProperty;
 
 public class Customer {
 
+    private int userId;
     private IntegerProperty id;
     private StringProperty name;
     private StringProperty address;
@@ -14,15 +15,24 @@ public class Customer {
 
     /*Used for new Customers*/
     public Customer(String name, String address, String phone) {
-        this(Integer.MIN_VALUE, name, address, phone);
+        this(Integer.MIN_VALUE, Integer.MIN_VALUE, name, address, phone);
     }
 
     /*Used for existing Customers*/
-    public Customer(int id, String name, String address, String phone) {
+    public Customer(int userId, int id, String name, String address, String phone) {
+        this.userId = userId;
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
         this.address = new SimpleStringProperty(address);
         this.phone = new SimpleStringProperty(phone);
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public int getId() {
@@ -78,15 +88,18 @@ public class Customer {
 
         Customer customer = (Customer) o;
 
+        if (getUserId() != customer.getUserId()) return false;
         if (getId() != customer.getId()) return false;
         if (getName() != null ? !getName().equals(customer.getName()) : customer.getName() != null) return false;
-        if (getAddress() != null ? !getAddress().equals(customer.getAddress()) : customer.getAddress() != null) return false;
+        if (getAddress() != null ? !getAddress().equals(customer.getAddress()) : customer.getAddress() != null)
+            return false;
         return getPhone() != null ? getPhone().equals(customer.getPhone()) : customer.getPhone() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = getId();
+        int result = getUserId();
+        result = 31 * result + getId();
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
         result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
         result = 31 * result + (getPhone() != null ? getPhone().hashCode() : 0);

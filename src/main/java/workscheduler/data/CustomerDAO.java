@@ -14,6 +14,7 @@ public class CustomerDAO extends DAO implements QueryBuilder<Customer> {
     /*
     Customer Table
     */
+    private static final String COLUMN_USER_ID = "userId";
     private static final String COLUMN_CUSTOMER_ID = "customerId";
     private static final String COLUMN_CUSTOMER_NAME = "customerName";
 
@@ -23,7 +24,7 @@ public class CustomerDAO extends DAO implements QueryBuilder<Customer> {
     private static final String COLUMN_ADDRESS_NAME = "address";
     private static final String COLUMN_ADDRESS_PHONE = "phone";
 
-    private static final String STATEMENT_INSERT_CUSTOMER = "CALL sp_customer_Insert_pk(?, ?, ?)";
+    private static final String STATEMENT_INSERT_CUSTOMER = "CALL sp_customer_Insert_pk(?, ?, ?, ?)";
 
     /**
      * Insert a {@link Customer} into the database
@@ -36,6 +37,7 @@ public class CustomerDAO extends DAO implements QueryBuilder<Customer> {
             PreparedStatement stmt = connection.prepareStatement(STATEMENT_INSERT_CUSTOMER);
 
             int stmtIndex = 0;
+            stmt.setInt(++stmtIndex, newCustomer.getUserId());
             stmt.setString(++stmtIndex, newCustomer.getName());
             stmt.setString(++stmtIndex, newCustomer.getAddress());
             stmt.setString(++stmtIndex, newCustomer.getPhone());
@@ -44,7 +46,7 @@ public class CustomerDAO extends DAO implements QueryBuilder<Customer> {
 
             custRS.next();
 
-            /*Return the id of the new Appointment*/
+            /*Return the id of the new Customer*/
             return custRS.getInt(1);
         }
     }
@@ -91,6 +93,23 @@ public class CustomerDAO extends DAO implements QueryBuilder<Customer> {
         }
     }
 
+    private static final String QUERY_SELECT_CUSTOMER_BY_ID = "CALL sp_customer_SelectByCustId(?)";
+
+    @Override
+    public Customer selectById(int customerId) throws SQLException, ClassNotFoundException {
+        try (Connection connection = createConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(QUERY_SELECT_CUSTOMER_BY_ID);
+
+            stmt.setInt(1, customerId);
+
+            ResultSet custRS = stmt.executeQuery();
+
+            custRS.next();
+
+            return buildObject(custRS);
+        }
+    }
+
     private static final String QUERY_SELECT_CUSTOMERS = "CALL sp_customer_SelectByUserId(?)";
 
     @Override
@@ -114,11 +133,12 @@ public class CustomerDAO extends DAO implements QueryBuilder<Customer> {
 
     @Override
     public Customer buildObject(ResultSet custRS) throws SQLException {
+        int rsUserId = custRS.getInt(CustomerDAO.COLUMN_USER_ID);
         int rsCustId = custRS.getInt(CustomerDAO.COLUMN_CUSTOMER_ID);
         String rsCustName = custRS.getString(CustomerDAO.COLUMN_CUSTOMER_NAME);
         String rsAddrName = custRS.getString(CustomerDAO.COLUMN_ADDRESS_NAME);
         String rsAddrPhone = custRS.getString(CustomerDAO.COLUMN_ADDRESS_PHONE);
 
-        return new Customer(rsCustId, rsCustName, rsAddrName, rsAddrPhone);
+        return new Customer(rsUserId, rsCustId, rsCustName, rsAddrName, rsAddrPhone);
     }
 }

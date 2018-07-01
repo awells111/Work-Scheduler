@@ -63,7 +63,7 @@ public class AddCustomerController {
         String address = textFieldCustomerAddress.getText();
         String phone = textFieldCustomerPhone.getText();
 
-        Customer newCustomer = new Customer(id, name, address, phone);
+        Customer newCustomer = new Customer(mainApp.getDatabase().getUserId(), id, name, address, phone);
 
         try {
             /*If Customer does not exist in the database, else*/

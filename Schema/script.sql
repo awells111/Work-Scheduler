@@ -265,6 +265,13 @@ create procedure sp_appointment_Insert_pk(IN var_customerId int(10), IN var_titl
     SELECT LAST_INSERT_ID();
   END;
 
+create procedure sp_appointment_SelectByApptId(IN var_appointmentId int(10))
+  BEGIN
+    SELECT *
+    FROM vw_appointment
+    WHERE appointmentId = var_appointmentId;
+  END;
+
 create procedure sp_appointment_SelectByCustomerId(IN var_customerId int(10))
   BEGIN
     SELECT *
@@ -320,13 +327,20 @@ create procedure sp_customer_Insert(IN var_userId int(10), IN var_customerName v
     INSERT INTO address (customerId, address, phone) VALUES (LAST_INSERT_ID(), var_address, var_phone);
   END;
 
-create procedure sp_customer_Insert_pk(IN var_customerName varchar(45), IN var_address varchar(50),
-                                       IN var_phone        varchar(20))
+create procedure sp_customer_Insert_pk(IN var_userId  int(10), IN var_customerName varchar(45),
+                                       IN var_address varchar(50), IN var_phone varchar(20))
   BEGIN
 
-    CALL `u04ts4`.`sp_customer_Insert`(var_customerName, var_address, var_phone);
+    CALL `u04ts4`.`sp_customer_Insert`(var_userId, var_customerName, var_address, var_phone);
 
     SELECT LAST_INSERT_ID();
+  END;
+
+create procedure sp_customer_SelectByCustId(IN var_customerId int(10))
+  BEGIN
+    SELECT *
+    FROM vw_customer
+    WHERE customerId = var_customerId;
   END;
 
 create procedure sp_customer_SelectByUserId(IN var_userId int(10))
@@ -354,6 +368,12 @@ create procedure sp_user_DeleteById(IN var_userId int(10))
   BEGIN
     DELETE FROM user
     WHERE userId = var_userId;
+  END;
+
+create procedure sp_user_DeleteByUserName(IN var_userName varchar(50))
+  BEGIN
+    DELETE FROM user
+    WHERE userName = var_userName;
   END;
 
 create procedure sp_user_Insert(IN var_userName varchar(50), IN var_password varchar(50))

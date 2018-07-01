@@ -87,6 +87,23 @@ public class AppointmentDAO extends DAO implements QueryBuilder<Appointment> {
         }
     }
 
+    private static final String QUERY_SELECT_APPOINTMENT_BY_ID = "CALL sp_appointment_SelectByApptId(?)";
+
+    @Override
+    public Appointment selectById(int appointmentId) throws SQLException, ClassNotFoundException {
+        try (Connection connection = createConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(QUERY_SELECT_APPOINTMENT_BY_ID);
+
+            stmt.setInt(1, appointmentId);
+
+            ResultSet custRS = stmt.executeQuery();
+
+            custRS.next();
+
+            return buildObject(custRS);
+        }
+    }
+
     private static final String QUERY_SELECT_APPOINTMENTS = "CALL sp_appointment_SelectByCustomerId(?)";
 
     @Override

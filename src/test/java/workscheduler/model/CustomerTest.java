@@ -12,6 +12,7 @@ class CustomerTest {
 
     private Customer customer;
 
+    private static final int EXPECTED_USER_ID = 10;
     private static final int EXPECTED_CUSTOMER_ID = 3;
     private static final String EXPECTED_NAME = "Jake Peralta";
     private static final String EXPECTED_ADDRESS = "100 Charming Avenue";
@@ -24,14 +25,32 @@ class CustomerTest {
 
     @BeforeEach
     void setUp() {
-        customer = new Customer(3, "Jake Peralta", "100 Charming Avenue", "6789998212");
+        customer = new Customer(EXPECTED_USER_ID, 3, "Jake Peralta", "100 Charming Avenue", "6789998212");
     }
 
-    @BeforeEach
+    @Test
+    void testDefaultUserId() {
+        /*Test the default value of customers that are not assigned an id*/
+        Customer customer = new Customer(EXPECTED_NAME, EXPECTED_ADDRESS, EXPECTED_PHONE);
+        assertEquals(Integer.MIN_VALUE, customer.getUserId());
+    }
+
+    @Test
     void testDefaultCustomerId() {
         /*Test the default value of customers that are not assigned an id*/
         Customer customer = new Customer(EXPECTED_NAME, EXPECTED_ADDRESS, EXPECTED_PHONE);
         assertEquals(Integer.MIN_VALUE, customer.getId());
+    }
+
+    @Test
+    void getUserId() {
+        assertEquals(EXPECTED_USER_ID, customer.getUserId());
+    }
+
+    @Test
+    void setUserId() {
+        customer.setUserId(-1);
+        assertEquals(customer.getUserId(), -1);
     }
 
     @Test
@@ -97,11 +116,11 @@ class CustomerTest {
 
     @Test
     void equalsTest() {
-        assertEquals(new Customer(EXPECTED_CUSTOMER_ID, EXPECTED_NAME, EXPECTED_ADDRESS, EXPECTED_PHONE), customer);
+        assertEquals(new Customer(EXPECTED_USER_ID, EXPECTED_CUSTOMER_ID, EXPECTED_NAME, EXPECTED_ADDRESS, EXPECTED_PHONE), customer);
     }
 
     @Test
     void hashCodeTest() {
-        assertEquals(new Customer(EXPECTED_CUSTOMER_ID, EXPECTED_NAME, EXPECTED_ADDRESS, EXPECTED_PHONE).hashCode(), customer.hashCode());
+        assertEquals(new Customer(EXPECTED_USER_ID, EXPECTED_CUSTOMER_ID, EXPECTED_NAME, EXPECTED_ADDRESS, EXPECTED_PHONE).hashCode(), customer.hashCode());
     }
 }

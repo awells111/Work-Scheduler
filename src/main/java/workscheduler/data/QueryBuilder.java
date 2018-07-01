@@ -15,6 +15,9 @@ interface QueryBuilder<E> {
     /*Delete an entity in the database.*/
     void delete(E e) throws SQLException, ClassNotFoundException;
 
+    /*Select one entity in the database.*/
+    E selectById(int entityId) throws SQLException, ClassNotFoundException;
+
     /*Returns a list of all entities from the database.*/
     List<E> getAll(int userId) throws SQLException, ClassNotFoundException;
 

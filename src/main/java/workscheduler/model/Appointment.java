@@ -42,6 +42,10 @@ public class Appointment {
         return customerId.get();
     }
 
+    public void setCustomerId(int customerId) {
+        this.customerId.set(customerId);
+    }
+
     public IntegerProperty customerIdProperty() {
         return customerId;
     }
